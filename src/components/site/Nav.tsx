@@ -37,7 +37,7 @@ export function Nav() {
         >
           {/* Logo + brand */}
           <a href="#hero" onClick={(e) => scrollTo(e, "#hero")} className="flex items-center shrink-0">
-            <img src={logo} alt="Avion Mobile Massage" className="h-14 md:h-16 w-auto" />
+            <img src={logo} alt="Avion Mobile Massage" className="h-16 md:h-20 w-auto" />
           </a>
 
           {/* Links */}
@@ -58,7 +58,7 @@ export function Nav() {
           <a
             href="#book"
             onClick={(e) => scrollTo(e, "#book")}
-            className="hidden md:inline-flex items-center bg-sage text-white px-5 py-2 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] hover:bg-sage-hover transition-all shadow-md hover:shadow-lg active:scale-95"
+            className="hidden md:inline-flex items-center bg-sage text-white px-7 py-3 rounded-full text-sm font-bold uppercase tracking-[0.2em] hover:bg-sage-hover transition-all shadow-md hover:shadow-lg active:scale-95"
           >
             Book Now
           </a>

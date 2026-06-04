@@ -18,7 +18,7 @@ export function Hero() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         {/* Left: headline */}
         <div className="relative">
-          <h1 className="font-display font-bold leading-[0.95] tracking-tight text-[64px] sm:text-[88px] lg:text-[112px]">
+          <h1 className="font-display font-bold leading-[0.95] tracking-tight text-[48px] sm:text-[68px] lg:text-[88px]">
             <span className="block text-charcoal">Avion</span>
             <span className="block text-sage">Mobile Massage</span>
           </h1>
@@ -46,7 +46,7 @@ export function Hero() {
         </div>
 
         {/* Right: image (mirrored, larger, refined) */}
-        <div className="relative lg:scale-[1.08] lg:-mr-6 xl:-mr-10">
+        <div className="relative lg:scale-[0.95] lg:-mr-2">
           {/* Soft offset shadow */}
           <div className="pointer-events-none absolute -inset-8 bg-soft-blue-light blob-1r -z-10 translate-x-10 translate-y-10 opacity-55 blur" />
           {/* Outer thin ring */}
