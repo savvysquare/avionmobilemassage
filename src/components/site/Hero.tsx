@@ -17,7 +17,7 @@ export function Hero() {
             </h1>
             <span className="block w-px h-14 bg-sage my-8" />
             <p className="font-display text-xl sm:text-2xl text-charcoal-muted font-light">
-              Calgary's Concierge RMT, Delivered to You
+              Calgary's Concierge Registered Massage Therapist, Delivered to You
             </p>
           </div>
 
