@@ -50,95 +50,51 @@
 :root {
   --radius: 1rem;
 
-  /* Tetra Farm light theme colors */
-  --background: #f2f6f6;
-  --surface: #ffffff;
-  --surface-muted: #e2eaea;
-  --foreground: #17191b;
+  /* warm off-white / beige */
+  --background: oklch(0.975 0.012 85);
+  --surface: oklch(0.985 0.008 85);
+  --surface-muted: oklch(0.945 0.018 85);
+  --foreground: oklch(0.2 0.012 250);
 
-  --card: #ffffff;
-  --card-foreground: #17191b;
-  --popover: #ffffff;
-  --popover-foreground: #17191b;
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.012 250);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.012 250);
 
-  /* Primary action maps to dark in light mode, cyan in dark mode */
-  --primary: #17191b;
-  --primary-foreground: #ffffff;
+  /* charcoal primary */
+  --primary: oklch(0.2 0.012 250);
+  --primary-foreground: oklch(0.985 0.008 85);
 
-  /* Neon cyan action color */
-  --sage: #43e8e8;
-  --sage-foreground: #17191b;
-  --sage-soft: rgba(67, 232, 232, 0.15);
-  --sky-soft: rgba(67, 232, 232, 0.1);
+  /* sage #A8B5A2 */
+  --sage: oklch(0.745 0.035 140);
+  --sage-foreground: oklch(0.22 0.02 150);
+  --sage-soft: oklch(0.93 0.025 140);
+  --sky-soft: oklch(0.92 0.03 230);
 
-  --secondary: #ffffff;
-  --secondary-foreground: #17191b;
+  --secondary: oklch(0.93 0.018 85);
+  --secondary-foreground: oklch(0.2 0.012 250);
 
-  --muted: #e2eaea;
-  --muted-foreground: #687172;
+  --muted: oklch(0.95 0.012 85);
+  --muted-foreground: oklch(0.45 0.012 250);
 
-  --accent: #43e8e8;
-  --accent-foreground: #17191b;
+  --accent: oklch(0.93 0.025 140);
+  --accent-foreground: oklch(0.22 0.02 150);
 
   --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: #ffffff;
+  --destructive-foreground: oklch(0.985 0.008 85);
 
-  --border: #d0d9da;
-  --input: #ddeaea;
-  --ring: #43e8e8;
+  --border: oklch(0.9 0.012 85);
+  --input: oklch(0.92 0.012 85);
+  --ring: oklch(0.745 0.035 140);
 
-  --sidebar: #ffffff;
-  --sidebar-foreground: #17191b;
-  --sidebar-primary: #17191b;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #e2eaea;
-  --sidebar-accent-foreground: #17191b;
-  --sidebar-border: #d0d9da;
-  --sidebar-ring: #43e8e8;
-}
-
-.dark {
-  /* Tetra Farm dark theme colors */
-  --background: #17191b;
-  --surface: #1c1f22;
-  --surface-muted: #24282d;
-  --foreground: #ffffff;
-
-  --card: #1c1f22;
-  --card-foreground: #ffffff;
-  --popover: #1c1f22;
-  --popover-foreground: #ffffff;
-
-  /* Primary action becomes the neon cyan */
-  --primary: #43e8e8;
-  --primary-foreground: #17191b;
-
-  --sage: #43e8e8;
-  --sage-foreground: #43e8e8; /* Glowing highlight in dark mode */
-  --sage-soft: rgba(67, 232, 232, 0.2);
-  --sky-soft: rgba(67, 232, 232, 0.15);
-
-  --secondary: #24282d;
-  --secondary-foreground: #ffffff;
-
-  --muted: #24282d;
-  --muted-foreground: #879ea1;
-
-  --accent: #43e8e8;
-  --accent-foreground: #17191b;
-
-  --border: rgba(255, 255, 255, 0.12);
-  --input: rgba(255, 255, 255, 0.08);
-  --ring: #43e8e8;
-
-  --sidebar: #1c1f22;
-  --sidebar-foreground: #ffffff;
-  --sidebar-primary: #43e8e8;
-  --sidebar-primary-foreground: #17191b;
-  --sidebar-accent: #24282d;
-  --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: rgba(255, 255, 255, 0.12);
-  --sidebar-ring: #43e8e8;
+  --sidebar: oklch(0.985 0.008 85);
+  --sidebar-foreground: oklch(0.2 0.012 250);
+  --sidebar-primary: oklch(0.2 0.012 250);
+  --sidebar-primary-foreground: oklch(0.985 0.008 85);
+  --sidebar-accent: oklch(0.93 0.025 140);
+  --sidebar-accent-foreground: oklch(0.22 0.02 150);
+  --sidebar-border: oklch(0.9 0.012 85);
+  --sidebar-ring: oklch(0.745 0.035 140);
 }
 
 @layer base {
@@ -156,9 +112,6 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     font-feature-settings: "ss01", "cv11";
-    transition:
-      background-color 0.3s ease,
-      color 0.3s ease;
   }
 
   h1,
@@ -182,49 +135,33 @@
   justify-content: center;
   gap: 0.5rem;
   border-radius: 9999px;
-  padding: 0.825rem 1.75rem;
+  padding: 0.875rem 1.5rem;
   font-weight: 500;
-  font-size: 0.92rem;
-  letter-spacing: 0.025em;
+  font-size: 0.95rem;
   transition:
-    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
-    background-color 0.2s ease,
-    color 0.2s ease,
-    box-shadow 0.2s ease;
-  cursor: pointer;
+    transform 200ms ease,
+    background-color 200ms ease,
+    color 200ms ease,
+    box-shadow 200ms ease;
 }
 
 @utility btn-charcoal {
   background-color: var(--color-primary);
   color: var(--color-primary-foreground);
-  border: 1px solid var(--color-primary);
 }
 @utility btn-charcoal-hover {
-  box-shadow: 0 0 15px rgba(67, 232, 232, 0.35);
-  transform: translateY(-1px);
+  background-color: color-mix(in oklab, var(--color-primary) 88%, white);
 }
 
 @utility btn-sage {
   background-color: var(--color-sage);
-  color: #17191b; /* Text remains dark charcoal for readability on neon cyan */
-  border: 1px solid var(--color-sage);
-  box-shadow: 0 2px 8px rgba(67, 232, 232, 0.15);
-}
-@utility btn-sage-hover {
-  box-shadow: 0 0 15px rgba(67, 232, 232, 0.5);
-  transform: translateY(-1px);
+  color: var(--color-primary);
 }
 
 @utility btn-outline {
   background-color: transparent;
-  color: var(--color-foreground);
+  color: var(--color-primary);
   border: 1px solid var(--color-border);
-}
-@utility btn-outline-hover {
-  background-color: rgba(67, 232, 232, 0.08);
-  border-color: var(--color-sage);
-  color: var(--color-foreground);
-  transform: translateY(-1px);
 }
 
 @utility tilt-left {

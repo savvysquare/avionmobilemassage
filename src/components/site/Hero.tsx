@@ -14,15 +14,17 @@ export function Hero() {
       >
         <path
           d="M120 80 C 360 460, 1080 460, 1320 80"
-          stroke="var(--color-sage)"
-          strokeOpacity="0.25"
-          strokeWidth="1.5"
+          stroke="currentColor"
+          strokeOpacity="0.18"
+          strokeWidth="1"
+          className="text-foreground"
         />
         <path
           d="M720 460 C 720 540, 720 560, 720 600"
-          stroke="var(--color-sage)"
-          strokeOpacity="0.25"
-          strokeWidth="1.5"
+          stroke="currentColor"
+          strokeOpacity="0.18"
+          strokeWidth="1"
+          className="text-foreground"
         />
       </svg>
 
@@ -63,14 +65,14 @@ export function Hero() {
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <a href="#book" className="btn-pill btn-sage hover:btn-sage-hover">
+              <a href="#book" className="btn-pill btn-sage hover:brightness-95">
                 Book Your Appointment
               </a>
               <a
                 href="https://wa.me/14039230323"
                 target="_blank"
                 rel="noreferrer"
-                className="btn-pill btn-outline hover:btn-outline-hover"
+                className="btn-pill btn-outline hover:bg-surface-muted"
               >
                 <MessageCircle className="h-4 w-4" />
                 Chat on WhatsApp

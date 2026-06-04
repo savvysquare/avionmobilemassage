@@ -61,7 +61,7 @@ export function Services() {
               <p className="mt-5 text-muted-foreground leading-relaxed">{s.body}</p>
               <a
                 href={`#book?service=${encodeURIComponent(s.name)}`}
-                className="mt-8 inline-flex w-fit btn-pill btn-outline hover:btn-outline-hover"
+                className="mt-8 inline-flex w-fit btn-pill btn-outline hover:bg-background"
               >
                 Book This Service
               </a>
