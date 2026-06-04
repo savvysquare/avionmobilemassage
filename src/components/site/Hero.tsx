@@ -47,8 +47,8 @@ export function Hero() {
 
         {/* Right: image */}
         <div className="relative">
-          <div className="pointer-events-none absolute -inset-4 bg-soft-blue-light rounded-[3rem] -z-10 translate-x-6 translate-y-6 opacity-70" />
-          <div className="relative overflow-hidden rounded-[2.5rem] shadow-premium aspect-[5/4]">
+          <div className="pointer-events-none absolute -inset-4 bg-soft-blue-light blob-1 -z-10 translate-x-6 translate-y-6 opacity-70" />
+          <div className="relative overflow-hidden blob-1 shadow-premium aspect-[5/4] rotate-2">
             <img
               src={heroImg}
               alt="Registered Massage Therapist providing in-home massage in Calgary"
