@@ -16,14 +16,18 @@ export function Areas() {
       <div className="container-page">
         <div className="grid lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-20">
           <div>
-            <span className="text-xs uppercase tracking-[0.2em] text-sage-foreground/80">Areas We Serve</span>
+            <span className="text-xs uppercase tracking-[0.2em] text-sage-foreground/80">
+              Areas We Serve
+            </span>
             <h2 className="mt-4 text-3xl md:text-5xl">
               We come
               <br />
               <span className="italic font-light text-foreground/70">to you.</span>
             </h2>
             <p className="mt-6 text-muted-foreground leading-relaxed max-w-md">
-              Proudly bringing expert mobile massage therapy throughout Calgary and nearby communities. Not sure if we cover your exact neighbourhood? Message us — we usually can.
+              Proudly bringing expert mobile massage therapy throughout Calgary and nearby
+              communities. Not sure if we cover your exact neighbourhood? Message us — we usually
+              can.
             </p>
             <a
               href="https://wa.me/14039230323"
@@ -45,7 +49,9 @@ export function Areas() {
               ))}
             </ul>
             <div className="my-8 h-px bg-foreground/10" />
-            <p className="text-sm uppercase tracking-widest text-sage-foreground/80">Also Serving</p>
+            <p className="text-sm uppercase tracking-widest text-sage-foreground/80">
+              Also Serving
+            </p>
             <ul className="mt-5 flex flex-wrap gap-2">
               {nearby.map((n) => (
                 <li

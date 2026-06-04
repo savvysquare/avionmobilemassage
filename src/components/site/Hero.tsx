@@ -60,7 +60,8 @@ export function Hero() {
             </h1>
 
             <p className="mt-6 mx-auto max-w-xl text-base md:text-lg text-muted-foreground leading-relaxed">
-              Professional Registered Massage Therapists come directly to your home, office, or workplace across Calgary.
+              Professional Registered Massage Therapists come directly to your home, office, or
+              workplace across Calgary.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -97,7 +98,11 @@ export function Hero() {
           {/* mobile single image */}
           <div className="md:hidden">
             <div className="mx-auto w-full max-w-sm aspect-[4/5] overflow-hidden rounded-3xl shadow-soft">
-              <img src={heroImg} alt="In-home massage session" className="h-full w-full object-cover" />
+              <img
+                src={heroImg}
+                alt="In-home massage session"
+                className="h-full w-full object-cover"
+              />
             </div>
           </div>
         </div>
@@ -118,7 +123,9 @@ export function Hero() {
         </div>
 
         <p className="mt-12 mx-auto max-w-2xl text-center text-muted-foreground">
-          You work hard. You move through busy Calgary days. Now self-care can meet you where you are — no traffic, no parking, no waiting rooms. Just professional, personalized massage therapy that fits your real life.
+          You work hard. You move through busy Calgary days. Now self-care can meet you where you
+          are — no traffic, no parking, no waiting rooms. Just professional, personalized massage
+          therapy that fits your real life.
         </p>
       </div>
     </section>

@@ -1,12 +1,29 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const faqs = [
-  { q: "Do I need a massage table?", a: "No. We bring a professional table, linens, and everything else required." },
-  { q: "Do you offer direct billing?", a: "Yes — we direct bill many extended health insurance providers. Coverage varies by plan, so we recommend checking with your insurer. If direct billing isn't available, we provide an official receipt for reimbursement." },
+  {
+    q: "Do I need a massage table?",
+    a: "No. We bring a professional table, linens, and everything else required.",
+  },
+  {
+    q: "Do you offer direct billing?",
+    a: "Yes — we direct bill many extended health insurance providers. Coverage varies by plan, so we recommend checking with your insurer. If direct billing isn't available, we provide an official receipt for reimbursement.",
+  },
   { q: "How long are appointments?", a: "We offer 60-minute and 90-minute sessions." },
   { q: "What areas do you serve?", a: "All of Calgary plus Airdrie, Cochrane, and Chestermere." },
-  { q: "What should I wear?", a: "Whatever feels comfortable. Your therapist will discuss preferences and ensure you're always properly draped and at ease." },
-  { q: "What is your cancellation policy?", a: "We kindly ask for at least 48 hours' notice for cancellations. Appointments cancelled with less notice may be subject to a fee. This helps us keep time available for other clients." },
+  {
+    q: "What should I wear?",
+    a: "Whatever feels comfortable. Your therapist will discuss preferences and ensure you're always properly draped and at ease.",
+  },
+  {
+    q: "What is your cancellation policy?",
+    a: "We kindly ask for at least 48 hours' notice for cancellations. Appointments cancelled with less notice may be subject to a fee. This helps us keep time available for other clients.",
+  },
 ];
 
 export function FAQ() {

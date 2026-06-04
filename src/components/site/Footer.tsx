@@ -9,9 +9,14 @@ export function Footer() {
           <p className="text-xl md:text-2xl max-w-xl">
             Join busy Calgarians making self-care simple.
             <br />
-            <span className="italic font-light opacity-80">Professional. Convenient. Delivered to you.</span>
+            <span className="italic font-light opacity-80">
+              Professional. Convenient. Delivered to you.
+            </span>
           </p>
-          <a href="#book" className="btn-pill bg-background text-foreground hover:opacity-90 self-start md:self-auto">
+          <a
+            href="#book"
+            className="btn-pill bg-background text-foreground hover:opacity-90 self-start md:self-auto"
+          >
             Book Now
           </a>
         </div>
@@ -20,7 +25,8 @@ export function Footer() {
           <div className="md:col-span-2">
             <img src={logo} alt="Avion" className="h-10 w-auto invert brightness-0" />
             <p className="mt-4 text-sm opacity-70 max-w-xs">
-              Mobile Massage Therapy · Registered Therapists serving Calgary &amp; surrounding areas.
+              Mobile Massage Therapy · Registered Therapists serving Calgary &amp; surrounding
+              areas.
             </p>
           </div>
 
@@ -48,12 +54,18 @@ export function Footer() {
             <p className="text-sm uppercase tracking-widest opacity-60">Contact</p>
             <ul className="mt-4 space-y-3 text-sm">
               <li>
-                <a href="tel:+14039230323" className="flex items-center gap-2 opacity-90 hover:opacity-100">
+                <a
+                  href="tel:+14039230323"
+                  className="flex items-center gap-2 opacity-90 hover:opacity-100"
+                >
                   <Phone className="h-4 w-4" /> +1 (403) 923-0323
                 </a>
               </li>
               <li>
-                <a href="mailto:avionmobilemassage@outlook.com" className="flex items-center gap-2 opacity-90 hover:opacity-100 break-all">
+                <a
+                  href="mailto:avionmobilemassage@outlook.com"
+                  className="flex items-center gap-2 opacity-90 hover:opacity-100 break-all"
+                >
                   <Mail className="h-4 w-4" /> avionmobilemassage@outlook.com
                 </a>
               </li>
@@ -72,10 +84,17 @@ export function Footer() {
         </div>
 
         <div className="mt-14 flex flex-col md:flex-row justify-between gap-4 text-xs opacity-60">
-          <p>© 2026 Avion Mobile Massage. All therapists are Registered Massage Therapists serving Calgary and surrounding areas.</p>
+          <p>
+            © 2026 Avion Mobile Massage. All therapists are Registered Massage Therapists serving
+            Calgary and surrounding areas.
+          </p>
           <div className="flex gap-5">
-            <a href="#" className="hover:opacity-100">Privacy</a>
-            <a href="#" className="hover:opacity-100">Cancellation Policy</a>
+            <a href="#" className="hover:opacity-100">
+              Privacy
+            </a>
+            <a href="#" className="hover:opacity-100">
+              Cancellation Policy
+            </a>
           </div>
         </div>
       </div>

@@ -23,14 +23,18 @@ export function HowItWorks() {
     <section className="bg-surface-muted/60 py-24 md:py-32">
       <div className="container-page">
         <div className="max-w-2xl">
-          <span className="text-xs uppercase tracking-[0.2em] text-sage-foreground/80">How it works</span>
+          <span className="text-xs uppercase tracking-[0.2em] text-sage-foreground/80">
+            How it works
+          </span>
           <h2 className="mt-4 text-3xl md:text-5xl">
             Professional care.
             <br />
             <span className="italic font-light text-foreground/70">Exceptional convenience.</span>
           </h2>
           <p className="mt-5 text-muted-foreground">
-            At Avion Mobile Massage we believe quality care should never feel like another task on your list. We handle everything — table, linens, oils — and bring a calm, respectful experience to the space where you already feel comfortable.
+            At Avion Mobile Massage we believe quality care should never feel like another task on
+            your list. We handle everything — table, linens, oils — and bring a calm, respectful
+            experience to the space where you already feel comfortable.
           </p>
         </div>
 

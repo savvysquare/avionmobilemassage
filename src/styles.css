@@ -54,46 +54,46 @@
   --background: oklch(0.975 0.012 85);
   --surface: oklch(0.985 0.008 85);
   --surface-muted: oklch(0.945 0.018 85);
-  --foreground: oklch(0.20 0.012 250);
+  --foreground: oklch(0.2 0.012 250);
 
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.20 0.012 250);
+  --card-foreground: oklch(0.2 0.012 250);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.20 0.012 250);
+  --popover-foreground: oklch(0.2 0.012 250);
 
   /* charcoal primary */
-  --primary: oklch(0.20 0.012 250);
+  --primary: oklch(0.2 0.012 250);
   --primary-foreground: oklch(0.985 0.008 85);
 
   /* sage #A8B5A2 */
   --sage: oklch(0.745 0.035 140);
-  --sage-foreground: oklch(0.22 0.020 150);
+  --sage-foreground: oklch(0.22 0.02 150);
   --sage-soft: oklch(0.93 0.025 140);
-  --sky-soft: oklch(0.92 0.030 230);
+  --sky-soft: oklch(0.92 0.03 230);
 
   --secondary: oklch(0.93 0.018 85);
-  --secondary-foreground: oklch(0.20 0.012 250);
+  --secondary-foreground: oklch(0.2 0.012 250);
 
   --muted: oklch(0.95 0.012 85);
   --muted-foreground: oklch(0.45 0.012 250);
 
   --accent: oklch(0.93 0.025 140);
-  --accent-foreground: oklch(0.22 0.020 150);
+  --accent-foreground: oklch(0.22 0.02 150);
 
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0.008 85);
 
-  --border: oklch(0.90 0.012 85);
+  --border: oklch(0.9 0.012 85);
   --input: oklch(0.92 0.012 85);
   --ring: oklch(0.745 0.035 140);
 
   --sidebar: oklch(0.985 0.008 85);
-  --sidebar-foreground: oklch(0.20 0.012 250);
-  --sidebar-primary: oklch(0.20 0.012 250);
+  --sidebar-foreground: oklch(0.2 0.012 250);
+  --sidebar-primary: oklch(0.2 0.012 250);
   --sidebar-primary-foreground: oklch(0.985 0.008 85);
   --sidebar-accent: oklch(0.93 0.025 140);
-  --sidebar-accent-foreground: oklch(0.22 0.020 150);
-  --sidebar-border: oklch(0.90 0.012 85);
+  --sidebar-accent-foreground: oklch(0.22 0.02 150);
+  --sidebar-border: oklch(0.9 0.012 85);
   --sidebar-ring: oklch(0.745 0.035 140);
 }
 
@@ -114,7 +114,9 @@
     font-feature-settings: "ss01", "cv11";
   }
 
-  h1, h2, h3 {
+  h1,
+  h2,
+  h3 {
     font-family: var(--font-display);
     letter-spacing: -0.025em;
     font-weight: 500;
@@ -136,7 +138,11 @@
   padding: 0.875rem 1.5rem;
   font-weight: 500;
   font-size: 0.95rem;
-  transition: transform 200ms ease, background-color 200ms ease, color 200ms ease, box-shadow 200ms ease;
+  transition:
+    transform 200ms ease,
+    background-color 200ms ease,
+    color 200ms ease,
+    box-shadow 200ms ease;
 }
 
 @utility btn-charcoal {
@@ -166,6 +172,11 @@
 }
 
 @keyframes float-slow {
-  0%, 100% { transform: translateY(0) rotate(var(--tw-rotate, 0)); }
-  50% { transform: translateY(-10px) rotate(var(--tw-rotate, 0)); }
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--tw-rotate, 0));
+  }
+  50% {
+    transform: translateY(-10px) rotate(var(--tw-rotate, 0));
+  }
 }

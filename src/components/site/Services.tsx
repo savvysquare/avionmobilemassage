@@ -29,7 +29,9 @@ export function Services() {
       <div className="container-page">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div className="max-w-xl">
-            <span className="text-xs uppercase tracking-[0.2em] text-sage-foreground/80">Our Services</span>
+            <span className="text-xs uppercase tracking-[0.2em] text-sage-foreground/80">
+              Our Services
+            </span>
             <h2 className="mt-4 text-3xl md:text-5xl">
               Care shaped around
               <br />
@@ -37,7 +39,8 @@ export function Services() {
             </h2>
           </div>
           <p className="md:max-w-sm text-muted-foreground">
-            Every session is built around what you need now — recovery, relief, or simply quiet, restorative time.
+            Every session is built around what you need now — recovery, relief, or simply quiet,
+            restorative time.
           </p>
         </div>
 

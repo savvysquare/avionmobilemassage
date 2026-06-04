@@ -28,12 +28,16 @@ export function Booking() {
               <span className="italic font-light text-foreground/70">better?</span>
             </h2>
             <p className="mt-6 text-muted-foreground leading-relaxed">
-              Professional care from Registered Massage Therapists, delivered to your door. Choose your time — we'll handle the rest.
+              Professional care from Registered Massage Therapists, delivered to your door. Choose
+              your time — we'll handle the rest.
             </p>
 
             <div className="mt-10 rounded-3xl bg-sage-soft p-6">
               <p className="text-sm text-sage-foreground/80">Prefer to talk?</p>
-              <a href="tel:+14039230323" className="mt-2 flex items-center gap-3 text-2xl font-medium text-foreground">
+              <a
+                href="tel:+14039230323"
+                className="mt-2 flex items-center gap-3 text-2xl font-medium text-foreground"
+              >
                 <Phone className="h-5 w-5" /> +1 (403) 923-0323
               </a>
               <a
@@ -59,7 +63,8 @@ export function Booking() {
                 </div>
                 <h3 className="mt-6 text-2xl">Thank you!</h3>
                 <p className="mt-3 text-muted-foreground max-w-sm mx-auto">
-                  We'll confirm your appointment shortly. In the meantime, feel free to message us on WhatsApp.
+                  We'll confirm your appointment shortly. In the meantime, feel free to message us
+                  on WhatsApp.
                 </p>
                 <a
                   href="https://wa.me/14039230323"
@@ -95,7 +100,9 @@ export function Booking() {
                         type="button"
                         onClick={() => setService(s)}
                         className={`btn-pill text-sm px-4 py-2 ring-1 ring-border ${
-                          service === s ? "bg-primary text-primary-foreground" : "bg-background text-foreground"
+                          service === s
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-background text-foreground"
                         }`}
                       >
                         {s}
@@ -123,14 +130,22 @@ export function Booking() {
                 </div>
 
                 <Field label="Insurance Provider (Optional)" name="insurance" />
-                <Field label="Additional Notes (Optional)" name="notes" placeholder="e.g. focus on lower back" />
+                <Field
+                  label="Additional Notes (Optional)"
+                  name="notes"
+                  placeholder="e.g. focus on lower back"
+                />
 
                 <div className="md:col-span-2 mt-2">
-                  <button type="submit" className="btn-pill btn-charcoal w-full py-4 text-base hover:opacity-90">
+                  <button
+                    type="submit"
+                    className="btn-pill btn-charcoal w-full py-4 text-base hover:opacity-90"
+                  >
                     Request My Appointment
                   </button>
                   <p className="mt-3 text-xs text-muted-foreground text-center">
-                    We'll confirm availability within a few hours via email or text. Direct billing available for most plans.
+                    We'll confirm availability within a few hours via email or text. Direct billing
+                    available for most plans.
                   </p>
                 </div>
               </form>
