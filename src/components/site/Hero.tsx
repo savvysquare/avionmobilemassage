@@ -11,7 +11,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative w-full pt-36 md:pt-40 pb-20 md:pb-28 px-6 overflow-hidden"
+      className="relative w-full pt-48 md:pt-56 pb-20 md:pb-28 px-6 overflow-hidden"
     >
       <div className="pointer-events-none absolute -top-24 -right-24 w-[520px] h-[520px] bg-soft-blue rounded-full blur-3xl opacity-30" />
 
