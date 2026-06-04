@@ -119,7 +119,7 @@ export function Hero() {
               <div className="h-14 w-14 rounded-full bg-white/80 border border-soft-blue/50 flex items-center justify-center shadow-sm group-hover:bg-sage/10 transition-colors">
                 <Icon className="h-6 w-6 text-sage" />
               </div>
-              <p className="text-charcoal/75 text-sm leading-relaxed font-light">
+              <p className="text-charcoal/80 text-base leading-relaxed font-medium">
                 <span className="text-sage font-medium not-italic">&ldquo;</span>
                 {quote}
                 <span className="text-sage font-medium">&rdquo;</span>
