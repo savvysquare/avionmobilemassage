@@ -70,9 +70,10 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Floating serif accent */}
-          <div className="hidden md:flex absolute -top-4 -right-4 h-20 w-20 rounded-full bg-sage text-white items-center justify-center font-serif italic text-2xl shadow-premium rotate-[8deg]">
-            RMT
+          {/* Floating trust seal */}
+          <div className="hidden md:flex absolute -top-5 -right-5 h-28 w-28 rounded-full bg-sage text-white flex-col items-center justify-center shadow-premium rotate-[8deg] border-4 border-white text-center leading-tight">
+            <span className="font-display font-bold text-[26px]">100%</span>
+            <span className="text-[8.5px] uppercase tracking-[0.18em] opacity-95">Direct<br/>Billing</span>
           </div>
         </div>
       </div>
