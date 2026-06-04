@@ -36,11 +36,8 @@ export function Nav() {
           } backdrop-blur-md`}
         >
           {/* Logo + brand */}
-          <a href="#hero" onClick={(e) => scrollTo(e, "#hero")} className="flex items-center gap-2.5 shrink-0">
-            <img src={logo} alt="Avion Mobile Massage" className="h-12 md:h-14 w-auto" />
-            <span className="font-display font-bold uppercase tracking-[0.18em] text-sm md:text-base text-charcoal leading-tight">
-              Avion Mobile Massage
-            </span>
+          <a href="#hero" onClick={(e) => scrollTo(e, "#hero")} className="flex items-center shrink-0">
+            <img src={logo} alt="Avion Mobile Massage" className="h-14 md:h-16 w-auto" />
           </a>
 
           {/* Links */}
