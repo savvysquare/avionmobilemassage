@@ -26,76 +26,79 @@ export function Nav() {
   };
 
   return (
-    <header className="fixed top-4 md:top-6 inset-x-0 z-50 flex justify-center px-4">
-      <div
-        className={`w-full max-w-5xl flex items-center justify-between gap-4 rounded-full px-4 md:px-6 py-2.5 md:py-3 border transition-all duration-300 ${
-          scrolled
-            ? "bg-white/85 border-soft-blue/30 shadow-soft"
-            : "bg-white/70 border-white/40 shadow-sm"
-        } backdrop-blur-md`}
-      >
-        {/* Logo + brand */}
-        <a href="#hero" onClick={(e) => scrollTo(e, "#hero")} className="flex items-center gap-2.5 shrink-0">
-          <img src={logo} alt="Avion Mobile Massage" className="h-9 md:h-10 w-auto" />
-          <span className="font-display font-bold uppercase tracking-[0.25em] text-xs md:text-sm text-charcoal hidden sm:inline">
-            Avion
-          </span>
-        </a>
-
-        {/* Links */}
-        <nav className="hidden md:flex items-center gap-7 text-[11px] font-semibold uppercase tracking-[0.18em] text-charcoal">
-          {links.map((l) => (
-            <a
-              key={l.label}
-              href={l.href}
-              onClick={(e) => scrollTo(e, l.href)}
-              className="hover:text-sage transition-colors"
-            >
-              {l.label}
-            </a>
-          ))}
-        </nav>
-
-        {/* CTA */}
-        <a
-          href="#book"
-          onClick={(e) => scrollTo(e, "#book")}
-          className="hidden md:inline-flex items-center bg-sage text-white px-5 py-2 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] hover:bg-sage-hover transition-all shadow-md hover:shadow-lg active:scale-95"
+    <header className="fixed top-4 md:top-6 inset-x-0 z-50 flex justify-center pointer-events-none select-none">
+      <div className="w-full max-w-7xl px-6 md:px-12 lg:px-20">
+        <div
+          className={`relative w-full flex items-center justify-between gap-4 rounded-full px-5 md:px-8 py-3 md:py-4 border transition-all duration-300 pointer-events-auto ${
+            scrolled
+              ? "bg-white/85 border-soft-blue/30 shadow-soft"
+              : "bg-white/70 border-white/40 shadow-sm"
+          } backdrop-blur-md`}
         >
-          Book Now
-        </a>
+          {/* Logo + brand */}
+          <a href="#hero" onClick={(e) => scrollTo(e, "#hero")} className="flex items-center gap-2.5 shrink-0">
+            <img src={logo} alt="Avion Mobile Massage" className="h-9 md:h-10 w-auto" />
+            <span className="font-display font-bold uppercase tracking-[0.25em] text-xs md:text-sm text-charcoal hidden sm:inline">
+              Avion
+            </span>
+          </a>
 
-        {/* Mobile */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden h-10 w-10 flex items-center justify-center text-charcoal"
-          aria-label="Toggle menu"
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
-      </div>
+          {/* Links */}
+          <nav className="hidden md:flex items-center gap-7 text-[11px] font-semibold uppercase tracking-[0.18em] text-charcoal">
+            {links.map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                onClick={(e) => scrollTo(e, l.href)}
+                className="hover:text-sage transition-colors"
+              >
+                {l.label}
+              </a>
+            ))}
+          </nav>
 
-      {open && (
-        <div className="absolute top-full mt-3 left-4 right-4 md:hidden bg-white/95 backdrop-blur-md border border-soft-blue/30 rounded-3xl shadow-soft p-6 flex flex-col gap-3">
-          {links.map((l) => (
-            <a
-              key={l.label}
-              href={l.href}
-              onClick={(e) => scrollTo(e, l.href)}
-              className="font-display py-2 text-base font-medium text-charcoal border-b border-border/40"
-            >
-              {l.label}
-            </a>
-          ))}
+          {/* CTA */}
           <a
             href="#book"
             onClick={(e) => scrollTo(e, "#book")}
-            className="mt-3 inline-flex items-center justify-center bg-sage text-white px-5 py-3 rounded-full text-xs font-bold uppercase tracking-[0.2em]"
+            className="hidden md:inline-flex items-center bg-sage text-white px-5 py-2 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] hover:bg-sage-hover transition-all shadow-md hover:shadow-lg active:scale-95"
           >
             Book Now
           </a>
+
+          {/* Mobile */}
+          <button
+            onClick={() => setOpen(!open)}
+            className="md:hidden h-10 w-10 flex items-center justify-center text-charcoal"
+            aria-label="Toggle menu"
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+
+          {/* Mobile Drawer Overlay */}
+          {open && (
+            <div className="absolute top-full mt-3 left-0 right-0 md:hidden bg-white/95 backdrop-blur-md border border-soft-blue/30 rounded-3xl shadow-soft p-6 flex flex-col gap-3 pointer-events-auto">
+              {links.map((l) => (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  onClick={(e) => scrollTo(e, l.href)}
+                  className="font-display py-2 text-base font-medium text-charcoal border-b border-border/40"
+                >
+                  {l.label}
+                </a>
+              ))}
+              <a
+                href="#book"
+                onClick={(e) => scrollTo(e, "#book")}
+                className="mt-3 inline-flex items-center justify-center bg-sage text-white px-5 py-3 rounded-full text-xs font-bold uppercase tracking-[0.2em]"
+              >
+                Book Now
+              </a>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </header>
   );
 }
