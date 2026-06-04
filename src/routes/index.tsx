@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Nav } from "@/components/site/Nav";
 import { Hero } from "@/components/site/Hero";
-import { HowItWorks } from "@/components/site/HowItWorks";
-import { Services } from "@/components/site/Services";
 import { About } from "@/components/site/About";
+import { Services } from "@/components/site/Services";
+import { HowItWorks } from "@/components/site/HowItWorks";
 import { Areas } from "@/components/site/Areas";
 import { FAQ } from "@/components/site/FAQ";
 import { Booking } from "@/components/site/Booking";
@@ -34,44 +34,20 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="min-h-screen bg-background text-foreground scroll-smooth">
+    <div className="min-h-screen bg-background text-foreground">
       <Nav />
       <main>
         <Hero />
-        <HowItWorks />
-        <Services />
         <About />
-        <div id="areas-faq" className="container mx-auto px-4 md:px-8 py-20 max-w-7xl">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            <div className="lg:col-span-5">
-              <Areas />
-            </div>
-            <div className="lg:col-span-7">
-              <FAQ />
-            </div>
-          </div>
-        </div>
-        <Booking />
-        {/* Final Trust / CTA Bar */}
-        <section className="bg-sage-light py-16 text-center border-t border-border">
-          <div className="container mx-auto px-6 max-w-4xl">
-            <h3 className="text-xl sm:text-2xl font-medium text-charcoal mb-6 leading-tight font-serif">
-              Join busy Calgarians who are making self-care simple.{" "}
-              <br className="hidden sm:inline" />
-              Professional. Convenient. Delivered to you.
-            </h3>
-            <a
-              href="#book"
-              onClick={(e) => {
-                e.preventDefault();
-                document.querySelector("#book")?.scrollIntoView({ behavior: "smooth" });
-              }}
-              className="inline-flex items-center justify-center px-8 py-3.5 bg-charcoal hover:bg-charcoal/90 text-white text-xs font-semibold rounded-full shadow-soft transition-all duration-200 uppercase tracking-wider"
-            >
-              Book Now
-            </a>
+        <Services />
+        <HowItWorks />
+        <section className="w-full py-24 md:py-32 bg-[#fafafa]">
+          <div className="container mx-auto px-6 md:px-10 lg:px-16 max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-16">
+            <Areas />
+            <FAQ />
           </div>
         </section>
+        <Booking />
       </main>
       <Footer />
       <FloatingWhatsApp />
