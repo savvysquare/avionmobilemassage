@@ -95,7 +95,7 @@ export function Services() {
                     className="absolute -inset-6 blob-1 opacity-50 blur-xl"
                     style={{ background: s.tint }}
                   />
-                  <div className={`relative aspect-[4/3] overflow-hidden blob-1 shadow-soft ${reverse ? "-rotate-2" : "rotate-2"}`}>
+                  <div className={`relative aspect-[4/3] overflow-hidden shadow-soft ${reverse ? "blob-1r -rotate-2" : "blob-1 rotate-2"}`}>
                     <img
                       src={s.image}
                       alt={`${s.name} ${s.accent}`}
