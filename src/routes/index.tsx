@@ -34,15 +34,16 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground grain">
       <Nav />
       <main>
         <Hero />
         <About />
         <Services />
         <HowItWorks />
-        <section className="w-full py-24 md:py-32 bg-[#fafafa]">
-          <div className="container mx-auto px-6 md:px-10 lg:px-16 max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <section className="w-full py-28 md:py-36 px-6 bg-soft-blue-light/20 relative overflow-hidden">
+          <div className="pointer-events-none absolute top-10 right-10 w-72 h-72 bg-soft-blue rounded-full blur-3xl opacity-30" />
+          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 relative">
             <Areas />
             <FAQ />
           </div>
@@ -52,5 +53,6 @@ function Index() {
       <Footer />
       <FloatingWhatsApp />
     </div>
+
   );
 }
