@@ -1,4 +1,5 @@
-import { MapPin } from "lucide-react";
+import React from "react";
+import { MapPin, HelpCircle, Activity } from "lucide-react";
 
 const calgary = [
   "North Calgary",
@@ -12,74 +13,53 @@ const nearby = ["Airdrie", "Cochrane", "Chestermere"];
 
 export function Areas() {
   return (
-    <section id="areas" className="relative py-28 md:py-36 overflow-hidden">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background to-surface-muted/50" />
-      <div className="absolute bottom-0 right-1/3 h-[350px] w-[350px] rounded-full bg-sage/6 blur-[100px] -z-10" />
+    <div className="w-full font-mono text-left select-none">
+      <div className="flex items-center gap-2 text-amber-500 glow-text-gold text-[10px] tracking-widest font-bold mb-2">
+        <Activity className="h-3.5 w-3.5 animate-pulse" />
+        <span>DEPLOYMENT COORDS // CH_04A</span>
+      </div>
 
-      <div className="container-page">
-        <div className="grid lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-20 items-center">
-          {/* Text column */}
-          <div>
-            <span className="inline-block text-xs uppercase tracking-[0.2em] text-sage-foreground font-semibold mb-4">
-              Areas We Serve
-            </span>
-            <h2 className="text-4xl md:text-5xl leading-tight">
-              We come
-              <br />
-              <span className="italic font-light text-foreground/55">to you.</span>
-            </h2>
-            <p className="mt-6 text-muted-foreground leading-relaxed max-w-md">
-              Proudly bringing expert mobile massage therapy throughout Calgary and nearby
-              communities. Not sure if we cover your exact neighbourhood? Message us — we usually
-              can.
-            </p>
-            <a
-              href="https://wa.me/14039230323"
-              target="_blank"
-              rel="noreferrer"
-              className="mt-8 inline-flex btn-pill btn-charcoal hover:opacity-85 hover:-translate-y-0.5"
+      <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-white font-sans uppercase mb-6">
+        COVERAGE REGION
+      </h2>
+
+      <div className="hud-panel p-6 border border-white/10 hud-corners hud-corners-active w-full">
+        <div className="flex justify-between items-center text-[8px] text-white/30 border-b border-white/5 pb-3 mb-4">
+          <span>[CALGARY METROPOLITAN MATRIX]</span>
+          <span className="text-emerald-500">ACCESSIBILITY: ACTIVE</span>
+        </div>
+
+        {/* Calgary Regions list */}
+        <p className="text-[10px] text-white/50 tracking-wider mb-3">CALGARY QUADRANTS:</p>
+        <ul className="grid grid-cols-2 gap-2 mb-6">
+          {calgary.map((c) => (
+            <li key={c} className="flex items-center gap-2 text-[10px] text-white/80">
+              <MapPin className="h-3 w-3 text-amber-500 shrink-0" />
+              <span>{c.toUpperCase()}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div className="h-px bg-white/5 my-4" />
+
+        {/* Surrounding Areas */}
+        <p className="text-[10px] text-white/50 tracking-wider mb-3">SATELLITE SECTORS:</p>
+        <div className="flex flex-wrap gap-2">
+          {nearby.map((n) => (
+            <span
+              key={n}
+              className="px-2.5 py-1 border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-[9px] rounded-sm uppercase"
             >
-              Check My Address
-            </a>
-          </div>
+              {n}
+            </span>
+          ))}
+        </div>
 
-          {/* Glass area card */}
-          <div className="glass-card rounded-3xl p-8 md:p-10">
-            <p className="text-xs uppercase tracking-[0.2em] text-sage-foreground font-semibold mb-5">
-              Calgary
-            </p>
-            <ul className="grid grid-cols-2 gap-x-6 gap-y-3">
-              {calgary.map((c) => (
-                <li key={c} className="flex items-center gap-2.5 text-sm text-foreground/85">
-                  <MapPin className="h-3.5 w-3.5 text-sage shrink-0" />
-                  {c}
-                </li>
-              ))}
-            </ul>
-
-            <div className="my-7 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-
-            <p className="text-xs uppercase tracking-[0.2em] text-sage-foreground font-semibold mb-5">
-              Also Serving
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {nearby.map((n) => (
-                <span
-                  key={n}
-                  className="rounded-full px-4 py-1.5 text-sm font-medium"
-                  style={{
-                    background: "rgba(168,181,162,0.15)",
-                    border: "1px solid rgba(168,181,162,0.3)",
-                    color: "var(--color-sage-foreground)",
-                  }}
-                >
-                  {n}
-                </span>
-              ))}
-            </div>
-          </div>
+        <div className="mt-6 flex items-center gap-2 text-[8px] text-white/30 bg-white/[0.02] p-2.5 border border-white/5 rounded-sm">
+          <HelpCircle className="h-3 w-3 text-amber-500 shrink-0" />
+          <span>OUTSIDE RANGE? SUBMIT COORDS VIA WHATSAPP STREAM.</span>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

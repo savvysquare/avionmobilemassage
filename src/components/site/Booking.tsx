@@ -1,177 +1,187 @@
-import { useState } from "react";
-import { Phone, ShieldCheck, MessageCircle } from "lucide-react";
+import React, { useState } from "react";
+import { Phone, ShieldCheck, MessageCircle, Send, CheckCircle, Activity } from "lucide-react";
 
 const services = [
   "Therapeutic Massage",
   "Deep Tissue Massage",
   "Relaxation Massage",
   "Prenatal Massage",
-  "Corporate Wellness Massage",
+  "Corporate Wellness",
 ];
 
 export function Booking() {
   const [submitted, setSubmitted] = useState(false);
-  const [service, setService] = useState(services[0]);
-  const [length, setLength] = useState("60");
+  const [selectedService, setSelectedService] = useState(services[0]);
+  const [selectedLength, setSelectedLength] = useState("60");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
 
   return (
-    <section id="book" className="relative py-28 md:py-36 overflow-hidden">
-      {/* Deep background gradient */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-foreground/5 via-background to-sage/5" />
-      <div className="absolute top-0 right-0 h-[500px] w-[500px] rounded-full bg-sage/8 blur-[130px] -z-10" />
-      <div className="absolute bottom-0 left-0 h-[400px] w-[400px] rounded-full bg-foreground/5 blur-[100px] -z-10" />
+    <div className="w-full h-full min-h-screen relative flex items-center justify-center bg-black px-6 md:px-12 py-24 select-none font-mono">
+      <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Left Info Column */}
+        <div className="lg:col-span-5 flex flex-col gap-6 lg:sticky lg:top-24">
+          <div className="flex items-center gap-2 text-amber-500 glow-text-gold text-[10px] tracking-widest font-bold mb-2">
+            <Activity className="h-3.5 w-3.5" />
+            <span>SESSION INITIATION // SECT_05</span>
+          </div>
 
-      <div className="container-page">
-        <div className="grid lg:grid-cols-[1fr_1.4fr] gap-12 lg:gap-16 items-start">
-          {/* Left: info */}
-          <div className="lg:sticky lg:top-32">
-            <span
-              className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-medium mb-6"
-              style={{
-                background: "rgba(168,181,162,0.15)",
-                border: "1px solid rgba(168,181,162,0.3)",
-                color: "var(--color-sage-foreground)",
-              }}
-            >
-              <ShieldCheck className="h-3.5 w-3.5" /> Direct Billing Available
+          <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white font-sans uppercase">
+            RESERVE MODULE
+          </h2>
+
+          <p className="text-xs text-white/50 leading-relaxed font-sans max-w-sm">
+            Transmit your biomechanical parameters to prepare therapist dispatch. We direct bill
+            standard insurance policies across major providers.
+          </p>
+
+          {/* Contact coordinates */}
+          <div className="hud-panel p-5 border border-white/10 hud-corners rounded-sm max-w-sm">
+            <span className="text-[8px] text-white/30 block mb-3">
+              [MANUAL COMMUNICATIONS STREAM]
             </span>
 
-            <h2 className="text-4xl md:text-5xl leading-tight">
-              Ready to feel
-              <br />
-              <span className="italic font-light text-foreground/55">better?</span>
-            </h2>
-            <p className="mt-6 text-muted-foreground leading-relaxed">
-              Professional care from Registered Massage Therapists, delivered to your door. Choose
-              your time — we'll handle the rest.
-            </p>
-
-            {/* Contact card */}
-            <div className="mt-10 glass-card rounded-3xl p-6">
-              <p className="text-sm text-muted-foreground mb-3">Prefer to talk?</p>
+            <div className="flex flex-col gap-3">
               <a
                 href="tel:+14039230323"
-                className="flex items-center gap-3 text-xl font-semibold text-foreground hover:text-sage-foreground transition-colors"
+                className="flex items-center gap-3 text-sm font-sans font-bold text-white hover:text-amber-500 transition-colors"
               >
-                <Phone className="h-5 w-5" /> +1 (403) 923-0323
+                <Phone className="h-4 w-4 text-amber-500" />
+                <span>+1 (403) 923-0323</span>
               </a>
+
               <a
                 href="https://wa.me/14039230323"
                 target="_blank"
                 rel="noreferrer"
-                className="mt-5 inline-flex btn-pill btn-charcoal hover:opacity-85 hover:-translate-y-0.5"
+                className="flex items-center gap-3 text-sm font-sans font-bold text-white hover:text-emerald-500 transition-colors"
               >
-                <MessageCircle className="h-4 w-4" /> Chat on WhatsApp
+                <MessageCircle className="h-4 w-4 text-emerald-500" />
+                <span>WHATSAPP SUPPORT</span>
               </a>
             </div>
-
-            <p className="mt-5 text-xs text-muted-foreground">
-              Limited evening slots this week — book soon.
-            </p>
           </div>
 
-          {/* Right: form */}
-          <div className="glass-card rounded-3xl p-6 md:p-10">
+          <span className="text-[8px] text-white/20 uppercase tracking-widest">
+            * SCHEDULING VERIFICATIONS TRANSMITTED WITHIN 120 MINUTES.
+          </span>
+        </div>
+
+        {/* Right Form Column */}
+        <div className="lg:col-span-7 w-full">
+          <div className="hud-panel p-6 md:p-8 border border-white/10 hud-corners hud-corners-active">
             {submitted ? (
-              <div className="py-16 text-center">
-                <div
-                  className="mx-auto inline-flex h-16 w-16 items-center justify-center rounded-full mb-6"
-                  style={{
-                    background: "rgba(168,181,162,0.2)",
-                    border: "1px solid rgba(168,181,162,0.35)",
-                  }}
-                >
-                  <ShieldCheck className="h-7 w-7 text-sage-foreground" />
+              <div className="py-16 text-center flex flex-col items-center justify-center">
+                <div className="h-16 w-16 rounded-full border border-emerald-500/30 bg-emerald-500/10 flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+                  <CheckCircle className="h-8 w-8 text-emerald-500 glow-text-green" />
                 </div>
-                <h3 className="text-2xl font-semibold">Thank you!</h3>
-                <p className="mt-3 text-muted-foreground max-w-sm mx-auto leading-relaxed">
-                  We'll confirm your appointment shortly. In the meantime, feel free to message us
-                  on WhatsApp.
+
+                <h3 className="text-xl font-bold font-sans text-white tracking-wide uppercase">
+                  TRANSMISSION SUCCESSFUL
+                </h3>
+
+                <p className="mt-4 text-xs text-white/50 max-w-sm mx-auto leading-relaxed font-sans">
+                  Session data parsed. Standby for dispatch validation coordinates via email or
+                  mobile text.
                 </p>
+
                 <a
                   href="https://wa.me/14039230323"
                   target="_blank"
                   rel="noreferrer"
-                  className="mt-7 inline-flex btn-pill btn-charcoal hover:opacity-85"
+                  className="mt-8 px-6 py-3 border border-amber-500 bg-amber-500 hover:bg-transparent text-black hover:text-amber-500 text-[9px] tracking-widest font-bold uppercase transition-all duration-300 hud-corners"
                 >
-                  Open WhatsApp
+                  OPEN DIRECT CHANNEL
                 </a>
               </div>
             ) : (
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  setSubmitted(true);
-                }}
-                className="grid grid-cols-1 md:grid-cols-2 gap-4"
-              >
-                <Field label="First Name" name="first" required />
-                <Field label="Last Name" name="last" required />
-                <Field label="Email" name="email" type="email" required />
-                <Field label="Phone (WhatsApp ok)" name="phone" type="tel" required />
-                <div className="md:col-span-2">
-                  <Field label="Service Address" name="address" required />
+              <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div className="flex justify-between items-center sm:col-span-2 text-[8px] text-white/30 border-b border-white/5 pb-3 mb-2">
+                  <span>[AMM CONVERSION APPLICATION]</span>
+                  <span className="text-amber-500 glow-text-gold">READY FOR DATA</span>
                 </div>
 
-                {/* Treatment type */}
-                <div className="md:col-span-2">
-                  <label className="block text-sm text-muted-foreground mb-3">Treatment Type</label>
+                <Field label="FIRST NAME" name="first" required />
+                <Field label="LAST NAME" name="last" required />
+                <Field label="EMAIL COORDINATE" name="email" type="email" required />
+                <Field label="MOBILE PHONE" name="phone" type="tel" required />
+
+                <div className="sm:col-span-2">
+                  <Field label="PHYSICAL DELIVERY ADDRESS" name="address" required />
+                </div>
+
+                {/* Service Selector HUD Badges */}
+                <div className="sm:col-span-2 flex flex-col gap-2 mt-2">
+                  <label className="text-[9px] text-white/40 tracking-wider font-bold">
+                    SELECT MODULE
+                  </label>
                   <div className="flex flex-wrap gap-2">
-                    {services.map((s) => (
-                      <button
-                        key={s}
-                        type="button"
-                        onClick={() => setService(s)}
-                        className={`btn-pill text-xs px-4 py-2 ring-1 transition-all ${
-                          service === s
-                            ? "bg-primary text-primary-foreground ring-primary"
-                            : "bg-background/70 text-foreground ring-border hover:ring-sage/50"
-                        }`}
-                      >
-                        {s}
-                      </button>
-                    ))}
+                    {services.map((s) => {
+                      const active = selectedService === s;
+                      return (
+                        <button
+                          key={s}
+                          type="button"
+                          onClick={() => setSelectedService(s)}
+                          className={`px-3 py-1.5 border text-[9px] font-bold rounded-sm uppercase transition-all duration-300 ${
+                            active
+                              ? "border-amber-500 bg-amber-500/10 text-white shadow-[0_0_8px_rgba(245,158,11,0.2)]"
+                              : "border-white/10 bg-white/5 text-white/50 hover:border-white/30 hover:text-white"
+                          }`}
+                        >
+                          {s}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
 
-                {/* Session length */}
-                <div className="md:col-span-2">
-                  <label className="block text-sm text-muted-foreground mb-3">Session Length</label>
+                {/* Duration select */}
+                <div className="sm:col-span-2 flex flex-col gap-2 mt-2">
+                  <label className="text-[9px] text-white/40 tracking-wider font-bold">
+                    DURATION SELECT
+                  </label>
                   <div className="flex gap-2">
-                    {["60", "90"].map((l) => (
-                      <button
-                        key={l}
-                        type="button"
-                        onClick={() => setLength(l)}
-                        className={`btn-pill px-6 py-2.5 ring-1 transition-all ${
-                          length === l
-                            ? "bg-sage text-white ring-sage"
-                            : "bg-background/70 ring-border hover:ring-sage/50"
-                        }`}
-                      >
-                        {l} Minutes
-                      </button>
-                    ))}
+                    {["60", "90"].map((l) => {
+                      const active = selectedLength === l;
+                      return (
+                        <button
+                          key={l}
+                          type="button"
+                          onClick={() => setSelectedLength(l)}
+                          className={`px-4 py-2 border text-[9px] font-bold rounded-sm uppercase transition-all duration-300 ${
+                            active
+                              ? "border-emerald-500 bg-emerald-500/10 text-white shadow-[0_0_8px_rgba(16,185,129,0.2)]"
+                              : "border-white/10 bg-white/5 text-white/50 hover:border-white/30 hover:text-white"
+                          }`}
+                        >
+                          {l} MINUTES
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
 
-                <Field label="Insurance Provider (Optional)" name="insurance" />
+                <Field label="INSURANCE PROVIDER (OPTIONAL)" name="insurance" />
                 <Field
-                  label="Additional Notes (Optional)"
+                  label="SYMPTOM NOTES (OPTIONAL)"
                   name="notes"
-                  placeholder="e.g. focus on lower back"
+                  placeholder="e.g. chronic lumber tightness"
                 />
 
-                <div className="md:col-span-2 mt-2">
+                <div className="sm:col-span-2 mt-4">
                   <button
                     type="submit"
-                    className="btn-pill btn-charcoal w-full py-4 text-base hover:opacity-85 hover:-translate-y-0.5 shadow-[0_6px_24px_rgba(0,0,0,0.18)]"
+                    className="w-full py-4 border border-amber-500 bg-amber-500 hover:bg-transparent text-black hover:text-amber-500 text-[10px] tracking-widest font-bold uppercase transition-all duration-300 hud-corners flex items-center justify-center gap-2"
                   >
-                    Request My Appointment
+                    SUBMIT CONVERSION CONFIGURATION
+                    <Send className="h-3.5 w-3.5" />
                   </button>
-                  <p className="mt-3 text-xs text-muted-foreground text-center">
-                    We'll confirm availability within a few hours via email or text. Direct billing
-                    available for most plans.
+                  <p className="mt-3 text-[8px] text-white/30 text-center uppercase tracking-widest">
+                    SYSTEM SECURED BY DIRECT INSURANCE RESOLUTION STREAM.
                   </p>
                 </div>
               </form>
@@ -179,7 +189,7 @@ export function Booking() {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 
@@ -197,14 +207,14 @@ function Field({
   placeholder?: string;
 }) {
   return (
-    <label className="block">
-      <span className="block text-sm text-muted-foreground mb-2">{label}</span>
+    <label className="flex flex-col gap-1.5 text-left font-mono">
+      <span className="text-[9px] text-white/40 tracking-wider font-bold">{label}</span>
       <input
         type={type}
         name={name}
         required={required}
         placeholder={placeholder}
-        className="w-full rounded-full bg-background/60 px-5 py-3 text-sm ring-1 ring-border focus:outline-none focus:ring-2 focus:ring-sage/60 transition-all placeholder:text-muted-foreground/50"
+        className="w-full bg-white/5 border border-white/10 focus:border-amber-500/60 rounded-sm px-4 py-2.5 text-xs text-white placeholder-white/25 focus:outline-none transition-all"
         style={{ backdropFilter: "blur(8px)" }}
       />
     </label>

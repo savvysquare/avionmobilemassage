@@ -1,79 +1,102 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import React, { useState } from "react";
+import { HelpCircle, ChevronDown, ChevronUp } from "lucide-react";
 
-const faqs = [
+interface FAQItem {
+  q: string;
+  a: string;
+}
+
+const faqs: FAQItem[] = [
   {
     q: "Do I need a massage table?",
-    a: "No. We bring a professional table, linens, and everything else required.",
+    a: "No. We bring a professional massage table, fresh linens, organic massage oils, and all required therapy supplies. You just need to open the door and provide a clear workspace (approx. 10x10 ft).",
   },
   {
     q: "Do you offer direct billing?",
-    a: "Yes — we direct bill many extended health insurance providers. Coverage varies by plan, so we recommend checking with your insurer. If direct billing isn't available, we provide an official receipt for reimbursement.",
+    a: "Yes. We direct bill most extended health insurance providers in Canada. Coverage limits depend on your specific policy. If direct billing fails, we issue an official RMT receipt for manual reimbursement.",
   },
-  { q: "How long are appointments?", a: "We offer 60-minute and 90-minute sessions." },
-  { q: "What areas do you serve?", a: "All of Calgary plus Airdrie, Cochrane, and Chestermere." },
+  {
+    q: "How long are appointments?",
+    a: "Standard treatment configurations are 60-minute and 90-minute modules. For corporate events, sessions can be customized from 15 to 30 minutes per workstation.",
+  },
+  {
+    q: "What areas do you serve?",
+    a: "All quadrants within Calgary city limits, plus surrounding municipalities: Airdrie, Cochrane, and Chestermere.",
+  },
   {
     q: "What should I wear?",
-    a: "Whatever feels comfortable. Your therapist will discuss preferences and ensure you're always properly draped and at ease.",
+    a: "Whatever feels comfortable. Your therapist will discuss treatment preferences and verify your comfort parameters. You will be professionally draped under a sheet at all times.",
   },
   {
     q: "What is your cancellation policy?",
-    a: "We kindly ask for at least 48 hours' notice for cancellations. Appointments cancelled with less notice may be subject to a fee. This helps us keep time available for other clients.",
+    a: "We require at least 48 hours' notice for cancellations. Late cancellations are subject to fee parameters to support scheduling availability.",
   },
 ];
 
 export function FAQ() {
-  return (
-    <section id="faq" className="relative py-28 md:py-36 overflow-hidden">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-surface-muted/70 via-background to-surface-muted/40" />
-      <div className="absolute top-1/4 left-0 h-[400px] w-[400px] rounded-full bg-sage/5 blur-[120px] -z-10" />
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
-      <div className="container-page grid lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-20">
-        {/* Left column */}
-        <div className="lg:sticky lg:top-32 lg:self-start">
-          <span className="inline-block text-xs uppercase tracking-[0.2em] text-sage-foreground font-semibold mb-4">
-            FAQ
-          </span>
-          <h2 className="text-4xl md:text-5xl leading-tight">
-            Good to
-            <br />
-            <span className="italic font-light text-foreground/55">know.</span>
-          </h2>
-          <p className="mt-6 text-muted-foreground leading-relaxed max-w-sm">
-            Quick answers about how it works, billing, and what to expect.
-          </p>
-          <a
-            href="#book"
-            className="mt-8 inline-flex btn-pill btn-charcoal hover:opacity-85 hover:-translate-y-0.5"
-          >
-            Book a Session
-          </a>
+  const toggleFAQ = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
+  return (
+    <div className="w-full font-mono text-left select-none">
+      <div className="flex items-center gap-2 text-amber-500 glow-text-gold text-[10px] tracking-widest font-bold mb-2">
+        <HelpCircle className="h-3.5 w-3.5" />
+        <span>OPERATIONAL PROTOCOLS // CH_04B</span>
+      </div>
+
+      <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-white font-sans uppercase mb-6">
+        DIAGNOSTIC FAQ
+      </h2>
+
+      <div className="hud-panel p-6 border border-white/10 hud-corners w-full">
+        <div className="flex justify-between items-center text-[8px] text-white/30 border-b border-white/5 pb-3 mb-4">
+          <span>[SYSTEM DIRECTORY & Q&A QUERY]</span>
+          <span>TOTAL SECTORS: 06</span>
         </div>
 
-        {/* Accordion */}
-        <div className="glass-card rounded-3xl p-6 md:p-8">
-          <Accordion type="single" collapsible className="w-full">
-            {faqs.map((f, i) => (
-              <AccordionItem
+        <div className="flex flex-col gap-2">
+          {faqs.map((f, i) => {
+            const isOpen = openIndex === i;
+            return (
+              <div
                 key={f.q}
-                value={`item-${i}`}
-                className="border-b border-border/60 last:border-0"
+                className={`border transition-all duration-300 ${
+                  isOpen
+                    ? "border-amber-500/30 bg-amber-500/[0.01]"
+                    : "border-white/5 hover:border-white/20"
+                }`}
               >
-                <AccordionTrigger className="text-left text-base font-medium py-5 hover:no-underline hover:text-sage-foreground transition-colors">
-                  {f.q}
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground leading-relaxed pb-5 text-sm">
-                  {f.a}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+                {/* Trigger Question bar */}
+                <button
+                  onClick={() => toggleFAQ(i)}
+                  className="w-full flex items-center justify-between p-4 text-left font-sans font-bold text-xs sm:text-sm text-white focus:outline-none"
+                >
+                  <span className={isOpen ? "text-amber-500 glow-text-gold" : "text-white/80"}>
+                    {f.q.toUpperCase()}
+                  </span>
+                  {isOpen ? (
+                    <ChevronUp className="h-4 w-4 text-amber-500" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4 text-white/30" />
+                  )}
+                </button>
+
+                {/* Answer Content */}
+                <div
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    isOpen ? "max-h-[200px] border-t border-white/5" : "max-h-0"
+                  }`}
+                >
+                  <div className="p-4 font-sans text-xs text-white/50 leading-relaxed">{f.a}</div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
-    </section>
+    </div>
   );
 }
