@@ -45,14 +45,16 @@ export function Hero() {
           </button>
         </div>
 
-        {/* Right: image */}
-        <div className="relative">
-          {/* Soft offset blob shadow */}
-          <div className="pointer-events-none absolute -inset-6 bg-soft-blue-light blob-1 -z-10 translate-x-8 translate-y-8 opacity-60 blur-sm" />
-          {/* Decorative thin ring */}
-          <div className="pointer-events-none absolute -inset-3 blob-1 border border-sage/25 -rotate-3" />
+        {/* Right: image (mirrored, larger, refined) */}
+        <div className="relative lg:scale-[1.08] lg:-mr-6 xl:-mr-10">
+          {/* Soft offset shadow */}
+          <div className="pointer-events-none absolute -inset-8 bg-soft-blue-light blob-1r -z-10 translate-x-10 translate-y-10 opacity-55 blur" />
+          {/* Outer thin ring */}
+          <div className="pointer-events-none absolute -inset-5 blob-1r border border-sage/30 rotate-3" />
+          {/* Inner dashed ring detail */}
+          <div className="pointer-events-none absolute -inset-2 blob-1r border border-dashed border-sage/20 -rotate-2" />
 
-          <div className="relative overflow-hidden blob-1 shadow-premium aspect-[5/4] rotate-2">
+          <div className="relative overflow-hidden blob-1r shadow-premium aspect-[6/5] -rotate-2">
             <img
               src={heroImg}
               alt="Calm Avion Mobile Massage setup — folded linens, warm oil, and eucalyptus in a sunlit Calgary home"
@@ -71,9 +73,9 @@ export function Hero() {
           </div>
 
           {/* Floating trust seal */}
-          <div className="hidden md:flex absolute -top-5 -right-5 h-28 w-28 rounded-full bg-sage text-white flex-col items-center justify-center shadow-premium rotate-[8deg] border-4 border-white text-center leading-tight">
-            <span className="font-display font-bold text-[26px]">100%</span>
-            <span className="text-[8.5px] uppercase tracking-[0.18em] opacity-95">Direct<br/>Billing</span>
+          <div className="hidden md:flex absolute -top-6 -right-6 h-32 w-32 rounded-full bg-sage text-white flex-col items-center justify-center shadow-premium rotate-[8deg] border-[5px] border-white text-center leading-tight">
+            <span className="font-display font-bold text-[30px]">100%</span>
+            <span className="text-[9px] uppercase tracking-[0.2em] opacity-95 mt-0.5">Direct<br/>Billing</span>
           </div>
         </div>
       </div>
