@@ -4,30 +4,25 @@ import { Instagram, Facebook, Twitter } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="w-full bg-[#fafafa] border-t border-border py-12">
-      <div className="container mx-auto px-6 md:px-10 lg:px-16 max-w-7xl">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <img src={logo} alt="Avion Mobile Massage — Registered Massage Therapists" className="h-16 w-auto" />
-          <p className="text-xs text-charcoal-muted text-center">
-            © 2026 Avion Mobile Massage. All Rights Reserved.
-          </p>
-          <div className="flex items-center gap-4">
-            <a href="#" className="text-charcoal-muted hover:text-sage transition-colors">
-              <Facebook className="h-4 w-4" />
-            </a>
-            <a
-              href="https://www.instagram.com/avionmobilemassage"
-              target="_blank"
-              rel="noreferrer"
-              className="text-charcoal-muted hover:text-sage transition-colors"
-            >
-              <Instagram className="h-4 w-4" />
-            </a>
-            <a href="#" className="text-charcoal-muted hover:text-sage transition-colors">
-              <Twitter className="h-4 w-4" />
-            </a>
-          </div>
+    <footer className="w-full bg-background py-20 px-6 border-t border-soft-blue/30">
+      <div className="max-w-7xl mx-auto flex flex-col items-center gap-10">
+        <img src={logo} alt="Avion Mobile Massage — Registered Massage Therapists" className="h-28 md:h-32 w-auto" />
+
+        <div className="flex gap-8 text-[10px] font-bold uppercase tracking-[0.28em] text-charcoal/40">
+          <a href="https://www.instagram.com/avionmobilemassage" target="_blank" rel="noreferrer" className="hover:text-sage transition-colors inline-flex items-center gap-2">
+            <Instagram className="h-3.5 w-3.5" /> Instagram
+          </a>
+          <a href="#" className="hover:text-sage transition-colors inline-flex items-center gap-2">
+            <Facebook className="h-3.5 w-3.5" /> Facebook
+          </a>
+          <a href="#" className="hover:text-sage transition-colors inline-flex items-center gap-2">
+            <Twitter className="h-3.5 w-3.5" /> Twitter
+          </a>
         </div>
+
+        <p className="text-[10px] text-charcoal/30 uppercase tracking-[0.25em]">
+          © 2026 Avion Mobile Massage. All Rights Reserved.
+        </p>
       </div>
     </footer>
   );

@@ -1,116 +1,98 @@
 import React, { useState, useEffect } from "react";
 import logo from "@/assets/avion-logo.png";
-import { Menu, X, Phone, Instagram, Facebook } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 export function Nav() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const navLinks = [
-    { href: "#hero", label: "Home" },
+  const links = [
     { href: "#services", label: "Services" },
     { href: "#about", label: "About" },
+    { href: "#faq", label: "FAQ" },
     { href: "#book", label: "Contact" },
   ];
 
-  const handleScrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    setMobileMenuOpen(false);
+    setOpen(false);
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-blur-glass shadow-soft py-3" : "bg-white py-5"
-      }`}
-    >
-      <div className="container mx-auto px-6 md:px-10 lg:px-16 max-w-7xl flex items-center justify-between">
-        {/* Logo */}
-        <a href="#hero" className="flex items-center shrink-0">
-          <img src={logo} alt="Avion Mobile Massage — Registered Massage Therapists" className="h-14 md:h-16 w-auto" />
+    <header className="fixed top-4 md:top-6 inset-x-0 z-50 flex justify-center px-4">
+      <div
+        className={`w-full max-w-5xl flex items-center justify-between gap-4 rounded-full px-4 md:px-6 py-2.5 md:py-3 border transition-all duration-300 ${
+          scrolled
+            ? "bg-white/85 border-soft-blue/30 shadow-soft"
+            : "bg-white/70 border-white/40 shadow-sm"
+        } backdrop-blur-md`}
+      >
+        {/* Logo + brand */}
+        <a href="#hero" onClick={(e) => scrollTo(e, "#hero")} className="flex items-center gap-2.5 shrink-0">
+          <img src={logo} alt="Avion Mobile Massage" className="h-9 md:h-10 w-auto" />
+          <span className="font-display font-bold uppercase tracking-[0.25em] text-xs md:text-sm text-charcoal hidden sm:inline">
+            Avion
+          </span>
         </a>
 
-        {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-10">
-          {navLinks.map((link) => (
+        {/* Links */}
+        <nav className="hidden md:flex items-center gap-7 text-[11px] font-semibold uppercase tracking-[0.18em] text-charcoal">
+          {links.map((l) => (
             <a
-              key={link.label}
-              href={link.href}
-              onClick={(e) => handleScrollToSection(e, link.href)}
-              className="font-display text-[15px] font-medium text-charcoal hover:text-sage transition-colors"
+              key={l.label}
+              href={l.href}
+              onClick={(e) => scrollTo(e, l.href)}
+              className="hover:text-sage transition-colors"
             >
-              {link.label}
+              {l.label}
             </a>
           ))}
         </nav>
 
-        {/* Phone + Socials */}
-        <div className="hidden lg:flex items-center gap-6">
-          <a
-            href="tel:+14039230323"
-            className="flex items-center gap-3 text-charcoal hover:text-sage transition-colors"
-          >
-            <span className="w-10 h-10 rounded-full border border-sage/40 flex items-center justify-center text-sage">
-              <Phone className="h-4 w-4" />
-            </span>
-            <span className="w-6 h-px bg-sage" />
-            <span className="font-display text-[15px] font-medium">+1 (403) 923-0323</span>
-          </a>
-          <div className="flex items-center gap-3 pl-4 border-l border-border">
-            <a
-              href="https://www.facebook.com"
-              target="_blank"
-              rel="noreferrer"
-              className="text-charcoal-muted hover:text-sage transition-colors"
-            >
-              <Facebook className="h-4 w-4" />
-            </a>
-            <a
-              href="https://www.instagram.com/avionmobilemassage"
-              target="_blank"
-              rel="noreferrer"
-              className="text-charcoal-muted hover:text-sage transition-colors"
-            >
-              <Instagram className="h-4 w-4" />
-            </a>
-          </div>
-        </div>
+        {/* CTA */}
+        <a
+          href="#book"
+          onClick={(e) => scrollTo(e, "#book")}
+          className="hidden md:inline-flex items-center bg-sage text-white px-5 py-2 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] hover:bg-sage-hover transition-all shadow-md hover:shadow-lg active:scale-95"
+        >
+          Book Now
+        </a>
 
-        {/* Mobile toggle */}
+        {/* Mobile */}
         <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden flex items-center justify-center h-10 w-10 text-charcoal"
+          onClick={() => setOpen(!open)}
+          className="md:hidden h-10 w-10 flex items-center justify-center text-charcoal"
           aria-label="Toggle menu"
         >
-          {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
 
-      {/* Mobile drawer */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-border bg-white px-6 py-6 flex flex-col gap-3">
-          {navLinks.map((link) => (
+      {open && (
+        <div className="absolute top-full mt-3 left-4 right-4 md:hidden bg-white/95 backdrop-blur-md border border-soft-blue/30 rounded-3xl shadow-soft p-6 flex flex-col gap-3">
+          {links.map((l) => (
             <a
-              key={link.label}
-              href={link.href}
-              onClick={(e) => handleScrollToSection(e, link.href)}
-              className="font-display py-2 text-lg font-medium text-charcoal border-b border-border/50"
+              key={l.label}
+              href={l.href}
+              onClick={(e) => scrollTo(e, l.href)}
+              className="font-display py-2 text-base font-medium text-charcoal border-b border-border/40"
             >
-              {link.label}
+              {l.label}
             </a>
           ))}
           <a
-            href="tel:+14039230323"
-            className="mt-2 flex items-center gap-3 text-sage font-display font-semibold"
+            href="#book"
+            onClick={(e) => scrollTo(e, "#book")}
+            className="mt-3 inline-flex items-center justify-center bg-sage text-white px-5 py-3 rounded-full text-xs font-bold uppercase tracking-[0.2em]"
           >
-            <Phone className="h-4 w-4" /> +1 (403) 923-0323
+            Book Now
           </a>
         </div>
       )}
