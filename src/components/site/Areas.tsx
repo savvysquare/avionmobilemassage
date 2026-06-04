@@ -33,7 +33,7 @@ export function Areas() {
               href="https://wa.me/14039230323"
               target="_blank"
               rel="noreferrer"
-              className="mt-8 inline-flex btn-pill btn-charcoal hover:opacity-90"
+              className="mt-8 inline-flex btn-pill btn-charcoal hover:btn-charcoal-hover"
             >
               Check My Address
             </a>

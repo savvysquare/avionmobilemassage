@@ -44,7 +44,7 @@ export function Booking() {
                 href="https://wa.me/14039230323"
                 target="_blank"
                 rel="noreferrer"
-                className="mt-5 inline-flex btn-pill btn-charcoal hover:opacity-90"
+                className="mt-5 inline-flex btn-pill btn-charcoal hover:btn-charcoal-hover"
               >
                 <MessageCircle className="h-4 w-4" /> Chat on WhatsApp
               </a>
@@ -70,7 +70,7 @@ export function Booking() {
                   href="https://wa.me/14039230323"
                   target="_blank"
                   rel="noreferrer"
-                  className="mt-6 inline-flex btn-pill btn-charcoal hover:opacity-90"
+                  className="mt-6 inline-flex btn-pill btn-charcoal hover:btn-charcoal-hover"
                 >
                   Open WhatsApp
                 </a>
@@ -139,7 +139,7 @@ export function Booking() {
                 <div className="md:col-span-2 mt-2">
                   <button
                     type="submit"
-                    className="btn-pill btn-charcoal w-full py-4 text-base hover:opacity-90"
+                    className="btn-pill btn-charcoal w-full py-4 text-base hover:btn-charcoal-hover"
                   >
                     Request My Appointment
                   </button>

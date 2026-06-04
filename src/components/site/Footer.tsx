@@ -3,9 +3,9 @@ import logo from "@/assets/avion-logo.png";
 
 export function Footer() {
   return (
-    <footer className="bg-foreground text-background">
+    <footer className="bg-[#17191B] text-[#F2F6F6] border-t border-white/5">
       <div className="container-page py-16">
-        <div className="rounded-3xl bg-background/5 border border-background/10 p-8 md:p-12 mb-16 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div className="rounded-3xl bg-white/5 border border-white/10 p-8 md:p-12 mb-16 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <p className="text-xl md:text-2xl max-w-xl">
             Join busy Calgarians making self-care simple.
             <br />
@@ -15,7 +15,7 @@ export function Footer() {
           </p>
           <a
             href="#book"
-            className="btn-pill bg-background text-foreground hover:opacity-90 self-start md:self-auto"
+            className="btn-pill bg-[#43E8E8] text-[#17191B] hover:brightness-95 hover:shadow-[0_0_15px_rgba(67,232,232,0.45)] transition-all self-start md:self-auto font-semibold"
           >
             Book Now
           </a>
