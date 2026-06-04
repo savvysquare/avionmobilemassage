@@ -28,32 +28,51 @@ const faqs = [
 
 export function FAQ() {
   return (
-    <section id="faq" className="py-24 md:py-32 bg-surface-muted/60">
-      <div className="container-page grid lg:grid-cols-[1fr_1.4fr] gap-12 lg:gap-20">
-        <div>
-          <span className="text-xs uppercase tracking-[0.2em] text-sage-foreground/80">FAQ</span>
-          <h2 className="mt-4 text-3xl md:text-5xl">
+    <section id="faq" className="relative py-28 md:py-36 overflow-hidden">
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-surface-muted/70 via-background to-surface-muted/40" />
+      <div className="absolute top-1/4 left-0 h-[400px] w-[400px] rounded-full bg-sage/5 blur-[120px] -z-10" />
+
+      <div className="container-page grid lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-20">
+        {/* Left column */}
+        <div className="lg:sticky lg:top-32 lg:self-start">
+          <span className="inline-block text-xs uppercase tracking-[0.2em] text-sage-foreground font-semibold mb-4">
+            FAQ
+          </span>
+          <h2 className="text-4xl md:text-5xl leading-tight">
             Good to
             <br />
-            <span className="italic font-light text-foreground/70">know.</span>
+            <span className="italic font-light text-foreground/55">know.</span>
           </h2>
-          <p className="mt-6 text-muted-foreground max-w-sm">
+          <p className="mt-6 text-muted-foreground leading-relaxed max-w-sm">
             Quick answers about how it works, billing, and what to expect.
           </p>
+          <a
+            href="#book"
+            className="mt-8 inline-flex btn-pill btn-charcoal hover:opacity-85 hover:-translate-y-0.5"
+          >
+            Book a Session
+          </a>
         </div>
 
-        <Accordion type="single" collapsible className="w-full">
-          {faqs.map((f, i) => (
-            <AccordionItem key={f.q} value={`item-${i}`} className="border-b border-border">
-              <AccordionTrigger className="text-left text-lg py-6 hover:no-underline">
-                {f.q}
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground leading-relaxed pb-6">
-                {f.a}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+        {/* Accordion */}
+        <div className="glass-card rounded-3xl p-6 md:p-8">
+          <Accordion type="single" collapsible className="w-full">
+            {faqs.map((f, i) => (
+              <AccordionItem
+                key={f.q}
+                value={`item-${i}`}
+                className="border-b border-border/60 last:border-0"
+              >
+                <AccordionTrigger className="text-left text-base font-medium py-5 hover:no-underline hover:text-sage-foreground transition-colors">
+                  {f.q}
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground leading-relaxed pb-5 text-sm">
+                  {f.a}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
       </div>
     </section>
   );

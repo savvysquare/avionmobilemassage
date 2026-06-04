@@ -42,40 +42,43 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-ring-offset-background: var(--background);
+  --color-glass: var(--glass);
+  --color-glass-border: var(--glass-border);
 
   --shadow-soft: 0 30px 60px -30px color-mix(in oklab, var(--foreground) 18%, transparent);
   --shadow-card: 0 24px 48px -32px color-mix(in oklab, var(--foreground) 22%, transparent);
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.12);
 }
 
 :root {
   --radius: 1rem;
 
   /* warm off-white / beige */
-  --background: oklch(0.975 0.012 85);
+  --background: oklch(0.97 0.01 80);
   --surface: oklch(0.985 0.008 85);
   --surface-muted: oklch(0.945 0.018 85);
-  --foreground: oklch(0.2 0.012 250);
+  --foreground: oklch(0.18 0.015 250);
 
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2 0.012 250);
+  --card: oklch(1 0 0 / 0.7);
+  --card-foreground: oklch(0.18 0.015 250);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2 0.012 250);
+  --popover-foreground: oklch(0.18 0.015 250);
 
   /* charcoal primary */
-  --primary: oklch(0.2 0.012 250);
+  --primary: oklch(0.18 0.015 250);
   --primary-foreground: oklch(0.985 0.008 85);
 
-  /* sage #A8B5A2 */
-  --sage: oklch(0.745 0.035 140);
+  /* sage */
+  --sage: oklch(0.68 0.07 155);
   --sage-foreground: oklch(0.22 0.02 150);
-  --sage-soft: oklch(0.93 0.025 140);
+  --sage-soft: oklch(0.93 0.025 140 / 0.6);
   --sky-soft: oklch(0.92 0.03 230);
 
   --secondary: oklch(0.93 0.018 85);
   --secondary-foreground: oklch(0.2 0.012 250);
 
   --muted: oklch(0.95 0.012 85);
-  --muted-foreground: oklch(0.45 0.012 250);
+  --muted-foreground: oklch(0.48 0.012 250);
 
   --accent: oklch(0.93 0.025 140);
   --accent-foreground: oklch(0.22 0.02 150);
@@ -83,9 +86,13 @@
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0.008 85);
 
-  --border: oklch(0.9 0.012 85);
+  --border: oklch(0.88 0.012 85);
   --input: oklch(0.92 0.012 85);
-  --ring: oklch(0.745 0.035 140);
+  --ring: oklch(0.68 0.07 155);
+
+  /* Glass tokens */
+  --glass: oklch(1 0 0 / 0.12);
+  --glass-border: oklch(1 0 0 / 0.25);
 
   --sidebar: oklch(0.985 0.008 85);
   --sidebar-foreground: oklch(0.2 0.012 250);
@@ -94,7 +101,7 @@
   --sidebar-accent: oklch(0.93 0.025 140);
   --sidebar-accent-foreground: oklch(0.22 0.02 150);
   --sidebar-border: oklch(0.9 0.012 85);
-  --sidebar-ring: oklch(0.745 0.035 140);
+  --sidebar-ring: oklch(0.68 0.07 155);
 }
 
 @layer base {
@@ -129,33 +136,62 @@
   padding-inline: 1.5rem;
 }
 
+/* ── Glassmorphism utilities ── */
+@utility glass-panel {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@utility glass-card {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+@utility glass-card-dark {
+  background: rgba(10, 10, 20, 0.45);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+/* ── Buttons ── */
 @utility btn-pill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   border-radius: 9999px;
-  padding: 0.875rem 1.5rem;
+  padding: 0.875rem 1.625rem;
   font-weight: 500;
-  font-size: 0.95rem;
+  font-size: 0.925rem;
+  letter-spacing: 0.01em;
   transition:
     transform 200ms ease,
     background-color 200ms ease,
     color 200ms ease,
-    box-shadow 200ms ease;
+    box-shadow 200ms ease,
+    opacity 200ms ease;
 }
 
 @utility btn-charcoal {
   background-color: var(--color-primary);
   color: var(--color-primary-foreground);
 }
+
 @utility btn-charcoal-hover {
-  background-color: color-mix(in oklab, var(--color-primary) 88%, white);
+  background-color: color-mix(in oklab, var(--color-primary) 85%, white);
+  transform: translateY(-1px);
 }
 
 @utility btn-sage {
   background-color: var(--color-sage);
-  color: var(--color-primary);
+  color: white;
 }
 
 @utility btn-outline {
@@ -164,6 +200,15 @@
   border: 1px solid var(--color-border);
 }
 
+@utility btn-glass {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+/* ── Card tilt ── */
 @utility tilt-left {
   transform: rotate(-7deg);
 }
@@ -171,6 +216,7 @@
   transform: rotate(6deg);
 }
 
+/* ── Animations ── */
 @keyframes float-slow {
   0%,
   100% {
@@ -179,4 +225,28 @@
   50% {
     transform: translateY(-10px) rotate(var(--tw-rotate, 0));
   }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@utility animate-fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
