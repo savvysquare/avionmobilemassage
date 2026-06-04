@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
@@ -6,45 +6,48 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Fraunces", Georgia, serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", "DM Sans", sans-serif;
+  --font-serif: "Outfit", sans-serif;
 
   --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
-  --radius-2xl: 16px;
-  --radius-3xl: 24px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-2xl: 28px;
+  --radius-3xl: 40px;
   --radius-pill: 999px;
 
-  --color-background: #f7f5f0;
-  --color-foreground: #1a1a1a;
+  --color-background: #ffffff;
+  --color-foreground: #3a3a3a;
 
-  --color-sage: #2a4b35;
-  --color-sage-hover: #1e3827;
-  --color-sage-light: #eae7df;
+  /* Gold/tan accent (Naples palette) */
+  --color-sage: #b8945a;
+  --color-sage-hover: #a07c44;
+  --color-sage-light: #fdf4e7;
 
-  --color-soft-blue: #d1b072;
-  --color-soft-blue-hover: #bda066;
-  --color-soft-blue-light: #f0ede6;
+  /* Peach blob / secondary */
+  --color-soft-blue: #f5d3a8;
+  --color-soft-blue-hover: #f0c285;
+  --color-soft-blue-light: #fde8d4;
 
-  --color-charcoal: #1a1a1a;
-  --color-charcoal-muted: #4a554a;
+  --color-charcoal: #3a3a3a;
+  --color-charcoal-muted: #6b6b6b;
 
-  --color-border: #e5e2da;
+  --color-border: #ececec;
   --color-input: #ffffff;
-  --color-ring: #2a4b35;
+  --color-ring: #b8945a;
   --color-card: #ffffff;
 }
 
 :root {
-  --background: #f7f5f0;
-  --foreground: #1a1a1a;
-  --sage: #2a4b35;
-  --soft-blue: #d1b072;
-  --charcoal: #1a1a1a;
-  --charcoal-muted: #4a554a;
-  --border: #e5e2da;
+  --background: #ffffff;
+  --foreground: #3a3a3a;
+  --sage: #b8945a;
+  --soft-blue: #f5d3a8;
+  --charcoal: #3a3a3a;
+  --charcoal-muted: #6b6b6b;
+  --border: #ececec;
 }
 
 @layer base {
@@ -69,33 +72,51 @@
   h4,
   h5,
   h6 {
-    font-family: var(--font-serif);
-    font-weight: 500;
-    color: var(--sage);
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--charcoal);
+    letter-spacing: -0.02em;
   }
 }
 
-/* ── Custom Utilities for Soft UI and Animations ── */
+/* ── Utilities ── */
+
+.font-display {
+  font-family: var(--font-display);
+}
 
 .shadow-soft {
-  box-shadow:
-    0 4px 20px -2px rgba(28, 28, 28, 0.05),
-    0 2px 8px -1px rgba(28, 28, 28, 0.02);
+  box-shadow: 0 4px 24px -4px rgba(58, 58, 58, 0.08);
 }
 
 .shadow-premium {
-  box-shadow:
-    0 10px 30px -5px rgba(28, 28, 28, 0.06),
-    0 4px 12px -2px rgba(28, 28, 28, 0.03);
+  box-shadow: 0 20px 60px -20px rgba(184, 148, 90, 0.25);
 }
 
 .bg-blur-glass {
-  background-color: rgba(250, 248, 245, 0.8);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background-color: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
-/* Reveal transition on scroll */
+/* Naples-style peach blob behind hero image */
+.peach-blob {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #fde8d4 0%, #fbd9b6 100%);
+  border-radius: 40px 40px 40px 120px;
+  transform: translate(24px, 24px);
+  z-index: 0;
+}
+
+/* Gold accent dot used as a divider */
+.gold-bar {
+  width: 1px;
+  height: 60px;
+  background: var(--sage);
+  display: inline-block;
+}
+
 .reveal-on-scroll {
   opacity: 0;
   transform: translateY(20px);

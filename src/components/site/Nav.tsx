@@ -1,127 +1,119 @@
 import React, { useState, useEffect } from "react";
 import logo from "@/assets/avion-logo.png";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Phone, Instagram, Facebook } from "lucide-react";
 
 export function Nav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Handle scroll shadow/opacity
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinks = [
     { href: "#hero", label: "Home" },
-    { href: "#about", label: "About" },
     { href: "#services", label: "Services" },
-    { href: "#areas-faq", label: "Areas We Serve" },
-    { href: "#faq", label: "FAQ" },
+    { href: "#about", label: "About" },
+    { href: "#book", label: "Contact" },
   ];
 
   const handleScrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setMobileMenuOpen(false);
-    const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth" });
-    }
+    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <>
-      <header
-        className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "bg-blur-glass border-b border-border shadow-soft h-16 md:h-20"
-            : "bg-transparent h-20 md:h-24"
-        } flex items-center justify-between px-6 md:px-12 lg:px-20 select-none`}
-      >
+    <header
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
+        scrolled ? "bg-blur-glass shadow-soft py-3" : "bg-white py-5"
+      }`}
+    >
+      <div className="container mx-auto px-6 md:px-10 lg:px-16 max-w-7xl flex items-center justify-between">
         {/* Logo */}
-        <a href="#hero" className="flex items-center focus:outline-none shrink-0">
-          <img src={logo} alt="Avion Mobile Massage" className="h-8 md:h-10 w-auto" />
+        <a href="#hero" className="flex items-center shrink-0">
+          <img src={logo} alt="Avion Mobile Massage" className="h-10 md:h-12 w-auto" />
         </a>
 
-        {/* Desktop Nav Links */}
-        <nav className="hidden lg:flex items-center gap-8">
+        {/* Desktop Nav */}
+        <nav className="hidden lg:flex items-center gap-10">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
               onClick={(e) => handleScrollToSection(e, link.href)}
-              className="text-sm font-medium text-charcoal-muted hover:text-soft-blue transition-colors duration-200"
+              className="font-display text-[15px] font-medium text-charcoal hover:text-sage transition-colors"
             >
               {link.label}
             </a>
           ))}
         </nav>
 
-        {/* Desktop Call to Action */}
-        <div className="hidden lg:flex items-center gap-4">
+        {/* Phone + Socials */}
+        <div className="hidden lg:flex items-center gap-6">
           <a
-            href="#book"
-            onClick={(e) => handleScrollToSection(e, "#book")}
-            className="inline-flex items-center justify-center px-6 py-2.5 bg-sage hover:bg-sage-hover text-white text-sm font-semibold rounded-lg transition-all shadow-soft hover:shadow-premium duration-200"
+            href="tel:+14039230323"
+            className="flex items-center gap-3 text-charcoal hover:text-sage transition-colors"
           >
-            Book Now
+            <span className="w-10 h-10 rounded-full border border-sage/40 flex items-center justify-center text-sage">
+              <Phone className="h-4 w-4" />
+            </span>
+            <span className="w-6 h-px bg-sage" />
+            <span className="font-display text-[15px] font-medium">+1 (403) 923-0323</span>
           </a>
-        </div>
-
-        {/* Mobile Menu Toggle */}
-        <div className="flex items-center lg:hidden">
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="flex items-center justify-center h-10 w-10 text-charcoal hover:bg-sage-light rounded-full transition-colors focus:outline-none"
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
-        </div>
-
-        {/* Mobile Drawer Overlay */}
-        {mobileMenuOpen && (
-          <div className="fixed inset-0 top-16 md:top-20 bg-background/98 z-40 lg:hidden flex flex-col p-6 gap-6 animate-fade-in border-t border-border">
-            <nav className="flex flex-col gap-4">
-              {navLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  onClick={(e) => handleScrollToSection(e, link.href)}
-                  className="py-3 text-lg font-medium text-charcoal-muted hover:text-soft-blue border-b border-border/50 transition-colors"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </nav>
+          <div className="flex items-center gap-3 pl-4 border-l border-border">
             <a
-              href="#book"
-              onClick={(e) => handleScrollToSection(e, "#book")}
-              className="mt-4 w-full py-3.5 bg-sage hover:bg-sage-hover text-white text-center text-md font-semibold rounded-lg shadow-soft transition-colors"
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noreferrer"
+              className="text-charcoal-muted hover:text-sage transition-colors"
             >
-              Book Now
+              <Facebook className="h-4 w-4" />
+            </a>
+            <a
+              href="https://www.instagram.com/avionmobilemassage"
+              target="_blank"
+              rel="noreferrer"
+              className="text-charcoal-muted hover:text-sage transition-colors"
+            >
+              <Instagram className="h-4 w-4" />
             </a>
           </div>
-        )}
-      </header>
+        </div>
 
-      {/* Mobile Sticky / Floating Book Now Button at screen bottom */}
-      <div className="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[90%] max-w-sm pointer-events-auto">
-        <a
-          href="#book"
-          onClick={(e) => handleScrollToSection(e, "#book")}
-          className="flex items-center justify-center w-full py-4 bg-sage hover:bg-sage-hover text-white text-sm font-semibold rounded-lg shadow-premium tracking-wide uppercase transition-transform hover:scale-102"
+        {/* Mobile toggle */}
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="lg:hidden flex items-center justify-center h-10 w-10 text-charcoal"
+          aria-label="Toggle menu"
         >
-          Book Now
-        </a>
+          {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
       </div>
-    </>
+
+      {/* Mobile drawer */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden border-t border-border bg-white px-6 py-6 flex flex-col gap-3">
+          {navLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              onClick={(e) => handleScrollToSection(e, link.href)}
+              className="font-display py-2 text-lg font-medium text-charcoal border-b border-border/50"
+            >
+              {link.label}
+            </a>
+          ))}
+          <a
+            href="tel:+14039230323"
+            className="mt-2 flex items-center gap-3 text-sage font-display font-semibold"
+          >
+            <Phone className="h-4 w-4" /> +1 (403) 923-0323
+          </a>
+        </div>
+      )}
+    </header>
   );
 }
