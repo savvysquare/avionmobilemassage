@@ -1,6 +1,6 @@
 import React from "react";
 import heroImg from "@/assets/hero-massage.jpg";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Shield, Activity, Home, Flame } from "lucide-react";
 
 export function Hero() {
   const scrollToBook = (e: React.MouseEvent) => {
@@ -77,6 +77,60 @@ export function Hero() {
             <span className="font-display font-bold text-[30px]">100%</span>
             <span className="text-[9px] uppercase tracking-[0.2em] opacity-95 mt-0.5">Direct<br/>Billing</span>
           </div>
+        </div>
+      </div>
+
+      {/* Does This Sound Like You? */}
+      <div className="max-w-7xl mx-auto mt-20 md:mt-28 px-0">
+        <div className="text-center mb-10">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-sage mb-3">Sound Familiar?</p>
+          <h2 className="font-display font-bold text-2xl md:text-3xl text-charcoal">
+            Does This Sound Like You?
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            {
+              icon: Shield,
+              quote:
+                "I pay for extended health benefits every month — but I never actually find time to use them.",
+            },
+            {
+              icon: Activity,
+              quote:
+                "My neck, shoulders and back are always tense, but getting to a clinic after work feels impossible.",
+            },
+            {
+              icon: Home,
+              quote:
+                "I'd love a massage, but I hate driving across the city after an already exhausting day.",
+            },
+            {
+              icon: Flame,
+              quote:
+                "I'm burnt out and running on empty. I just need someone to come to me — on my schedule.",
+            },
+          ].map(({ icon: Icon, quote }, i) => (
+            <div
+              key={i}
+              className="group bg-sage-light/50 border border-soft-blue/60 rounded-2xl p-6 flex flex-col items-center text-center gap-4 hover:shadow-soft hover:border-sage/30 hover:-translate-y-1 transition-all duration-300"
+            >
+              <div className="h-14 w-14 rounded-full bg-white/80 border border-soft-blue/50 flex items-center justify-center shadow-sm group-hover:bg-sage/10 transition-colors">
+                <Icon className="h-6 w-6 text-sage" />
+              </div>
+              <p className="text-charcoal/75 text-sm leading-relaxed font-light">
+                <span className="text-sage font-medium not-italic">&ldquo;</span>
+                {quote}
+                <span className="text-sage font-medium">&rdquo;</span>
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Connector line to next section */}
+        <div className="flex justify-center mt-12">
+          <span className="block w-px h-12 bg-gradient-to-b from-sage/30 to-transparent" />
         </div>
       </div>
     </section>
