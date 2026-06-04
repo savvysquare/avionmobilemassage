@@ -47,13 +47,32 @@ export function Hero() {
 
         {/* Right: image */}
         <div className="relative">
-          <div className="pointer-events-none absolute -inset-4 bg-soft-blue-light blob-1 -z-10 translate-x-6 translate-y-6 opacity-70" />
+          {/* Soft offset blob shadow */}
+          <div className="pointer-events-none absolute -inset-6 bg-soft-blue-light blob-1 -z-10 translate-x-8 translate-y-8 opacity-60 blur-sm" />
+          {/* Decorative thin ring */}
+          <div className="pointer-events-none absolute -inset-3 blob-1 border border-sage/25 -rotate-3" />
+
           <div className="relative overflow-hidden blob-1 shadow-premium aspect-[5/4] rotate-2">
             <img
               src={heroImg}
-              alt="Registered Massage Therapist providing in-home massage in Calgary"
+              alt="Calm Avion Mobile Massage setup — folded linens, warm oil, and eucalyptus in a sunlit Calgary home"
               className="w-full h-full object-cover"
             />
+            <div className="absolute inset-0 bg-gradient-to-tr from-sage/15 via-transparent to-transparent mix-blend-multiply" />
+          </div>
+
+          {/* Floating credential chip */}
+          <div className="absolute -bottom-6 -left-6 md:-left-10 bg-white/95 backdrop-blur-md rounded-full shadow-premium px-5 py-3 flex items-center gap-3 border border-soft-blue/40">
+            <span className="h-2 w-2 rounded-full bg-sage animate-pulse" />
+            <div className="leading-tight">
+              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-sage">Now Booking</p>
+              <p className="text-[11px] text-charcoal/70">Evenings &amp; weekends</p>
+            </div>
+          </div>
+
+          {/* Floating serif accent */}
+          <div className="hidden md:flex absolute -top-4 -right-4 h-20 w-20 rounded-full bg-sage text-white items-center justify-center font-serif italic text-2xl shadow-premium rotate-[8deg]">
+            RMT
           </div>
         </div>
       </div>
