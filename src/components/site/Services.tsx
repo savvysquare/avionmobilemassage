@@ -92,10 +92,10 @@ export function Services() {
               >
                 <div className="w-full md:w-1/2 relative">
                   <div
-                    className="absolute -inset-6 blob-1 opacity-50 blur-xl"
+                    className={`absolute -inset-6 opacity-50 blur-xl ${reverse ? "blob-1r" : "blob-1"}`}
                     style={{ background: s.tint }}
                   />
-                  <div className={`relative aspect-[4/3] overflow-hidden blob-1 shadow-soft ${reverse ? "-rotate-2" : "rotate-2"}`}>
+                  <div className={`relative aspect-[4/3] overflow-hidden shadow-soft ${reverse ? "blob-1r -rotate-2" : "blob-1 rotate-2"}`}>
                     <img
                       src={s.image}
                       alt={`${s.name} ${s.accent}`}
