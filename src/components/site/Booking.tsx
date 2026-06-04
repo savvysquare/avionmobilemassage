@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CheckCircle, Phone, Mail, MessageCircle } from "lucide-react";
+import { CheckCircle, Phone, Mail, MessageCircle, ArrowRight } from "lucide-react";
 
 export function Booking() {
   const [submitted, setSubmitted] = useState(false);
@@ -10,89 +10,94 @@ export function Booking() {
   };
 
   return (
-    <section id="book" className="w-full py-24 md:py-32 bg-white relative overflow-hidden">
-      {/* Background blob */}
-      <div
-        className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full opacity-50 pointer-events-none"
-        style={{ background: "radial-gradient(circle, #fde8d4 0%, transparent 70%)" }}
-      />
+    <section id="book" className="w-full py-28 md:py-36 px-6 bg-charcoal text-white relative overflow-hidden">
+      <div className="pointer-events-none absolute top-0 right-0 w-[480px] h-[480px] bg-sage rounded-full blur-[120px] opacity-20" />
+      <div className="pointer-events-none absolute bottom-0 left-0 w-[400px] h-[400px] bg-soft-blue rounded-full blur-[120px] opacity-10" />
 
-      <div className="container mx-auto px-6 md:px-10 lg:px-16 max-w-5xl relative">
-        <div className="text-center mb-14">
-          <h2 className="font-display text-[44px] md:text-[56px] leading-[1.05] font-extrabold text-charcoal">
-            Contact <span className="text-sage">Avion</span>
+      <div className="max-w-5xl mx-auto relative z-10">
+        <div className="text-center mb-16">
+          <p className="text-soft-blue tracking-[0.32em] uppercase text-[11px] font-semibold mb-4">
+            Get in touch
+          </p>
+          <h2 className="font-display text-5xl md:text-6xl font-bold text-soft-blue">
+            Contact <span className="italic font-serif font-medium text-white">Avion</span>
           </h2>
-          <p className="mt-4 text-charcoal-muted text-[15px] leading-relaxed max-w-2xl mx-auto">
+          <p className="mt-5 text-white/50 max-w-xl mx-auto text-[15px]">
             Ready to feel better? Send us a message and we'll confirm your appointment shortly.
           </p>
         </div>
 
         {submitted ? (
           <div className="py-16 text-center flex flex-col items-center">
-            <div className="h-16 w-16 rounded-full bg-soft-blue-light flex items-center justify-center mb-6 text-sage">
+            <div className="h-16 w-16 rounded-full bg-sage/20 flex items-center justify-center mb-6 text-sage">
               <CheckCircle className="h-8 w-8" />
             </div>
-            <h3 className="font-display text-3xl font-extrabold text-charcoal">
-              Request <span className="text-sage">Received</span>
+            <h3 className="font-display text-3xl font-bold text-soft-blue">
+              Request <span className="italic font-serif font-medium text-white">Received</span>
             </h3>
-            <p className="mt-4 text-[15px] text-charcoal-muted max-w-sm">
+            <p className="mt-4 text-[15px] text-white/60 max-w-sm">
               Thank you! We'll confirm your appointment shortly.
             </p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8">
-            <Field label="Name" name="name" required />
-            <Field label="Email" name="email" type="email" required />
-            <Field label="Phone No" name="phone" type="tel" required />
-            <Field label="Service Address" name="address" required />
+          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Field label="Full Name" name="name" placeholder="Jane Doe" required />
+            <Field label="Email Address" name="email" type="email" placeholder="jane@example.com" required />
+            <Field label="Phone No" name="phone" type="tel" placeholder="(403) 000-0000" required />
+            <Field label="Service Address" name="address" placeholder="Street, Calgary" required />
             <div className="md:col-span-2">
-              <Field label="Comments" name="comments" placeholder="" multiline />
+              <Field label="How can we help?" name="comments" placeholder="Tell us about your needs…" multiline />
             </div>
-            <div className="md:col-span-2 flex justify-center mt-4">
+            <div className="md:col-span-2 flex justify-center pt-6">
               <button
                 type="submit"
-                className="inline-flex items-center px-10 py-4 bg-sage hover:bg-sage-hover text-white font-display font-semibold text-sm uppercase tracking-wider transition-all duration-200"
+                className="group inline-flex items-center gap-3 bg-sage hover:bg-sage-hover text-white pl-10 pr-12 py-5 rounded-full text-xs font-bold uppercase tracking-[0.25em] transition-all duration-500 hover:pr-16 hover:shadow-premium active:scale-95 relative overflow-hidden"
               >
-                Send Message
+                <span>Send Inquiry</span>
+                <ArrowRight className="w-4 h-4 absolute right-6 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-500" />
               </button>
             </div>
           </form>
         )}
 
-        {/* Contact info row */}
-        <div className="mt-20 pt-12 border-t border-border grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-          <a href="tel:+14039230323" className="flex flex-col items-center gap-2 group">
-            <Phone className="h-6 w-6 text-sage" />
-            <span className="font-display font-semibold text-charcoal group-hover:text-sage transition-colors">
-              +1 (403) 923-0323
-            </span>
-            <span className="text-xs text-charcoal-muted">Call us</span>
-          </a>
-          <a
-            href="https://wa.me/14039230323"
-            target="_blank"
-            rel="noreferrer"
-            className="flex flex-col items-center gap-2 group"
-          >
-            <MessageCircle className="h-6 w-6 text-sage" />
-            <span className="font-display font-semibold text-charcoal group-hover:text-sage transition-colors">
-              WhatsApp
-            </span>
-            <span className="text-xs text-charcoal-muted">+1 (403) 923-0323</span>
-          </a>
-          <a
-            href="mailto:avionmobilemassage@outlook.com"
-            className="flex flex-col items-center gap-2 group"
-          >
-            <Mail className="h-6 w-6 text-sage" />
-            <span className="font-display font-semibold text-charcoal group-hover:text-sage transition-colors break-all">
-              avionmobilemassage@outlook.com
-            </span>
-            <span className="text-xs text-charcoal-muted">Email us</span>
-          </a>
+        <div className="mt-20 pt-12 border-t border-white/10 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          <ContactPill icon={Phone} label="Call us" value="+1 (403) 923-0323" href="tel:+14039230323" />
+          <ContactPill icon={MessageCircle} label="WhatsApp" value="+1 (403) 923-0323" href="https://wa.me/14039230323" external />
+          <ContactPill icon={Mail} label="Email us" value="avionmobilemassage@outlook.com" href="mailto:avionmobilemassage@outlook.com" />
         </div>
       </div>
     </section>
+  );
+}
+
+function ContactPill({
+  icon: Icon,
+  label,
+  value,
+  href,
+  external,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+  value: string;
+  href: string;
+  external?: boolean;
+}) {
+  return (
+    <a
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noreferrer" : undefined}
+      className="flex flex-col items-center gap-3 group"
+    >
+      <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-soft-blue group-hover:bg-sage group-hover:text-white group-hover:border-sage transition-all">
+        <Icon className="h-5 w-5" />
+      </div>
+      <span className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-semibold">{label}</span>
+      <span className="font-display font-medium text-white group-hover:text-soft-blue transition-colors break-all text-[14px]">
+        {value}
+      </span>
+    </a>
   );
 }
 
@@ -113,7 +118,7 @@ function Field({
 }) {
   return (
     <label className="flex flex-col gap-2">
-      <span className="font-display text-xs font-semibold text-charcoal-muted uppercase tracking-wider">
+      <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-white/40 px-4">
         {label}
       </span>
       {multiline ? (
@@ -122,7 +127,7 @@ function Field({
           required={required}
           placeholder={placeholder}
           rows={4}
-          className="w-full bg-transparent border-0 border-b border-border focus:border-sage focus:ring-0 px-0 py-2 text-[15px] text-charcoal placeholder-charcoal-muted/40 outline-none transition-colors resize-none"
+          className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-[15px] text-white placeholder-white/30 outline-none focus:border-sage transition-colors resize-none"
         />
       ) : (
         <input
@@ -130,7 +135,7 @@ function Field({
           name={name}
           required={required}
           placeholder={placeholder}
-          className="w-full bg-transparent border-0 border-b border-border focus:border-sage focus:ring-0 px-0 py-2 text-[15px] text-charcoal placeholder-charcoal-muted/40 outline-none transition-colors"
+          className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-[15px] text-white placeholder-white/30 outline-none focus:border-sage transition-colors"
         />
       )}
     </label>

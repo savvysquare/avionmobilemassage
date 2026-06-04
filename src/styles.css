@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap");
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
@@ -8,7 +8,7 @@
 @theme inline {
   --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Outfit", "DM Sans", sans-serif;
-  --font-serif: "Outfit", sans-serif;
+  --font-serif: "Cormorant Garamond", serif;
 
   --radius-sm: 4px;
   --radius-md: 8px;
@@ -18,15 +18,13 @@
   --radius-3xl: 40px;
   --radius-pill: 999px;
 
-  --color-background: #ffffff;
+  --color-background: #fffcf9;
   --color-foreground: #3a3a3a;
 
-  /* Gold/tan accent (Naples palette) */
   --color-sage: #b8945a;
-  --color-sage-hover: #a07c44;
+  --color-sage-hover: #a6844e;
   --color-sage-light: #fdf4e7;
 
-  /* Peach blob / secondary */
   --color-soft-blue: #f5d3a8;
   --color-soft-blue-hover: #f0c285;
   --color-soft-blue-light: #fde8d4;
@@ -38,10 +36,13 @@
   --color-input: #ffffff;
   --color-ring: #b8945a;
   --color-card: #ffffff;
+
+  --animate-spin-slow: spin 20s linear infinite;
+  --animate-float: float 8s ease-in-out infinite;
 }
 
 :root {
-  --background: #ffffff;
+  --background: #fffcf9;
   --foreground: #3a3a3a;
   --sage: #b8945a;
   --soft-blue: #f5d3a8;
@@ -66,6 +67,11 @@
     scroll-behavior: smooth;
   }
 
+  ::selection {
+    background-color: #f5d3a8;
+    color: #3a3a3a;
+  }
+
   h1,
   h2,
   h3,
@@ -79,42 +85,48 @@
   }
 }
 
-/* ── Utilities ── */
-
-.font-display {
-  font-family: var(--font-display);
+@keyframes float {
+  0%, 100% { transform: translateY(0px) }
+  50% { transform: translateY(-12px) }
 }
 
-.shadow-soft {
-  box-shadow: 0 4px 24px -4px rgba(58, 58, 58, 0.08);
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0) }
+  50% { transform: translate(20px, -20px) }
 }
 
-.shadow-premium {
-  box-shadow: 0 20px 60px -20px rgba(184, 148, 90, 0.25);
-}
+.font-display { font-family: var(--font-display); }
+.font-serif { font-family: var(--font-serif); }
+
+.shadow-soft { box-shadow: 0 4px 24px -4px rgba(58, 58, 58, 0.08); }
+.shadow-premium { box-shadow: 0 24px 60px -24px rgba(184, 148, 90, 0.35); }
 
 .bg-blur-glass {
-  background-color: rgba(255, 255, 255, 0.92);
+  background-color: rgba(255, 252, 249, 0.8);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
 
-/* Naples-style peach blob behind hero image */
-.peach-blob {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, #fde8d4 0%, #fbd9b6 100%);
-  border-radius: 40px 40px 40px 120px;
-  transform: translate(24px, 24px);
-  z-index: 0;
-}
+/* Organic blob shapes */
+.blob-1 { border-radius: 40% 60% 70% 30% / 40% 50% 60% 40%; }
+.blob-2 { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+.blob-3 { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+.blob-4 { border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; }
 
-/* Gold accent dot used as a divider */
-.gold-bar {
-  width: 1px;
-  height: 60px;
-  background: var(--sage);
-  display: inline-block;
+.animate-float { animation: float 8s ease-in-out infinite; }
+.animate-drift { animation: drift 14s ease-in-out infinite; }
+.animate-spin-slow { animation: spin 24s linear infinite; }
+
+/* Grain texture */
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.04;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 .reveal-on-scroll {
@@ -125,7 +137,4 @@
     transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.reveal-on-scroll.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+.reveal-on-scroll.visible { opacity: 1; transform: translateY(0); }

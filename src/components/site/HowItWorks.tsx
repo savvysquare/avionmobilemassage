@@ -4,52 +4,62 @@ import { CalendarCheck, Truck, Sparkles } from "lucide-react";
 const steps = [
   {
     icon: CalendarCheck,
-    title: "Book",
-    accent: "Online",
-    description:
-      "Choose your service, preferred time, and location in under a minute. We'll confirm quickly.",
+    title: "Book Online",
+    description: "Choose your service, preferred time, and location in under a minute. We'll confirm quickly.",
+    bg: "bg-soft-blue",
+    fg: "text-sage",
+    rotate: "rotate-3",
   },
   {
     icon: Truck,
-    title: "We Come",
-    accent: "Prepared",
-    description:
-      "Your therapist arrives on time with a professional massage table, linens, and all supplies. You just need to open the door.",
+    title: "We Come Prepared",
+    description: "Your therapist arrives on time with a professional table, linens, and all supplies. You just need to open the door.",
+    bg: "bg-sage",
+    fg: "text-white",
+    rotate: "-rotate-6",
   },
   {
     icon: Sparkles,
-    title: "Relax &",
-    accent: "Recover",
-    description:
-      "Enjoy focused, expert care in your own environment. When the session ends, you're already home — ready to continue your day feeling better.",
+    title: "Relax & Recover",
+    description: "Enjoy focused, expert care in your own environment. When the session ends, you're already home — ready to feel better.",
+    bg: "bg-soft-blue",
+    fg: "text-sage",
+    rotate: "rotate-12",
   },
 ];
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="w-full py-24 md:py-32 bg-white">
-      <div className="container mx-auto px-6 md:px-10 lg:px-16 max-w-7xl">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="font-display text-[44px] md:text-[56px] leading-[1.05] font-extrabold text-charcoal">
-            How It <span className="text-sage">Works</span>
-          </h2>
-          <p className="mt-4 text-charcoal-muted text-[15px] leading-relaxed">
-            Professional care. Exceptional convenience. Delivered in three simple steps.
-          </p>
-        </div>
+    <section id="how-it-works" className="w-full py-28 md:py-36 px-6">
+      <div className="max-w-5xl mx-auto text-center">
+        <p className="text-sage tracking-[0.32em] uppercase text-[11px] font-semibold mb-4">
+          The Process
+        </p>
+        <h2 className="font-display text-5xl md:text-6xl font-bold text-charcoal mb-16">
+          How It <span className="text-sage italic font-serif font-medium">Works</span>
+        </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          {steps.map((step) => {
-            const Icon = step.icon;
+        <div className="grid md:grid-cols-3 gap-14 md:gap-12">
+          {steps.map((s, i) => {
+            const Icon = s.icon;
             return (
-              <div key={step.accent} className="text-center px-4">
-                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-soft-blue-light flex items-center justify-center text-sage">
-                  <Icon className="h-9 w-9" />
+              <div key={s.title} className="flex flex-col items-center text-center space-y-6 group">
+                <div className="relative">
+                  <div
+                    className={`w-24 h-24 ${s.bg} rounded-[2rem] flex items-center justify-center shadow-soft ${s.rotate} transition-transform duration-500 group-hover:rotate-0 group-hover:scale-105`}
+                  >
+                    <Icon className={`w-10 h-10 ${s.fg}`} strokeWidth={1.5} />
+                  </div>
+                  <span className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-white border border-soft-blue text-sage font-display font-bold text-xs flex items-center justify-center shadow-sm">
+                    {i + 1}
+                  </span>
                 </div>
-                <h3 className="font-display text-[26px] font-extrabold text-charcoal mb-3">
-                  {step.title} <span className="text-sage">{step.accent}</span>
-                </h3>
-                <p className="text-charcoal-muted text-[15px] leading-[1.8]">{step.description}</p>
+                <h4 className="font-display text-xl md:text-2xl font-bold text-charcoal">
+                  {s.title}
+                </h4>
+                <p className="text-[14.5px] text-charcoal-muted leading-[1.8] max-w-xs">
+                  {s.description}
+                </p>
               </div>
             );
           })}
