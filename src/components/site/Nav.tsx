@@ -34,7 +34,7 @@ export function Nav() {
       <div className="container mx-auto px-6 md:px-10 lg:px-16 max-w-7xl flex items-center justify-between">
         {/* Logo */}
         <a href="#hero" className="flex items-center shrink-0">
-          <img src={logo} alt="Avion Mobile Massage" className="h-10 md:h-12 w-auto" />
+          <img src={logo} alt="Avion Mobile Massage — Registered Massage Therapists" className="h-14 md:h-16 w-auto" />
         </a>
 
         {/* Desktop Nav */}
