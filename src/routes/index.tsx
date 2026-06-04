@@ -13,13 +13,13 @@ import { FloatingWhatsApp } from "@/components/site/FloatingWhatsApp";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Avion Mobile Massage — Calgary's Concierge RMT, Delivered to You" },
+      { title: "Avion Mobile Massage — Calgary's Concierge Registered Massage Therapist, Delivered to You" },
       {
         name: "description",
         content:
           "Registered Massage Therapists who come to your home or office across Calgary. Direct billing, evening & weekend appointments. Book in minutes.",
       },
-      { property: "og:title", content: "Avion Mobile Massage — Calgary's Concierge RMT" },
+      { property: "og:title", content: "Avion Mobile Massage — Calgary's Concierge Registered Massage Therapist" },
       {
         property: "og:description",
         content:
