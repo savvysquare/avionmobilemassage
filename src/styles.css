@@ -72,6 +72,12 @@
     color: #3a3a3a;
   }
 
+  p {
+    font-size: 1.0625rem;
+    font-weight: 450;
+    line-height: 1.65;
+  }
+
   h1,
   h2,
   h3,

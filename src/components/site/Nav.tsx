@@ -41,7 +41,7 @@ export function Nav() {
           </a>
 
           {/* Links */}
-          <nav className="hidden md:flex items-center gap-7 text-[11px] font-semibold uppercase tracking-[0.18em] text-charcoal">
+          <nav className="hidden md:flex items-center gap-7 text-[13px] font-bold uppercase tracking-[0.18em] text-charcoal">
             {links.map((l) => (
               <a
                 key={l.label}
