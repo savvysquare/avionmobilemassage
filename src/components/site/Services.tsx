@@ -1,8 +1,9 @@
 import React from "react";
-import heroImg from "@/assets/hero-massage.jpg";
+import therapeuticImg from "@/assets/service-therapeutic.jpg";
+import deepTissueImg from "@/assets/service-deep-tissue.jpg";
+import relaxationImg from "@/assets/service-relaxation.jpg";
 import prenatalImg from "@/assets/service-prenatal.jpg";
 import corporateImg from "@/assets/service-corporate.jpg";
-import aboutImg from "@/assets/about-client.jpg";
 import { ArrowRight } from "lucide-react";
 
 interface ServiceItem {
@@ -21,7 +22,7 @@ const services: ServiceItem[] = [
     description:
       "Personalized treatment that targets your specific tension patterns, improves mobility, and supports recovery from the physical demands of daily life in Calgary. Ideal for clients managing chronic stress or rebuilding after injury.",
     duration: "60 or 90 Minutes",
-    image: heroImg,
+    image: therapeuticImg,
     tint: "#f5d3a8",
   },
   {
@@ -30,7 +31,7 @@ const services: ServiceItem[] = [
     description:
       "Focused work on deeper muscle layers to release chronic tightness, stubborn knots, and long-held stress. Ideal after long workdays, intense training, or active Calgary weekends in the mountains.",
     duration: "60 or 90 Minutes",
-    image: aboutImg,
+    image: deepTissueImg,
     tint: "#d4d9c4",
   },
   {
@@ -39,7 +40,7 @@ const services: ServiceItem[] = [
     description:
       "A calming, flowing session designed to quiet the nervous system, reduce stress, and leave you feeling grounded and recharged — without ever leaving the comfort of your own space.",
     duration: "60 or 90 Minutes",
-    image: heroImg,
+    image: relaxationImg,
     tint: "#fde8d4",
   },
   {
