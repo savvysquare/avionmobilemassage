@@ -1,211 +1,162 @@
-import React, { useState } from "react";
-import { ArrowRight, Activity, Zap, Compass, CheckCircle } from "lucide-react";
+import React from "react";
+import { ArrowRight, Clock, ShieldCheck, Heart, User, Building } from "lucide-react";
 
-interface ServiceModule {
+interface ServiceItem {
   name: string;
-  code: string;
-  pressure: number; // 1-10
-  recovery: string;
-  nodes: string[];
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   description: string;
-  durations: string[];
+  benefits: string[];
+  duration: string;
 }
 
-const services: ServiceModule[] = [
+const services: ServiceItem[] = [
   {
     name: "Therapeutic Massage",
-    code: "AMM-THER-01",
-    pressure: 6,
-    recovery: "88.7%",
-    nodes: ["Myofascial Trigger Points", "Lumbar Region", "Shoulder Girdle"],
+    icon: Heart,
     description:
-      "Highly customized therapy targeted to restore musculoskeletal alignment, alleviate chronic tension patterns, and enhance physiological joint mobility.",
-    durations: ["60 MIN", "90 MIN", "120 MIN"],
+      "Personalized treatment that targets your specific tension patterns, improves mobility, and supports recovery from the physical demands of daily life in Calgary.",
+    benefits: ["Targeted tension relief", "Joint mobility improvement", "Musculoskeletal recovery"],
+    duration: "60 or 90 Minutes",
   },
   {
     name: "Deep Tissue Massage",
-    code: "AMM-DEEP-02",
-    pressure: 9,
-    recovery: "94.2%",
-    nodes: ["Subscapularis Knots", "Gluteal Myofascial Nodes", "Cervical Tension"],
+    icon: ShieldCheck,
     description:
-      "Intense, deep muscular penetration focusing on releasing stubborn connective tissue adhesion points, chronic stress holds, and posture-induced restriction nodes.",
-    durations: ["60 MIN", "90 MIN", "120 MIN"],
+      "Focused work on deeper muscle layers to release chronic tightness, stubborn knots, and long-held stress. Ideal after long workdays or active weekends.",
+    benefits: ["Connective tissue release", "Post-workout recovery", "Chronic strain reduction"],
+    duration: "60 or 90 Minutes",
   },
   {
     name: "Relaxation Massage",
-    code: "AMM-RELAX-03",
-    pressure: 4,
-    recovery: "81.5%",
-    nodes: ["Parasympathetic Nervous System", "Vagus Stimulation", "Dermal Soothing"],
+    icon: SparklesIcon,
     description:
-      "Gentle flowing technique focusing on soothing the central nervous system, reducing adrenaline levels, and encouraging systemic lymph circulation.",
-    durations: ["60 MIN", "90 MIN", "120 MIN"],
+      "A calming, flowing session designed to quiet the nervous system, reduce stress, and leave you feeling grounded and recharged.",
+    benefits: [
+      "Nervous system soothing",
+      "Stress and anxiety reduction",
+      "Circulation enhancement",
+    ],
+    duration: "60 or 90 Minutes",
   },
   {
     name: "Prenatal Massage",
-    code: "AMM-PREN-04",
-    pressure: 5,
-    recovery: "85.0%",
-    nodes: ["Pelvic Pressure Offload", "Sciatic Decompression", "Lower Back Alignment"],
+    icon: User,
     description:
-      "Safe, highly specialized therapy tailored for expectant mothers. Focuses on comforting local pressure symptoms and leg swelling, ensuring absolute safety.",
-    durations: ["60 MIN", "90 MIN"],
+      "Safe, supportive care tailored for pregnancy. We help ease common discomforts while keeping you comfortable and relaxed in your own home.",
+    benefits: ["Pregnancy comfort setup", "Lower back stress offload", "Leg swelling comfort"],
+    duration: "60 or 90 Minutes",
   },
   {
-    name: "Corporate Wellness",
-    code: "AMM-CORP-05",
-    pressure: 6,
-    recovery: "90.1%",
-    nodes: ["Cervicothoracic Release", "Scapular Mobilization", "Mental Reset Nodes"],
+    name: "Corporate Wellness Massage",
+    icon: Building,
     description:
-      "Focused office/workplace setup targeting typical seated desk-fatigue areas. Minimizes stress, improves focus, and drives overall employee mental recovery.",
-    durations: ["15 MIN", "20 MIN", "30 MIN"],
+      "On-site massage for workplaces, team events, and employee wellness programs. A thoughtful way to support your team without anyone leaving the office.",
+    benefits: ["Desk posture correction", "Workplace stress reduction", "Team wellness support"],
+    duration: "15 to 30 mins per person",
   },
 ];
 
+// Simple Sparkles SVG replacement since Sparkles icon is in lucide but let's make sure it loads
+function SparklesIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+      <path d="m5 3 1 2.5L8.5 6 6 7 5 9.5 4 7 1.5 6 4 5.5z" />
+      <path d="m19 17 1 2.5 2.5.5-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1z" />
+    </svg>
+  );
+}
+
 export function Services() {
-  const [selectedService, setSelectedService] = useState<number>(0);
-  const current = services[selectedService];
+  const handleBookService = (serviceName: string) => {
+    const event = new CustomEvent("select-service", { detail: serviceName });
+    window.dispatchEvent(event);
+  };
 
   return (
-    <div className="w-full h-full min-h-screen relative flex items-center justify-center bg-black px-6 md:px-12 py-24 select-none font-mono">
-      <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-        {/* Left Side: Module Selector List */}
-        <div className="lg:col-span-4 flex flex-col justify-center gap-3">
-          <div className="flex items-center gap-2 text-amber-500 glow-text-gold text-[10px] tracking-widest font-bold mb-4">
-            <Activity className="h-3.5 w-3.5" />
-            <span>DIAGNOSTIC MODULES // SECT_02</span>
-          </div>
-
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white font-sans uppercase mb-6">
-            THERAPY UNITS
+    <section id="services" className="w-full py-20 md:py-28 bg-background">
+      <div className="container mx-auto px-6 md:px-12 lg:px-20 max-w-7xl">
+        {/* Section Header */}
+        <div className="max-w-3xl mb-16 text-left">
+          <span className="text-xs font-semibold text-sage uppercase tracking-wider block mb-3">
+            Our Services
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-charcoal tracking-tight">
+            Tailored Care For Your Body & Mind
           </h2>
-
-          <div className="flex flex-col gap-2">
-            {services.map((s, idx) => {
-              const isSelected = selectedService === idx;
-              return (
-                <button
-                  key={s.name}
-                  onClick={() => setSelectedService(idx)}
-                  className={`w-full text-left p-4 border transition-all duration-300 relative ${
-                    isSelected
-                      ? "border-amber-500 bg-amber-500/10 text-white"
-                      : "border-white/5 bg-white/[0.02] text-white/50 hover:border-white/20 hover:text-white"
-                  } hud-corners ${isSelected ? "hud-corners-active" : ""}`}
-                >
-                  <div className="flex justify-between items-center text-[9px] mb-1 font-bold">
-                    <span>{s.code}</span>
-                    {isSelected && <span className="text-amber-500 glow-text-gold">SELECTED</span>}
-                  </div>
-                  <div className="font-sans font-bold text-sm tracking-wide">{s.name}</div>
-                </button>
-              );
-            })}
-          </div>
+          <p className="mt-4 text-charcoal-muted text-md sm:text-lg leading-relaxed font-light">
+            Skip the travel and receive focused clinical expertise in the comfort of your own space.
+            Choose the treatment that aligns with your wellness goals.
+          </p>
         </div>
 
-        {/* Right Side: Detailed HUD Technical Spec Sheet */}
-        <div className="lg:col-span-8 flex flex-col justify-center">
-          <div className="hud-panel p-6 md:p-10 border border-white/10 hud-corners hud-corners-active">
-            {/* Header Specs */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/5 pb-6 mb-6 gap-4">
-              <div>
-                <span className="text-[9px] text-amber-500 tracking-widest font-bold block mb-1">
-                  MODULE DETAIL SPECIFICATIONS
-                </span>
-                <h3 className="text-xl md:text-2xl font-bold font-sans text-white tracking-wide">
-                  {current.name}
-                </h3>
-              </div>
-              <div className="text-right flex flex-col items-start sm:items-end">
-                <span className="text-[8px] text-white/30">SYSTEM RECOVERY METRIC</span>
-                <span className="text-lg md:text-2xl text-emerald-500 glow-text-green font-extrabold">
-                  {current.recovery}
-                </span>
-              </div>
-            </div>
-
-            {/* Description */}
-            <p className="text-xs text-white/70 leading-relaxed font-sans mb-8">
-              {current.description}
-            </p>
-
-            {/* Visual Gauges */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-              {/* Pressure Level Gauge */}
-              <div className="flex flex-col gap-2">
-                <div className="flex justify-between items-center text-[9px] text-white/40">
-                  <span>PRESSURE COEFFICIENT</span>
-                  <span className="text-amber-500 glow-text-gold">{current.pressure * 10}%</span>
-                </div>
-
-                {/* Visual Bar Graph */}
-                <div className="h-6 w-full border border-white/10 bg-white/5 p-1 flex gap-0.5 rounded-sm">
-                  {[...Array(10)].map((_, i) => {
-                    const active = i < current.pressure;
-                    return (
-                      <div
-                        key={i}
-                        className={`h-full flex-1 transition-all duration-500 ${
-                          active
-                            ? "bg-gradient-to-t from-amber-600 to-amber-400 shadow-[0_0_4px_#f59e0b]"
-                            : "bg-white/5"
-                        }`}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Target Relief Nodes */}
-              <div className="flex flex-col gap-2 font-sans">
-                <span className="text-[9px] text-white/40 font-mono tracking-widest uppercase">
-                  TARGET NODES
-                </span>
-                <div className="flex flex-wrap gap-2 pt-1">
-                  {current.nodes.map((node) => (
-                    <span
-                      key={node}
-                      className="px-2.5 py-1 border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-[10px] rounded-sm flex items-center gap-1.5 font-mono"
-                    >
-                      <Zap className="h-3 w-3 shrink-0" />
-                      {node}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Duration Matrix selector */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between border-t border-white/5 pt-6 gap-4">
-              <div className="flex flex-col gap-1">
-                <span className="text-[9px] text-white/30">DURATION CONFIGURATIONS</span>
-                <div className="flex gap-2 mt-1">
-                  {current.durations.map((duration) => (
-                    <span
-                      key={duration}
-                      className="px-3 py-1.5 border border-white/10 bg-white/5 text-white/70 text-[9px] font-bold rounded-sm"
-                    >
-                      {duration}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Action booking portal trigger */}
-              <a
-                href="#book"
-                className="px-6 py-3 border border-amber-500 bg-amber-500 hover:bg-transparent text-black hover:text-amber-500 text-[9px] tracking-widest font-bold uppercase transition-all duration-300 hud-corners flex items-center gap-2 self-start sm:self-auto"
+        {/* Services Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {services.map((s) => {
+            const IconComponent = s.icon;
+            return (
+              <div
+                key={s.name}
+                className="flex flex-col justify-between bg-card p-8 rounded-2xl shadow-soft hover:shadow-premium transition-all duration-300 border border-border"
               >
-                PROCEED WITH MODULE
-                <ArrowRight className="h-3.5 w-3.5" />
-              </a>
-            </div>
-          </div>
+                <div>
+                  {/* Top Row: Icon & Duration */}
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="w-12 h-12 rounded-xl bg-soft-blue-light flex items-center justify-center text-sage">
+                      <IconComponent className="h-6 w-6" />
+                    </div>
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-background border border-border text-[11px] font-medium text-charcoal-muted">
+                      <Clock className="h-3 w-3" />
+                      {s.duration}
+                    </span>
+                  </div>
+
+                  {/* Service Title */}
+                  <h3 className="text-xl font-medium text-charcoal mb-4">{s.name}</h3>
+
+                  {/* Description */}
+                  <p className="text-charcoal-muted text-sm leading-relaxed mb-6 font-light">
+                    {s.description}
+                  </p>
+
+                  {/* Key Benefits Checklist */}
+                  <ul className="space-y-2 mb-8">
+                    {s.benefits.map((b) => (
+                      <li
+                        key={b}
+                        className="flex items-center gap-2 text-xs text-charcoal-muted font-medium"
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-sage" />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Book Button */}
+                <button
+                  onClick={() => handleBookService(s.name)}
+                  className="w-full inline-flex items-center justify-center gap-2 py-3 bg-sage hover:bg-sage-hover text-white text-xs font-semibold rounded-full shadow-soft transition-all duration-200 uppercase tracking-wider"
+                >
+                  Book This Service
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            );
+          })}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

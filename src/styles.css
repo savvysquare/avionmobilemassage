@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&display=swap");
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
@@ -6,41 +6,45 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Fraunces", Georgia, serif;
 
-  --radius-sm: 2px;
-  --radius-md: 4px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
-  --radius-2xl: 16px;
-  --radius-3xl: 24px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-3xl: 32px;
   --radius-pill: 999px;
 
-  --color-background: #000000;
-  --color-foreground: #ffffff;
+  --color-background: #faf8f5;
+  --color-foreground: #1c1c1c;
 
-  --color-neon-gold: #f59e0b;
-  --color-neon-green: #10b981;
-  --color-neon-cyan: #06b6d4;
+  --color-sage: #a8b5a2;
+  --color-sage-hover: #96a391;
+  --color-sage-light: #f0f2ee;
 
-  --color-hud-bg: rgba(0, 0, 0, 0.85);
-  --color-hud-border: rgba(255, 255, 255, 0.12);
-  --color-hud-border-glow: rgba(245, 158, 11, 0.25);
+  --color-soft-blue: #d4e2ec;
+  --color-soft-blue-hover: #c2d4e2;
+  --color-soft-blue-light: #ebf2f7;
 
-  --color-border: rgba(255, 255, 255, 0.1);
-  --color-input: rgba(255, 255, 255, 0.05);
-  --color-ring: #f59e0b;
+  --color-charcoal: #1c1c1c;
+  --color-charcoal-muted: #555856;
+
+  --color-border: #e8e5df;
+  --color-input: #faf8f5;
+  --color-ring: #a8b5a2;
+  --color-card: #ffffff;
 }
 
 :root {
-  --neon-gold: #f59e0b;
-  --neon-green: #10b981;
-  --neon-cyan: #06b6d4;
-  --hud-bg: rgba(0, 0, 0, 0.85);
-  --hud-border: rgba(255, 255, 255, 0.12);
-  --hud-border-active: rgba(245, 158, 11, 0.5);
-  --hud-text-muted: #888888;
+  --background: #faf8f5;
+  --foreground: #1c1c1c;
+  --sage: #a8b5a2;
+  --soft-blue: #d4e2ec;
+  --charcoal: #1c1c1c;
+  --charcoal-muted: #555856;
+  --border: #e8e5df;
 }
 
 @layer base {
@@ -48,25 +52,15 @@
   body {
     margin: 0;
     padding: 0;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden; /* Scroll-jacking handles navigation */
-    background-color: #000000;
-    color: #ffffff;
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: var(--background);
+    color: var(--foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
-    cursor: none; /* Hide default cursor to use custom follower */
-  }
-
-  /* Target everything interactive for cursor customization */
-  a,
-  button,
-  select,
-  input,
-  textarea,
-  [role="button"],
-  [class*="cursor-pointer"] {
-    cursor: none !important;
+    scroll-behavior: smooth;
   }
 
   h1,
@@ -75,260 +69,42 @@
   h4,
   h5,
   h6 {
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    font-family: var(--font-serif);
+    font-weight: 500;
+    color: var(--charcoal);
   }
 }
 
-/* ── HUD Panel & Borders ── */
-@utility hud-panel {
-  background: var(--hud-bg);
-  border: 1px solid var(--hud-border);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  position: relative;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+/* ── Custom Utilities for Soft UI and Animations ── */
+
+.shadow-soft {
+  box-shadow:
+    0 4px 20px -2px rgba(28, 28, 28, 0.05),
+    0 2px 8px -1px rgba(28, 28, 28, 0.02);
 }
 
-@utility hud-panel-gold {
-  background: var(--hud-bg);
-  border: 1px solid rgba(245, 158, 11, 0.3);
-  box-shadow: 0 0 15px rgba(245, 158, 11, 0.05);
+.shadow-premium {
+  box-shadow:
+    0 10px 30px -5px rgba(28, 28, 28, 0.06),
+    0 4px 12px -2px rgba(28, 28, 28, 0.03);
 }
 
-@utility hud-panel-green {
-  background: var(--hud-bg);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  box-shadow: 0 0 15px rgba(16, 185, 129, 0.05);
+.bg-blur-glass {
+  background-color: rgba(250, 248, 245, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
-/* HUD Corner Brackets */
-@utility hud-corners {
-  position: relative;
-}
-
-/* HUD corner bracket styles as regular CSS (Tailwind v4 @utility doesn't support pseudo-elements) */
-.hud-corners::before,
-.hud-corners::after {
-  content: "";
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  border-color: rgba(255, 255, 255, 0.35);
-  border-style: solid;
-  pointer-events: none;
-  transition: all 0.3s ease;
-}
-
-.hud-corners::before {
-  top: -1px;
-  left: -1px;
-  border-width: 1px 0 0 1px;
-}
-
-.hud-corners::after {
-  bottom: -1px;
-  right: -1px;
-  border-width: 0 1px 1px 0;
-}
-
-.hud-corners-active::before {
-  border-color: var(--neon-gold);
-  width: 12px;
-  height: 12px;
-  box-shadow: -2px -2px 6px rgba(245, 158, 11, 0.3);
-}
-
-.hud-corners-active::after {
-  border-color: var(--neon-gold);
-  width: 12px;
-  height: 12px;
-  box-shadow: 2px 2px 6px rgba(245, 158, 11, 0.3);
-}
-
-/* ── HUD Glow ── */
-@utility glow-text-gold {
-  text-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
-}
-
-@utility glow-text-green {
-  text-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
-}
-
-@utility glow-border-gold {
-  box-shadow: 0 0 12px rgba(245, 158, 11, 0.3);
-  border-color: var(--neon-gold);
-}
-
-@utility glow-border-green {
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
-  border-color: var(--neon-green);
-}
-
-/* ── Tech Lines & Overlays ── */
-@utility scanlines {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background:
-    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-    linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-  background-size:
-    100% 4px,
-    6px 100%;
-  z-index: 99;
-  pointer-events: none;
-}
-
-@utility noise-overlay {
-  position: fixed;
-  top: -50%;
-  left: -50%;
-  right: -50%;
-  bottom: -50%;
-  width: 200%;
-  height: 200%;
-  background: transparent
-    url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E')
-    repeat;
-  opacity: 0.04;
-  pointer-events: none;
-  z-index: 100;
-  animation: grain-animation 8s steps(10) infinite;
-}
-
-@keyframes grain-animation {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-  10% {
-    transform: translate(-5%, -10%);
-  }
-  20% {
-    transform: translate(-15%, 5%);
-  }
-  30% {
-    transform: translate(7%, -25%);
-  }
-  40% {
-    transform: translate(-5%, 25%);
-  }
-  50% {
-    transform: translate(-15%, 10%);
-  }
-  60% {
-    transform: translate(15%, 0%);
-  }
-  70% {
-    transform: translate(0%, 15%);
-  }
-  80% {
-    transform: translate(3%, 35%);
-  }
-  90% {
-    transform: translate(-10%, 10%);
-  }
-}
-
-/* ── Custom HUD Elements ── */
-@utility hud-grid {
-  background-size: 40px 40px;
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-}
-
-@utility tech-data-label {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  color: var(--hud-text-muted);
-  text-transform: uppercase;
-}
-
-/* ── Section Transition System ── */
-.hud-chapter-section {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Reveal transition on scroll */
+.reveal-on-scroll {
   opacity: 0;
-  pointer-events: none;
-  transform: translateY(30px) scale(0.98);
+  transform: translateY(20px);
   transition:
     opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  z-index: 10;
 }
 
-.hud-chapter-section.active {
+.reveal-on-scroll.visible {
   opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0) scale(1);
-  z-index: 20;
-}
-
-/* Swipe animations for next/previous chapters */
-.hud-chapter-section.exit-up {
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(-50px) scale(0.95);
-}
-
-.hud-chapter-section.exit-down {
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(50px) scale(0.95);
-}
-
-/* Custom Interactive Cursor Follower */
-#custom-cursor-dot {
-  width: 6px;
-  height: 6px;
-  background-color: var(--neon-gold);
-  border-radius: 50%;
-  position: fixed;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 9999;
-  transition:
-    width 0.2s,
-    height 0.2s,
-    background-color 0.2s;
-}
-
-#custom-cursor-ring {
-  width: 32px;
-  height: 32px;
-  border: 1px solid var(--neon-gold);
-  border-radius: 50%;
-  position: fixed;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 9998;
-  transition:
-    width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-    height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-    background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Hover States for Custom Cursor */
-body.cursor-hover #custom-cursor-ring {
-  width: 56px;
-  height: 56px;
-  border-color: var(--neon-green);
-  background-color: rgba(16, 185, 129, 0.05);
-}
-
-body.cursor-hover #custom-cursor-dot {
-  background-color: var(--neon-green);
+  transform: translateY(0);
 }

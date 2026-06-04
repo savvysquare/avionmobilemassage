@@ -9,27 +9,27 @@ interface FAQItem {
 const faqs: FAQItem[] = [
   {
     q: "Do I need a massage table?",
-    a: "No. We bring a professional massage table, fresh linens, organic massage oils, and all required therapy supplies. You just need to open the door and provide a clear workspace (approx. 10x10 ft).",
+    a: "No. We bring a professional table, linens, and everything else required.",
   },
   {
     q: "Do you offer direct billing?",
-    a: "Yes. We direct bill most extended health insurance providers in Canada. Coverage limits depend on your specific policy. If direct billing fails, we issue an official RMT receipt for manual reimbursement.",
+    a: "Yes — we direct bill many extended health insurance providers. Coverage varies by plan, so we recommend checking with your insurer. If direct billing isn’t available, we provide an official receipt for reimbursement.",
   },
   {
     q: "How long are appointments?",
-    a: "Standard treatment configurations are 60-minute and 90-minute modules. For corporate events, sessions can be customized from 15 to 30 minutes per workstation.",
+    a: "We offer 60-minute and 90-minute sessions.",
   },
   {
     q: "What areas do you serve?",
-    a: "All quadrants within Calgary city limits, plus surrounding municipalities: Airdrie, Cochrane, and Chestermere.",
+    a: "All of Calgary plus Airdrie, Cochrane, and Chestermere.",
   },
   {
     q: "What should I wear?",
-    a: "Whatever feels comfortable. Your therapist will discuss treatment preferences and verify your comfort parameters. You will be professionally draped under a sheet at all times.",
+    a: "Whatever feels comfortable. Your therapist will discuss preferences and ensure you’re always properly draped and at ease.",
   },
   {
     q: "What is your cancellation policy?",
-    a: "We require at least 48 hours' notice for cancellations. Late cancellations are subject to fee parameters to support scheduling availability.",
+    a: "We kindly ask for at least 48 hours’ notice for cancellations. Appointments cancelled with less notice may be subject to a fee. This helps us keep time available for other clients.",
   },
 ];
 
@@ -41,56 +41,51 @@ export function FAQ() {
   };
 
   return (
-    <div className="w-full font-mono text-left select-none">
-      <div className="flex items-center gap-2 text-amber-500 glow-text-gold text-[10px] tracking-widest font-bold mb-2">
-        <HelpCircle className="h-3.5 w-3.5" />
-        <span>OPERATIONAL PROTOCOLS // CH_04B</span>
-      </div>
-
-      <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-white font-sans uppercase mb-6">
-        DIAGNOSTIC FAQ
+    <div id="faq" className="w-full text-left select-none">
+      <span className="text-xs font-semibold text-sage uppercase tracking-wider block mb-3">
+        Common Questions
+      </span>
+      <h2 className="text-3xl sm:text-4xl font-semibold text-charcoal tracking-tight mb-8">
+        Frequently Asked Questions
       </h2>
 
-      <div className="hud-panel p-6 border border-white/10 hud-corners w-full">
-        <div className="flex justify-between items-center text-[8px] text-white/30 border-b border-white/5 pb-3 mb-4">
-          <span>[SYSTEM DIRECTORY & Q&A QUERY]</span>
-          <span>TOTAL SECTORS: 06</span>
-        </div>
-
-        <div className="flex flex-col gap-2">
+      <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-soft w-full">
+        <div className="flex flex-col gap-3">
           {faqs.map((f, i) => {
             const isOpen = openIndex === i;
             return (
               <div
                 key={f.q}
-                className={`border transition-all duration-300 ${
+                className={`border rounded-xl transition-all duration-300 ${
                   isOpen
-                    ? "border-amber-500/30 bg-amber-500/[0.01]"
-                    : "border-white/5 hover:border-white/20"
+                    ? "border-sage bg-sage-light/20"
+                    : "border-border bg-background hover:border-sage/40"
                 }`}
               >
                 {/* Trigger Question bar */}
                 <button
                   onClick={() => toggleFAQ(i)}
-                  className="w-full flex items-center justify-between p-4 text-left font-sans font-bold text-xs sm:text-sm text-white focus:outline-none"
+                  className="w-full flex items-center justify-between p-5 text-left font-sans font-medium text-sm sm:text-md text-charcoal focus:outline-none"
                 >
-                  <span className={isOpen ? "text-amber-500 glow-text-gold" : "text-white/80"}>
-                    {f.q.toUpperCase()}
+                  <span className={isOpen ? "text-sage font-semibold" : "text-charcoal"}>
+                    {f.q}
                   </span>
                   {isOpen ? (
-                    <ChevronUp className="h-4 w-4 text-amber-500" />
+                    <ChevronUp className="h-5 w-5 text-sage flex-shrink-0" />
                   ) : (
-                    <ChevronDown className="h-4 w-4 text-white/30" />
+                    <ChevronDown className="h-5 w-5 text-charcoal-muted flex-shrink-0" />
                   )}
                 </button>
 
                 {/* Answer Content */}
                 <div
                   className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                    isOpen ? "max-h-[200px] border-t border-white/5" : "max-h-0"
+                    isOpen ? "max-h-[300px] border-t border-border/50" : "max-h-0"
                   }`}
                 >
-                  <div className="p-4 font-sans text-xs text-white/50 leading-relaxed">{f.a}</div>
+                  <div className="p-5 text-sm text-charcoal-muted leading-relaxed font-light">
+                    {f.a}
+                  </div>
                 </div>
               </div>
             );

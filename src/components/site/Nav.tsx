@@ -1,143 +1,127 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "@/assets/avion-logo.png";
-import { Volume2, VolumeX, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
-interface NavProps {
-  activeChapter: number;
-  setActiveChapter?: (index: number) => void;
-  isMuted: boolean;
-  setIsMuted: (muted: boolean) => void;
-}
-
-const navLinks = [
-  { id: 0, label: "WELCOME" },
-  { id: 1, label: "SEQUENCE" },
-  { id: 2, label: "THERAPIES" },
-  { id: 3, label: "SCIENCE" },
-  { id: 4, label: "DETAILS" },
-  { id: 5, label: "INITIATE" },
-];
-
-export function Nav({ activeChapter, setActiveChapter, isMuted, setIsMuted }: NavProps) {
+export function Nav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Handle scroll shadow/opacity
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const navLinks = [
+    { href: "#hero", label: "Home" },
+    { href: "#about", label: "About" },
+    { href: "#services", label: "Services" },
+    { href: "#areas-faq", label: "Areas We Serve" },
+    { href: "#faq", label: "FAQ" },
+  ];
+
+  const handleScrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    const target = document.querySelector(href);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 flex items-center justify-between px-6 md:px-12 h-20 border-b border-white/5 bg-black/60 backdrop-blur-md select-none font-mono">
-      {/* Top Left: Logo & Status */}
-      <div className="flex items-center gap-6">
-        <button
-          onClick={() => setActiveChapter?.(0)}
-          className="flex items-center gap-2 focus:outline-none shrink-0"
-        >
-          <img src={logo} alt="Avion" className="h-7 w-auto brightness-0 invert" />
-        </button>
+    <>
+      <header
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? "bg-blur-glass border-b border-border shadow-soft h-16 md:h-20"
+            : "bg-transparent h-20 md:h-24"
+        } flex items-center justify-between px-6 md:px-12 lg:px-20 select-none`}
+      >
+        {/* Logo */}
+        <a href="#hero" className="flex items-center focus:outline-none shrink-0">
+          <img src={logo} alt="Avion Mobile Massage" className="h-8 md:h-10 w-auto" />
+        </a>
 
-        {/* Status Indicator */}
-        <div className="hidden lg:flex items-center gap-2 px-3 py-1 border border-emerald-500/20 bg-emerald-500/5 rounded-sm">
-          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="text-[9px] text-emerald-500 tracking-widest font-bold">
-            SYSTEM ACTIVE // CH_0{activeChapter}
-          </span>
-        </div>
-      </div>
-
-      {/* Center: Desktop Nav Links */}
-      <nav className="hidden lg:flex items-center gap-2">
-        {navLinks.map((link) => {
-          const isActive = activeChapter === link.id;
-          return (
-            <button
-              key={link.id}
-              onClick={() => setActiveChapter?.(link.id)}
-              className={`px-4 py-2 text-[10px] tracking-widest font-bold transition-all relative ${
-                isActive ? "text-amber-500 glow-text-gold" : "text-white/40 hover:text-white/80"
-              }`}
+        {/* Desktop Nav Links */}
+        <nav className="hidden lg:flex items-center gap-8">
+          {navLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              onClick={(e) => handleScrollToSection(e, link.href)}
+              className="text-sm font-medium text-charcoal-muted hover:text-charcoal transition-colors duration-200"
             >
               {link.label}
-              {isActive && (
-                <span className="absolute bottom-0 left-4 right-4 h-[1px] bg-amber-500 shadow-[0_0_8px_#f59e0b]" />
-              )}
-            </button>
-          );
-        })}
-      </nav>
+            </a>
+          ))}
+        </nav>
 
-      {/* Right: Sound Control & Mobile Menu */}
-      <div className="flex items-center gap-4 md:gap-6">
-        {/* Audio Toggle Button */}
-        <button
-          onClick={() => setIsMuted(!isMuted)}
-          className="flex items-center gap-3 px-3 py-1.5 border border-white/10 hover:border-amber-500/40 rounded-sm bg-white/5 transition-all text-white/60 hover:text-white"
-          title={isMuted ? "Unmute Ambient Sound" : "Mute Ambient Sound"}
-        >
-          <span className="text-[9px] tracking-widest font-bold hidden sm:inline">
-            AMBIENT AUDIO
-          </span>
-
-          <div className="flex items-center gap-0.5 h-3 w-5 justify-center">
-            {isMuted ? (
-              <VolumeX className="h-3 w-3 text-white/40" />
-            ) : (
-              <>
-                <Volume2 className="h-3 w-3 text-amber-500 mr-1" />
-                {/* Audio Waves Visualizer (Animated CSS Bars) */}
-                <span className="w-[1.5px] h-3 bg-amber-500 animate-[bounce_0.8s_infinite_0.1s]" />
-                <span className="w-[1.5px] h-2 bg-amber-500 animate-[bounce_0.8s_infinite_0.3s]" />
-                <span className="w-[1.5px] h-3.5 bg-amber-500 animate-[bounce_0.8s_infinite_0.5s]" />
-                <span className="w-[1.5px] h-1.5 bg-amber-500 animate-[bounce_0.8s_infinite_0.2s]" />
-              </>
-            )}
-          </div>
-        </button>
-
-        {/* Action Button */}
-        <button
-          onClick={() => setActiveChapter?.(5)}
-          className="hidden md:inline-flex items-center justify-center px-5 py-2 border border-amber-500 bg-amber-500/10 hover:bg-amber-500 text-amber-500 hover:text-black text-[9px] tracking-widest font-bold transition-all hud-corners"
-        >
-          INITIATE SESSION
-        </button>
+        {/* Desktop Call to Action */}
+        <div className="hidden lg:flex items-center gap-4">
+          <a
+            href="#book"
+            onClick={(e) => handleScrollToSection(e, "#book")}
+            className="inline-flex items-center justify-center px-6 py-2.5 bg-sage hover:bg-sage-hover text-white text-sm font-semibold rounded-full transition-all shadow-soft hover:shadow-premium duration-200"
+          >
+            Book Now
+          </a>
+        </div>
 
         {/* Mobile Menu Toggle */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden flex items-center justify-center h-8 w-8 border border-white/10 bg-white/5 text-white/80 hover:text-white"
-        >
-          {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-        </button>
-      </div>
-
-      {/* Mobile Drawer Overlay */}
-      {mobileMenuOpen && (
-        <div className="fixed inset-x-0 top-20 bg-black/95 border-b border-white/10 z-40 lg:hidden flex flex-col p-6 gap-2">
-          {navLinks.map((link) => {
-            const isActive = activeChapter === link.id;
-            return (
-              <button
-                key={link.id}
-                onClick={() => {
-                  setActiveChapter?.(link.id);
-                  setMobileMenuOpen(false);
-                }}
-                className={`py-3 text-left text-xs tracking-widest font-bold border-b border-white/5 ${
-                  isActive ? "text-amber-500" : "text-white/50"
-                }`}
-              >
-                CH_0{link.id} // {link.label}
-              </button>
-            );
-          })}
+        <div className="flex items-center lg:hidden">
           <button
-            onClick={() => {
-              setActiveChapter?.(5);
-              setMobileMenuOpen(false);
-            }}
-            className="mt-4 w-full py-3 bg-amber-500 text-black text-center text-xs tracking-widest font-bold uppercase rounded-sm"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="flex items-center justify-center h-10 w-10 text-charcoal hover:bg-sage-light rounded-full transition-colors focus:outline-none"
+            aria-label="Toggle menu"
           >
-            INITIATE SESSION
+            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
-      )}
-    </header>
+
+        {/* Mobile Drawer Overlay */}
+        {mobileMenuOpen && (
+          <div className="fixed inset-0 top-16 md:top-20 bg-background/98 z-40 lg:hidden flex flex-col p-6 gap-6 animate-fade-in border-t border-border">
+            <nav className="flex flex-col gap-4">
+              {navLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  onClick={(e) => handleScrollToSection(e, link.href)}
+                  className="py-3 text-lg font-medium text-charcoal-muted hover:text-charcoal border-b border-border/50 transition-colors"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </nav>
+            <a
+              href="#book"
+              onClick={(e) => handleScrollToSection(e, "#book")}
+              className="mt-4 w-full py-3.5 bg-sage hover:bg-sage-hover text-white text-center text-md font-semibold rounded-full shadow-soft transition-colors"
+            >
+              Book Now
+            </a>
+          </div>
+        )}
+      </header>
+
+      {/* Mobile Sticky / Floating Book Now Button at screen bottom */}
+      <div className="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[90%] max-w-sm pointer-events-auto">
+        <a
+          href="#book"
+          onClick={(e) => handleScrollToSection(e, "#book")}
+          className="flex items-center justify-center w-full py-4 bg-charcoal hover:bg-charcoal/90 text-white text-sm font-semibold rounded-full shadow-premium tracking-wide uppercase transition-transform hover:scale-102"
+        >
+          Book Now
+        </a>
+      </div>
+    </>
   );
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { MapPin, HelpCircle, Activity } from "lucide-react";
+import { MapPin, HelpCircle } from "lucide-react";
 
 const calgary = [
   "North Calgary",
@@ -13,51 +13,68 @@ const nearby = ["Airdrie", "Cochrane", "Chestermere"];
 
 export function Areas() {
   return (
-    <div className="w-full font-mono text-left select-none">
-      <div className="flex items-center gap-2 text-amber-500 glow-text-gold text-[10px] tracking-widest font-bold mb-2">
-        <Activity className="h-3.5 w-3.5 animate-pulse" />
-        <span>DEPLOYMENT COORDS // CH_04A</span>
-      </div>
-
-      <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-white font-sans uppercase mb-6">
-        COVERAGE REGION
+    <div id="areas" className="w-full text-left select-none">
+      <span className="text-xs font-semibold text-sage uppercase tracking-wider block mb-3">
+        Where We Go
+      </span>
+      <h2 className="text-3xl sm:text-4xl font-semibold text-charcoal tracking-tight mb-8">
+        We Come To You.
       </h2>
 
-      <div className="hud-panel p-6 border border-white/10 hud-corners hud-corners-active w-full">
-        <div className="flex justify-between items-center text-[8px] text-white/30 border-b border-white/5 pb-3 mb-4">
-          <span>[CALGARY METROPOLITAN MATRIX]</span>
-          <span className="text-emerald-500">ACCESSIBILITY: ACTIVE</span>
-        </div>
+      <div className="bg-card p-8 rounded-2xl border border-border shadow-soft w-full">
+        {/* Intro */}
+        <p className="text-sm text-charcoal-muted mb-6 leading-relaxed font-light">
+          Proudly bringing expert mobile massage therapy throughout Calgary and nearby communities:
+        </p>
 
-        {/* Calgary Regions list */}
-        <p className="text-[10px] text-white/50 tracking-wider mb-3">CALGARY QUADRANTS:</p>
-        <ul className="grid grid-cols-2 gap-2 mb-6">
+        {/* Calgary Quadrants list */}
+        <span className="text-xs font-semibold text-charcoal uppercase tracking-wider block mb-4">
+          Calgary Quadrants
+        </span>
+        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
           {calgary.map((c) => (
-            <li key={c} className="flex items-center gap-2 text-[10px] text-white/80">
-              <MapPin className="h-3 w-3 text-amber-500 shrink-0" />
-              <span>{c.toUpperCase()}</span>
+            <li
+              key={c}
+              className="flex items-center gap-2.5 text-sm text-charcoal-muted font-light"
+            >
+              <MapPin className="h-4 w-4 text-sage flex-shrink-0" />
+              <span>{c}</span>
             </li>
           ))}
         </ul>
 
-        <div className="h-px bg-white/5 my-4" />
+        <div className="h-px bg-border my-6" />
 
         {/* Surrounding Areas */}
-        <p className="text-[10px] text-white/50 tracking-wider mb-3">SATELLITE SECTORS:</p>
-        <div className="flex flex-wrap gap-2">
+        <span className="text-xs font-semibold text-charcoal uppercase tracking-wider block mb-4">
+          Surrounding Communities
+        </span>
+        <div className="flex flex-wrap gap-2.5">
           {nearby.map((n) => (
             <span
               key={n}
-              className="px-2.5 py-1 border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-[9px] rounded-sm uppercase"
+              className="px-4 py-1.5 bg-soft-blue-light border border-soft-blue/30 text-charcoal text-xs font-semibold rounded-full"
             >
               {n}
             </span>
           ))}
         </div>
 
-        <div className="mt-6 flex items-center gap-2 text-[8px] text-white/30 bg-white/[0.02] p-2.5 border border-white/5 rounded-sm">
-          <HelpCircle className="h-3 w-3 text-amber-500 shrink-0" />
-          <span>OUTSIDE RANGE? SUBMIT COORDS VIA WHATSAPP STREAM.</span>
+        {/* Outside Range Note */}
+        <div className="mt-8 flex items-start gap-3 text-xs text-charcoal-muted bg-background p-4 rounded-xl border border-border/50">
+          <HelpCircle className="h-4 w-4 text-sage flex-shrink-0 mt-0.5" />
+          <p className="leading-relaxed font-light">
+            Not sure if we cover your exact neighbourhood?{" "}
+            <a
+              href="https://wa.me/14039230323"
+              target="_blank"
+              rel="noreferrer"
+              className="font-semibold text-sage underline hover:text-sage-hover"
+            >
+              Message us
+            </a>{" "}
+            — we’re happy to confirm and usually can accommodate.
+          </p>
         </div>
       </div>
     </div>

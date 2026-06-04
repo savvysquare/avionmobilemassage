@@ -1,127 +1,96 @@
-import React, { useState } from "react";
-import { CalendarCheck, Truck, Sparkles, Crosshair, HelpCircle, Activity } from "lucide-react";
+import React from "react";
+import { CalendarCheck, Truck, Sparkles, ArrowRight } from "lucide-react";
 
 const steps = [
   {
     icon: CalendarCheck,
-    phase: "PHASE_01",
-    subId: "SYS_REQ_LOC",
-    title: "GEO-LOCATION",
+    title: "1. Book Online",
     description:
-      "Initialize target session details. Select duration, RMT specialization, and precise deployment coordinates.",
-    metric: "LATENCY: < 1.2s",
+      "Choose your service, preferred time, and location in under a minute. We’ll confirm quickly.",
   },
   {
     icon: Truck,
-    phase: "PHASE_02",
-    subId: "DISPATCH_SYS",
-    title: "DISPATCH & SETUP",
+    title: "2. We Come Prepared",
     description:
-      "Therapist deploys with technical array: premium ergonomic massage table, custom linens, organic oils, and soothing audio atmosphere.",
-    metric: "DEP_RANGE: CALGARY + AREA",
+      "Your therapist arrives on time with a professional massage table, linens, and all supplies. You just need to open the door.",
   },
   {
     icon: Sparkles,
-    phase: "PHASE_03",
-    subId: "INTEG_RECOV",
-    title: "RECOVERY INTEGRATION",
+    title: "3. Relax & Recover",
     description:
-      "Therapeutic massage session execution in your private biome. Deep tension mitigation, myofascial release, and absolute recovery.",
-    metric: "EFFICIENCY: 100%",
+      "Enjoy focused, expert care in your own environment. When the session ends, you’re already home — ready to continue your day feeling better.",
   },
 ];
 
 export function HowItWorks() {
-  const [hoveredPhase, setHoveredPhase] = useState<number | null>(null);
+  const handleScrollToBooking = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const target = document.querySelector("#book");
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
-    <div className="w-full h-full min-h-screen relative flex items-center justify-center bg-black px-6 md:px-12 py-24 select-none font-mono">
-      <div className="w-full max-w-6xl">
-        {/* Diagnostic Heading */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-white/10 pb-6 mb-12">
-          <div>
-            <div className="flex items-center gap-2 text-amber-500 glow-text-gold text-[10px] tracking-widest font-bold mb-2">
-              <Activity className="h-3.5 w-3.5" />
-              <span>OPERATION PROTOCOL // SECT_01</span>
-            </div>
-            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white font-sans">
-              THE WELLNESS SEQUENCE
-            </h2>
-          </div>
-
-          <div className="text-right text-white/40 text-[9px] tracking-widest mt-4 md:mt-0 max-w-xs">
-            <span>
-              [AUTOMATED CONVERSION SYSTEMS] // EXPERT THERAPEUTIC FLUIDITY APPLIED TO YOUR PRIVATE
-              BIOME.
-            </span>
+    <section id="how-it-works" className="w-full py-20 md:py-28 bg-white">
+      <div className="container mx-auto px-6 md:px-12 lg:px-20 max-w-7xl">
+        {/* Section Header */}
+        <div className="max-w-3xl mb-16 text-left">
+          <span className="text-xs font-semibold text-sage uppercase tracking-wider block mb-3">
+            How It Works
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-charcoal tracking-tight leading-tight">
+            Professional Care. <br className="sm:hidden" />
+            Exceptional Convenience.
+          </h2>
+          <div className="mt-6 text-charcoal-muted space-y-4 text-md sm:text-lg leading-relaxed font-light">
+            <p>
+              At Avion Mobile Massage we believe quality care should never feel like another task on
+              your list. Our Registered Massage Therapists bring clinical expertise and genuine
+              warmth straight to you — whether you’re recovering from desk posture, training for
+              your next adventure in the Rockies, or simply carving out time for yourself.
+            </p>
+            <p>
+              We handle everything: professional table, fresh linens, oils, and a calm, respectful
+              experience in the space where you already feel comfortable.
+            </p>
           </div>
         </div>
 
-        {/* Phase Panel Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {steps.map((s, idx) => {
-            const isHovered = hoveredPhase === idx;
+        {/* Steps Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+          {steps.map((step) => {
+            const IconComponent = step.icon;
             return (
               <div
-                key={s.title}
-                onMouseEnter={() => setHoveredPhase(idx)}
-                onMouseLeave={() => setHoveredPhase(null)}
-                className={`hud-panel p-6 md:p-8 flex flex-col justify-between transition-all duration-500 border ${
-                  isHovered
-                    ? "border-amber-500/40 bg-amber-500/[0.03] translate-y-[-4px] shadow-[0_0_20px_rgba(245,158,11,0.08)]"
-                    : "border-white/10"
-                } hud-corners ${isHovered ? "hud-corners-active" : ""}`}
+                key={step.title}
+                className="flex flex-col bg-background p-8 rounded-2xl shadow-soft hover:shadow-premium transition-all duration-300 border border-border/30"
               >
-                <div>
-                  {/* Top Phase Indicators */}
-                  <div className="flex justify-between items-center mb-6">
-                    <span
-                      className={`text-[9px] tracking-widest font-bold transition-colors ${isHovered ? "text-amber-500" : "text-white/30"}`}
-                    >
-                      {s.phase} // {s.subId}
-                    </span>
-                    <div
-                      className={`p-2 rounded-sm transition-colors ${isHovered ? "bg-amber-500/20 text-amber-500" : "bg-white/5 text-white/40"}`}
-                    >
-                      <s.icon className="h-4 w-4" />
-                    </div>
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="text-md sm:text-lg font-bold text-white font-sans tracking-wide mb-4">
-                    {s.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-[10px] sm:text-xs text-white/50 tracking-wider leading-relaxed mb-6 font-sans">
-                    {s.description}
-                  </p>
+                <div className="w-12 h-12 rounded-xl bg-sage-light flex items-center justify-center text-sage mb-6">
+                  <IconComponent className="h-6 w-6" />
                 </div>
-
-                {/* Technical Diagnostic Stats inside Card */}
-                <div className="pt-4 border-t border-white/5 flex items-center justify-between text-[9px] text-white/30">
-                  <div className="flex items-center gap-1.5">
-                    <Crosshair
-                      className={`h-3 w-3 ${isHovered ? "text-emerald-500" : "text-white/30"}`}
-                    />
-                    <span>STATUS: READY</span>
-                  </div>
-                  <span>{s.metric}</span>
-                </div>
+                <h3 className="text-xl font-medium text-charcoal mb-3">{step.title}</h3>
+                <p className="text-charcoal-muted text-sm leading-relaxed">{step.description}</p>
               </div>
             );
           })}
         </div>
 
-        {/* Phase Indicator Footer Link */}
-        <div className="mt-12 flex justify-between items-center border-t border-white/5 pt-6 text-[9px] text-white/30">
-          <div className="flex items-center gap-2">
-            <HelpCircle className="h-3 w-3 text-amber-500" />
-            <span>NEED SCHEDULING CLARIFICATIONS? JUMP CH_05</span>
-          </div>
-          <span>[SYSTEMS VERIFIED READY]</span>
+        {/* Bottom CTA */}
+        <div className="mt-16 flex justify-start">
+          <a
+            href="#book"
+            onClick={handleScrollToBooking}
+            className="inline-flex items-center gap-2 text-sage hover:text-sage-hover text-md font-semibold transition-colors duration-200 group"
+          >
+            Ready when you are
+            <span className="group-hover:translate-x-1.5 transition-transform duration-200 flex items-center">
+              <ArrowRight className="h-4 w-4" />
+            </span>
+            <span className="underline ml-1">Book Now</span>
+          </a>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
