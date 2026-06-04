@@ -49,16 +49,16 @@ export function FAQ() {
         Frequently Asked Questions
       </h2>
 
-      <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-soft w-full">
+      <div className="bg-card p-6 md:p-8 rounded-lg border border-border shadow-soft w-full">
         <div className="flex flex-col gap-3">
           {faqs.map((f, i) => {
             const isOpen = openIndex === i;
             return (
               <div
                 key={f.q}
-                className={`border rounded-xl transition-all duration-300 ${
+                className={`border rounded-lg transition-all duration-300 ${
                   isOpen
-                    ? "border-sage bg-sage-light/20"
+                    ? "border-sage bg-sage-light/30"
                     : "border-border bg-background hover:border-sage/40"
                 }`}
               >

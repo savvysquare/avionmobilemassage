@@ -21,7 +21,7 @@ export function Areas() {
         We Come To You.
       </h2>
 
-      <div className="bg-card p-8 rounded-2xl border border-border shadow-soft w-full">
+      <div className="bg-card p-8 rounded-lg border border-border shadow-soft w-full">
         {/* Intro */}
         <p className="text-sm text-charcoal-muted mb-6 leading-relaxed font-light">
           Proudly bringing expert mobile massage therapy throughout Calgary and nearby communities:
@@ -53,7 +53,7 @@ export function Areas() {
           {nearby.map((n) => (
             <span
               key={n}
-              className="px-4 py-1.5 bg-soft-blue-light border border-soft-blue/30 text-charcoal text-xs font-semibold rounded-full"
+              className="px-4 py-1.5 bg-sage-light border border-sage/25 text-sage text-xs font-semibold rounded-md"
             >
               {n}
             </span>
@@ -61,7 +61,7 @@ export function Areas() {
         </div>
 
         {/* Outside Range Note */}
-        <div className="mt-8 flex items-start gap-3 text-xs text-charcoal-muted bg-background p-4 rounded-xl border border-border/50">
+        <div className="mt-8 flex items-start gap-3 text-xs text-charcoal-muted bg-background p-4 rounded-lg border border-border/50">
           <HelpCircle className="h-4 w-4 text-sage flex-shrink-0 mt-0.5" />
           <p className="leading-relaxed font-light">
             Not sure if we cover your exact neighbourhood?{" "}

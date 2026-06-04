@@ -53,7 +53,7 @@ export function About() {
             </div>
 
             {/* Our Promise Callout */}
-            <div className="p-6 rounded-2xl bg-sage-light border border-sage/20 text-left">
+            <div className="p-6 rounded-lg bg-sage-light border border-sage/20 text-left">
               <span className="text-[11px] font-semibold text-sage uppercase tracking-wider block mb-2">
                 Our Promise
               </span>
@@ -67,7 +67,7 @@ export function About() {
           {/* Right Column: Image & Pillars */}
           <div className="lg:col-span-6 flex flex-col gap-10">
             {/* Bright cropped Calgary lifestyle image */}
-            <div className="w-full rounded-2xl overflow-hidden shadow-soft aspect-[16/10] max-h-[300px]">
+            <div className="w-full rounded-lg overflow-hidden shadow-soft aspect-[16/10] max-h-[300px]">
               <img
                 src={aboutImg}
                 alt="Relaxing Calgary client receiving professional in-home care"
@@ -84,9 +84,9 @@ export function About() {
                   return (
                     <div
                       key={p.title}
-                      className="p-5 bg-background border border-border/50 rounded-2xl flex flex-col gap-3 shadow-soft hover:shadow-premium transition-shadow duration-300"
+                      className="p-5 bg-background border border-border/50 rounded-lg flex flex-col gap-3 shadow-soft hover:shadow-premium transition-shadow duration-300"
                     >
-                      <div className="w-10 h-10 rounded-lg bg-soft-blue-light flex items-center justify-center text-sage">
+                      <div className="w-10 h-10 rounded-md bg-sage-light flex items-center justify-center text-sage">
                         <IconComponent className="h-5 w-5" />
                       </div>
                       <div>

@@ -64,9 +64,9 @@ export function HowItWorks() {
             return (
               <div
                 key={step.title}
-                className="flex flex-col bg-background p-8 rounded-2xl shadow-soft hover:shadow-premium transition-all duration-300 border border-border/30"
+                className="flex flex-col bg-background p-8 rounded-lg shadow-sm hover:shadow-soft transition-all duration-300 border border-border"
               >
-                <div className="w-12 h-12 rounded-xl bg-sage-light flex items-center justify-center text-sage mb-6">
+                <div className="w-12 h-12 rounded-lg bg-sage-light flex items-center justify-center text-sage mb-6">
                   <IconComponent className="h-6 w-6" />
                 </div>
                 <h3 className="text-xl font-medium text-charcoal mb-3">{step.title}</h3>
@@ -81,7 +81,7 @@ export function HowItWorks() {
           <a
             href="#book"
             onClick={handleScrollToBooking}
-            className="inline-flex items-center gap-2 text-sage hover:text-sage-hover text-md font-semibold transition-colors duration-200 group"
+            className="inline-flex items-center gap-2 text-sage hover:text-soft-blue text-md font-semibold transition-colors duration-200 group"
           >
             Ready when you are
             <span className="group-hover:translate-x-1.5 transition-transform duration-200 flex items-center">

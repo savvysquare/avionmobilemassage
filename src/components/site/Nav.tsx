@@ -57,7 +57,7 @@ export function Nav() {
               key={link.label}
               href={link.href}
               onClick={(e) => handleScrollToSection(e, link.href)}
-              className="text-sm font-medium text-charcoal-muted hover:text-charcoal transition-colors duration-200"
+              className="text-sm font-medium text-charcoal-muted hover:text-soft-blue transition-colors duration-200"
             >
               {link.label}
             </a>
@@ -69,7 +69,7 @@ export function Nav() {
           <a
             href="#book"
             onClick={(e) => handleScrollToSection(e, "#book")}
-            className="inline-flex items-center justify-center px-6 py-2.5 bg-sage hover:bg-sage-hover text-white text-sm font-semibold rounded-full transition-all shadow-soft hover:shadow-premium duration-200"
+            className="inline-flex items-center justify-center px-6 py-2.5 bg-sage hover:bg-sage-hover text-white text-sm font-semibold rounded-lg transition-all shadow-soft hover:shadow-premium duration-200"
           >
             Book Now
           </a>
@@ -95,7 +95,7 @@ export function Nav() {
                   key={link.label}
                   href={link.href}
                   onClick={(e) => handleScrollToSection(e, link.href)}
-                  className="py-3 text-lg font-medium text-charcoal-muted hover:text-charcoal border-b border-border/50 transition-colors"
+                  className="py-3 text-lg font-medium text-charcoal-muted hover:text-soft-blue border-b border-border/50 transition-colors"
                 >
                   {link.label}
                 </a>
@@ -104,7 +104,7 @@ export function Nav() {
             <a
               href="#book"
               onClick={(e) => handleScrollToSection(e, "#book")}
-              className="mt-4 w-full py-3.5 bg-sage hover:bg-sage-hover text-white text-center text-md font-semibold rounded-full shadow-soft transition-colors"
+              className="mt-4 w-full py-3.5 bg-sage hover:bg-sage-hover text-white text-center text-md font-semibold rounded-lg shadow-soft transition-colors"
             >
               Book Now
             </a>
@@ -117,7 +117,7 @@ export function Nav() {
         <a
           href="#book"
           onClick={(e) => handleScrollToSection(e, "#book")}
-          className="flex items-center justify-center w-full py-4 bg-charcoal hover:bg-charcoal/90 text-white text-sm font-semibold rounded-full shadow-premium tracking-wide uppercase transition-transform hover:scale-102"
+          className="flex items-center justify-center w-full py-4 bg-sage hover:bg-sage-hover text-white text-sm font-semibold rounded-lg shadow-premium tracking-wide uppercase transition-transform hover:scale-102"
         >
           Book Now
         </a>

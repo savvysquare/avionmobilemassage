@@ -21,7 +21,7 @@ export function Hero() {
         <a
           href="#book"
           onClick={handleScrollToBooking}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-soft-blue-light border border-soft-blue/50 text-xs font-semibold text-charcoal hover:bg-soft-blue transition-colors duration-200 mb-8"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg bg-soft-blue-light border border-soft-blue/50 text-xs font-semibold text-[#2A4B35] hover:bg-soft-blue transition-colors duration-200 mb-8"
         >
           <span className="inline-block w-2 h-2 rounded-full bg-sage animate-pulse" />
           Direct Billing Available
@@ -44,7 +44,7 @@ export function Hero() {
         <div className="mt-10 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
           <button
             onClick={handleScrollToBooking}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-sage hover:bg-sage-hover text-white text-sm font-semibold rounded-full shadow-soft hover:shadow-premium transition-all duration-200"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-sage hover:bg-sage-hover text-white text-sm font-semibold rounded-lg shadow-soft hover:shadow-premium transition-all duration-200"
           >
             Book Your Appointment
             <ArrowRight className="h-4 w-4" />
@@ -54,7 +54,7 @@ export function Hero() {
             href="https://wa.me/14039230323"
             target="_blank"
             rel="noreferrer"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-soft-blue-light border border-border text-charcoal text-sm font-semibold rounded-full shadow-soft transition-all duration-200"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-soft-blue-light border border-border text-charcoal text-sm font-semibold rounded-lg shadow-soft transition-all duration-200"
           >
             <MessageCircle className="h-4 w-4 text-[#25D366]" />
             Chat with us on WhatsApp

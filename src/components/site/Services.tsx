@@ -108,15 +108,15 @@ export function Services() {
             return (
               <div
                 key={s.name}
-                className="flex flex-col justify-between bg-card p-8 rounded-2xl shadow-soft hover:shadow-premium transition-all duration-300 border border-border"
+                className="flex flex-col justify-between bg-card p-8 rounded-lg shadow-sm hover:shadow-soft transition-all duration-300 border border-border"
               >
                 <div>
                   {/* Top Row: Icon & Duration */}
                   <div className="flex items-center justify-between mb-6">
-                    <div className="w-12 h-12 rounded-xl bg-soft-blue-light flex items-center justify-center text-sage">
+                    <div className="w-12 h-12 rounded-lg bg-soft-blue-light flex items-center justify-center text-sage">
                       <IconComponent className="h-6 w-6" />
                     </div>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-background border border-border text-[11px] font-medium text-charcoal-muted">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-soft-blue-light border border-soft-blue/30 text-[11px] font-semibold text-soft-blue">
                       <Clock className="h-3 w-3" />
                       {s.duration}
                     </span>
@@ -137,7 +137,7 @@ export function Services() {
                         key={b}
                         className="flex items-center gap-2 text-xs text-charcoal-muted font-medium"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-sage" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-soft-blue" />
                         {b}
                       </li>
                     ))}
@@ -147,7 +147,7 @@ export function Services() {
                 {/* Book Button */}
                 <button
                   onClick={() => handleBookService(s.name)}
-                  className="w-full inline-flex items-center justify-center gap-2 py-3 bg-sage hover:bg-sage-hover text-white text-xs font-semibold rounded-full shadow-soft transition-all duration-200 uppercase tracking-wider"
+                  className="w-full inline-flex items-center justify-center gap-2 py-3 bg-sage hover:bg-sage-hover text-white text-xs font-semibold rounded-lg shadow-soft transition-all duration-200 uppercase tracking-wider"
                 >
                   Book This Service
                   <ArrowRight className="h-3.5 w-3.5" />

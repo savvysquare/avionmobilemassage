@@ -59,7 +59,7 @@ export function Booking() {
             </div>
 
             {/* Urgency Callout */}
-            <div className="flex items-center gap-3 px-5 py-4 bg-soft-blue-light border border-soft-blue/30 rounded-2xl text-charcoal">
+            <div className="flex items-center gap-3 px-5 py-4 bg-sage-light border border-sage/20 rounded-lg text-charcoal">
               <AlertCircle className="h-5 w-5 text-sage shrink-0" />
               <span className="text-xs font-medium">
                 Limited evening slots this week — book soon.
@@ -67,7 +67,7 @@ export function Booking() {
             </div>
 
             {/* Direct Billing Badge */}
-            <div className="p-6 bg-background rounded-2xl border border-border/80 flex flex-col gap-4">
+            <div className="p-6 bg-background rounded-lg border border-border/80 flex flex-col gap-4">
               <span className="text-xs font-semibold text-charcoal uppercase tracking-wider">
                 Direct Billing Available
               </span>
@@ -85,7 +85,7 @@ export function Booking() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <a
                   href="tel:+14039230323"
-                  className="flex items-center gap-3 px-5 py-3 border border-border hover:bg-soft-blue-light hover:border-soft-blue rounded-full text-xs font-semibold text-charcoal transition-all duration-200"
+                  className="flex items-center gap-3 px-5 py-3 border border-border hover:bg-sage-light hover:border-sage/30 rounded-lg text-xs font-semibold text-charcoal transition-all duration-200"
                 >
                   <Phone className="h-4 w-4 text-sage" />
                   <span>Call +1 (403) 923-0323</span>
@@ -95,7 +95,7 @@ export function Booking() {
                   href="https://wa.me/14039230323"
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-3 px-5 py-3 border border-border hover:bg-soft-blue-light hover:border-soft-blue rounded-full text-xs font-semibold text-charcoal transition-all duration-200"
+                  className="flex items-center gap-3 px-5 py-3 border border-border hover:bg-sage-light hover:border-sage/30 rounded-lg text-xs font-semibold text-charcoal transition-all duration-200"
                 >
                   <MessageCircle className="h-4 w-4 text-[#25D366]" />
                   <span>WhatsApp +1 (403) 923-0323</span>
@@ -106,7 +106,7 @@ export function Booking() {
 
           {/* Right Column: Dynamic Form Panel */}
           <div className="lg:col-span-7 w-full">
-            <div className="bg-card p-6 md:p-10 rounded-2xl border border-border shadow-premium">
+            <div className="bg-card p-6 md:p-10 rounded-lg border border-border shadow-premium">
               {submitted ? (
                 <div className="py-16 text-center flex flex-col items-center justify-center">
                   <div className="h-16 w-16 rounded-full bg-sage-light flex items-center justify-center mb-6 text-sage">
@@ -126,7 +126,7 @@ export function Booking() {
                     href="https://wa.me/14039230323"
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-8 inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-sage hover:bg-sage-hover text-white text-xs font-semibold rounded-full shadow-soft transition-colors tracking-wider uppercase"
+                    className="mt-8 inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-sage hover:bg-sage-hover text-white text-xs font-semibold rounded-lg shadow-soft transition-colors tracking-wider uppercase"
                   >
                     Message on WhatsApp
                     <MessageCircle className="h-4 w-4" />
@@ -173,7 +173,7 @@ export function Booking() {
                             key={s}
                             type="button"
                             onClick={() => setSelectedService(s)}
-                            className={`px-4 py-2 border text-xs font-medium rounded-full transition-all duration-200 ${
+                            className={`px-4 py-2 border text-xs font-medium rounded-lg transition-all duration-200 ${
                               active
                                 ? "border-sage bg-sage text-white shadow-soft"
                                 : "border-border bg-background text-charcoal-muted hover:border-sage/50 hover:text-charcoal"
@@ -199,7 +199,7 @@ export function Booking() {
                             key={l}
                             type="button"
                             onClick={() => setSelectedLength(l)}
-                            className={`px-5 py-2.5 border text-xs font-medium rounded-full transition-all duration-200 ${
+                            className={`px-5 py-2.5 border text-xs font-medium rounded-lg transition-all duration-200 ${
                               active
                                 ? "border-sage bg-sage text-white shadow-soft"
                                 : "border-border bg-background text-charcoal-muted hover:border-sage/50 hover:text-charcoal"
@@ -222,7 +222,7 @@ export function Booking() {
                   <div className="sm:col-span-2 mt-6">
                     <button
                       type="submit"
-                      className="w-full inline-flex items-center justify-center gap-2 py-4 bg-sage hover:bg-sage-hover text-white text-xs font-semibold rounded-full shadow-soft hover:shadow-premium transition-all duration-200 uppercase tracking-wider"
+                      className="w-full inline-flex items-center justify-center gap-2 py-4 bg-sage hover:bg-sage-hover text-white text-xs font-semibold rounded-lg shadow-soft hover:shadow-premium transition-all duration-200 uppercase tracking-wider"
                     >
                       Request My Appointment
                       <Send className="h-4 w-4" />
@@ -263,7 +263,7 @@ function Field({
         name={name}
         required={required}
         placeholder={placeholder}
-        className="w-full bg-background border border-border focus:border-sage focus:ring-1 focus:ring-sage rounded-xl px-4 py-3 text-sm text-charcoal placeholder-charcoal-muted/30 focus:outline-none transition-all"
+        className="w-full bg-background border border-border focus:border-sage focus:ring-1 focus:ring-sage rounded-lg px-4 py-3 text-sm text-charcoal placeholder-charcoal-muted/30 focus:outline-none transition-all"
       />
     </label>
   );

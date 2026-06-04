@@ -12,13 +12,13 @@ export function Footer() {
   };
 
   return (
-    <footer className="w-full bg-charcoal text-background pt-16 pb-24 md:pb-16 select-none">
+    <footer className="w-full text-background pt-16 pb-24 md:pb-16 select-none" style={{ backgroundColor: '#1E2E22' }}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20 max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 border-b border-background/10 pb-12">
           {/* Column 1: Logo & Tagline */}
           <div className="md:col-span-5 flex flex-col gap-4 text-left">
             <img src={logo} alt="Avion" className="h-8 w-auto brightness-0 invert self-start" />
-            <p className="text-xs font-semibold uppercase tracking-wider text-sage">
+            <p className="text-xs font-semibold uppercase tracking-wider text-soft-blue">
               Mobile Massage Therapy | Registered Therapists
             </p>
             <p className="text-xs text-background/60 leading-relaxed max-w-xs font-light">
@@ -82,7 +82,7 @@ export function Footer() {
                 <a
                   href="#book"
                   onClick={(e) => handleScrollToSection(e, "#book")}
-                  className="hover:text-white transition-colors text-sage font-medium"
+                  className="hover:text-white transition-colors text-soft-blue font-medium"
                 >
                   Book Now
                 </a>
@@ -101,7 +101,7 @@ export function Footer() {
                   href="tel:+14039230323"
                   className="flex items-center gap-2.5 hover:text-white transition-colors"
                 >
-                  <Phone className="h-4 w-4 text-sage" />
+                  <Phone className="h-4 w-4 text-soft-blue" />
                   <span>Call: +1 (403) 923-0323</span>
                 </a>
               </li>
@@ -121,7 +121,7 @@ export function Footer() {
                   href="mailto:avionmobilemassage@outlook.com"
                   className="flex items-center gap-2.5 hover:text-white transition-colors animate-pulse-slow"
                 >
-                  <Mail className="h-4 w-4 text-sage" />
+                  <Mail className="h-4 w-4 text-soft-blue" />
                   <span>avionmobilemassage@outlook.com</span>
                 </a>
               </li>
@@ -132,7 +132,7 @@ export function Footer() {
                   rel="noreferrer"
                   className="flex items-center gap-2.5 hover:text-white transition-colors"
                 >
-                  <Instagram className="h-4 w-4 text-sage" />
+                  <Instagram className="h-4 w-4 text-soft-blue" />
                   <span>Instagram: @avionmobilemassage</span>
                 </a>
               </li>
