@@ -27,7 +27,7 @@ export function Nav() {
 
   return (
     <header className="fixed top-4 md:top-6 inset-x-0 z-50 flex justify-center pointer-events-none select-none">
-      <div className="w-full max-w-7xl px-6 md:px-12 lg:px-20">
+      <div className="w-full max-w-7xl px-6">
         <div
           className={`relative w-full flex items-center justify-between gap-4 rounded-full px-5 md:px-8 py-3 md:py-4 border transition-all duration-300 pointer-events-auto ${
             scrolled
@@ -37,7 +37,7 @@ export function Nav() {
         >
           {/* Logo + brand */}
           <a href="#hero" onClick={(e) => scrollTo(e, "#hero")} className="flex items-center shrink-0">
-            <img src={logo} alt="Avion Mobile Massage" className="h-16 md:h-20 w-auto" />
+            <img src={logo} alt="Avion Mobile Massage" className="h-20 md:h-24 w-auto" />
           </a>
 
           {/* Links */}

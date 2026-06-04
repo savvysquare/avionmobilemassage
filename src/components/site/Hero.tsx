@@ -64,11 +64,11 @@ export function Hero() {
           </div>
 
           {/* Floating credential chip */}
-          <div className="absolute -bottom-6 -left-6 md:-left-10 bg-white/95 backdrop-blur-md rounded-full shadow-premium px-5 py-3 flex items-center gap-3 border border-soft-blue/40">
-            <span className="h-2 w-2 rounded-full bg-sage animate-pulse" />
+          <div className="absolute bottom-4 -left-4 md:-left-8 bg-white/95 backdrop-blur-md rounded-full shadow-premium px-6 py-4 flex items-center gap-4 border border-soft-blue/40">
+            <span className="h-3 w-3 rounded-full bg-sage animate-pulse shrink-0" />
             <div className="leading-tight">
-              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-sage">Now Booking</p>
-              <p className="text-[11px] text-charcoal/70">Evenings &amp; weekends</p>
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-sage">Now Booking</p>
+              <p className="text-sm text-charcoal/70 font-medium">Evenings &amp; Weekends</p>
             </div>
           </div>
 
