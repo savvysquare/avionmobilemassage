@@ -482,13 +482,13 @@ _Thank you for booking with Avion! We will review your slot availability and rea
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
               <button
                 onClick={handleFinalSubmit}
-                className="inline-flex items-center gap-2 bg-sage hover:bg-sage-hover text-white px-6 py-3.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all"
+                className="inline-flex items-center gap-2 bg-sage hover:bg-sage-hover text-white px-6 py-3.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all whitespace-nowrap"
               >
                 <MessageCircle className="h-4 w-4" /> Re-open WhatsApp
               </button>
               <button
                 onClick={resetForm}
-                className="inline-flex items-center gap-2 border border-white/20 hover:border-white/50 text-white px-6 py-3.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all"
+                className="inline-flex items-center gap-2 border border-white/20 hover:border-white/50 text-white px-6 py-3.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all whitespace-nowrap"
               >
                 <RefreshCw className="h-4 w-4" /> New Booking
               </button>
@@ -720,9 +720,9 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                           }`}
                         >
                           <div className="flex items-center justify-between mb-1.5">
-                            <span className="font-display font-semibold text-[15.5px]">{item.name}</span>
+                            <span className="font-display font-semibold text-[15.5px] whitespace-nowrap">{item.name}</span>
                             {serviceType === item.name && (
-                              <span className="h-4 w-4 rounded-full bg-sage flex items-center justify-center text-white">
+                              <span className="h-4 w-4 rounded-full bg-sage flex items-center justify-center text-white shrink-0 ml-2">
                                 <Check className="h-2.5 w-2.5" />
                               </span>
                             )}
@@ -758,15 +758,15 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                           }`}
                         >
                           {item.recommended && (
-                            <span className="absolute -top-3 left-4 bg-sage text-white text-[8px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full border border-charcoal">
+                            <span className="absolute -top-3 left-4 bg-sage text-white text-[8px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full border border-charcoal whitespace-nowrap">
                               Recommended
                             </span>
                           )}
-                          <div className="flex justify-between items-baseline mb-2 mt-1">
-                            <span className="font-display font-bold text-lg">{item.min} Minutes</span>
-                            <span className="font-display font-semibold text-base text-sage">${item.price} CAD</span>
+                          <div className="flex justify-between items-baseline mb-2 mt-1 gap-2">
+                            <span className="font-display font-bold text-lg whitespace-nowrap">{item.min} Minutes</span>
+                            <span className="font-display font-semibold text-base text-sage whitespace-nowrap shrink-0">${item.price} CAD</span>
                           </div>
-                          <span className="block text-[10px] font-bold uppercase tracking-wider text-soft-blue mb-2.5">
+                          <span className="block text-[10px] font-bold uppercase tracking-wider text-soft-blue mb-2.5 whitespace-nowrap">
                             {item.rec}
                           </span>
                           <p className="text-xs text-white/50 leading-relaxed font-light">
@@ -797,7 +797,7 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                               : "bg-white/5 border-white/10 hover:border-white/30 text-white/70"
                           }`}
                         >
-                          <div className="font-display font-semibold text-sm mb-1">{pref.label}</div>
+                          <div className="font-display font-semibold text-sm mb-1 whitespace-nowrap">{pref.label}</div>
                           <div className="text-[11px] text-white/45 font-light">{pref.desc}</div>
                         </button>
                       ))}
@@ -938,7 +938,7 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                     <p className="text-white/60 text-xs tracking-wider uppercase mb-5">
                       Select if this is a one-time session or if you'd like to lock in this recurring schedule.
                     </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                       {[
                         { id: "one-time", label: "One-Time", desc: "Just single session" },
                         { id: "weekly", label: "Weekly", desc: "Hold same slot weekly" },
@@ -955,8 +955,8 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                               : "bg-white/5 border-white/10 hover:border-white/30 text-white/70"
                           }`}
                         >
-                          <div className="font-display font-semibold text-sm mb-1">{freq.label}</div>
-                          <div className="text-[11px] text-white/45 font-light">{freq.desc}</div>
+                          <div className="font-display font-semibold text-sm mb-1 whitespace-nowrap">{freq.label}</div>
+                          <div className="text-[11px] text-white/45 font-light whitespace-nowrap">{freq.desc}</div>
                         </button>
                       ))}
                     </div>
@@ -976,7 +976,7 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                       Save on travel costs by booking back-to-back sessions at the same address.
                     </p>
                     
-                    <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                       {[
                         { count: 1, label: "1 Person", note: "Standard rate" },
                         { count: 2, label: "2 Persons", note: "Save 10% total", discount: "10% Off" },
@@ -994,12 +994,12 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                           }`}
                         >
                           {item.discount && (
-                            <span className="absolute top-3 right-3 bg-sage text-white text-[8px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full">
+                            <span className="absolute top-3 right-3 bg-sage text-white text-[8px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full whitespace-nowrap">
                               {item.discount}
                             </span>
                           )}
-                          <div className="font-display font-bold text-lg mb-1">{item.label}</div>
-                          <div className="text-xs text-white/45 font-light">{item.note}</div>
+                          <div className="font-display font-bold text-lg mb-1 whitespace-nowrap">{item.label}</div>
+                          <div className="text-xs text-white/45 font-light whitespace-nowrap">{item.note}</div>
                         </button>
                       ))}
                     </div>
@@ -1042,7 +1042,7 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                         type="button"
                         onClick={handleGeolocate}
                         disabled={locating}
-                        className="bg-white/10 border border-white/15 hover:bg-white/20 text-white rounded-2xl px-6 py-4 text-xs font-bold uppercase tracking-widest shrink-0 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                        className="bg-white/10 border border-white/15 hover:bg-white/20 text-white rounded-2xl px-6 py-4 text-xs font-bold uppercase tracking-widest shrink-0 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 whitespace-nowrap"
                       >
                         {locating ? (
                           <>
@@ -1190,7 +1190,7 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                   <button
                     type="button"
                     onClick={prevStep}
-                    className="group flex items-center gap-2 text-white/60 hover:text-white text-[10px] font-bold uppercase tracking-widest transition-colors py-2"
+                    className="group flex items-center gap-2 text-white/60 hover:text-white text-[10px] font-bold uppercase tracking-widest transition-colors py-2 whitespace-nowrap"
                   >
                     <ArrowLeft className="h-3.5 w-3.5" /> Back
                   </button>
@@ -1201,7 +1201,7 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                 <button
                   type="button"
                   onClick={resetForm}
-                  className="text-white/40 hover:text-white/70 text-[10px] font-bold uppercase tracking-widest transition-colors px-3 py-2"
+                  className="text-white/40 hover:text-white/70 text-[10px] font-bold uppercase tracking-widest transition-colors px-3 py-2 whitespace-nowrap"
                 >
                   Start Over
                 </button>
@@ -1211,7 +1211,7 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                     type="button"
                     onClick={nextStep}
                     disabled={!canGoNext()}
-                    className="group inline-flex items-center gap-2 bg-sage hover:bg-sage-hover disabled:bg-white/10 disabled:text-white/30 disabled:border-white/5 text-white px-7 py-3.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all hover:shadow-premium"
+                    className="group inline-flex items-center gap-2 bg-sage hover:bg-sage-hover disabled:bg-white/10 disabled:text-white/30 disabled:border-white/5 text-white px-7 py-3.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all hover:shadow-premium whitespace-nowrap"
                   >
                     Next Step <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
                   </button>
@@ -1219,7 +1219,7 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                   <button
                     type="button"
                     onClick={handleFinalSubmit}
-                    className="group inline-flex items-center gap-2 bg-sage hover:bg-sage-hover text-white px-8 py-4 rounded-full text-[11px] font-bold uppercase tracking-widest transition-all shadow-premium"
+                    className="group inline-flex items-center gap-2 bg-sage hover:bg-sage-hover text-white px-8 py-4 rounded-full text-[11px] font-bold uppercase tracking-widest transition-all shadow-premium whitespace-nowrap"
                   >
                     Submit Booking <ArrowRight className="h-4 w-4 relative z-10 transition-transform group-hover:translate-x-0.5" />
                   </button>
