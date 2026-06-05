@@ -1,11 +1,12 @@
 import React from "react";
 import heroImg from "@/assets/hero-massage.jpg";
 import { ArrowRight, Shield, Activity, Home, Flame } from "lucide-react";
+import { scrollToSection } from "@/lib/scrollTo";
 
 export function Hero() {
   const scrollToBook = (e: React.MouseEvent) => {
     e.preventDefault();
-    document.querySelector("#book")?.scrollIntoView({ behavior: "smooth" });
+    scrollToSection("#book");
   };
 
   return (

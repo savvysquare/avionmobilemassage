@@ -20,6 +20,7 @@ import {
   Check,
   ChevronDown
 } from "lucide-react";
+import { scrollToSection } from "@/lib/scrollTo";
 
 export function Booking() {
   const [submitted, setSubmitted] = useState(false);
@@ -469,12 +470,7 @@ _Thank you for booking with Avion! We will review your slot availability and rea
     return () => document.removeEventListener("mousedown", handler);
   }, [codeOpen]);
 
-  const scrollToFormTop = () => {
-    if (!formCardRef.current) return;
-    const rect = formCardRef.current.getBoundingClientRect();
-    const offset = 140; // 40px announcement bar + ~100px header pill
-    window.scrollTo({ top: window.scrollY + rect.top - offset, behavior: "smooth" });
-  };
+  const scrollToFormTop = () => scrollToSection("#book");
 
   const nextStep = () => {
     if (canGoNext()) {

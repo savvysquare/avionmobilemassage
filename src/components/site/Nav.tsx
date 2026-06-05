@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import logo from "@/assets/avion-logo.png";
 import { Menu, X, Sparkles } from "lucide-react";
+import { scrollToSection } from "@/lib/scrollTo";
 
 export function Nav() {
   const [open, setOpen] = useState(false);
@@ -23,11 +24,7 @@ export function Nav() {
   const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setOpen(false);
-    const target = document.querySelector(href);
-    if (!target) return;
-    const rect = target.getBoundingClientRect();
-    const offset = 130; // 40px bar + ~90px header
-    window.scrollTo({ top: window.scrollY + rect.top - offset, behavior: "smooth" });
+    scrollToSection(href);
   };
 
   return (
