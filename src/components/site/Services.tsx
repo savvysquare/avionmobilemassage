@@ -5,6 +5,7 @@ import relaxationImg from "@/assets/service-relaxation.jpg";
 import prenatalImg from "@/assets/service-prenatal.jpg";
 import corporateImg from "@/assets/service-corporate.jpg";
 import { ArrowRight } from "lucide-react";
+import { scrollToSection } from "@/lib/scrollTo";
 
 interface ServiceItem {
   name: string;
@@ -64,8 +65,7 @@ const services: ServiceItem[] = [
 ];
 
 export function Services() {
-  const scrollToBook = () =>
-    document.querySelector("#book")?.scrollIntoView({ behavior: "smooth" });
+  const scrollToBook = () => scrollToSection("#book");
 
   return (
     <section id="services" className="w-full py-28 md:py-36 px-6 bg-soft-blue-light/30">
