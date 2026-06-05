@@ -26,9 +26,9 @@ export function Hero() {
           <div className="mt-10 flex items-start gap-5">
             <span className="block w-px h-16 bg-charcoal/30 mt-2" />
             <div>
-              <p className="text-xl md:text-2xl text-charcoal/80 font-light leading-snug max-w-md">
+              <p className="text-xl md:text-2xl text-charcoal/80 font-normal leading-snug max-w-md">
                 Calgary&apos;s Concierge Registered Massage Therapist,{" "}
-                <span className="italic font-serif text-sage">delivered to you.</span>
+                <span className="italic font-serif font-medium text-sage">delivered to you.</span>
               </p>
               <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.32em] text-sage/80">
                 Registered Massage Therapists
@@ -38,10 +38,13 @@ export function Hero() {
 
           <button
             onClick={scrollToBook}
-            className="group mt-12 inline-flex items-center gap-3 bg-sage text-white pl-10 pr-12 py-5 rounded-full text-xs font-bold uppercase tracking-[0.25em] relative overflow-hidden transition-all duration-500 hover:pl-8 hover:pr-16 hover:bg-sage-hover hover:shadow-premium active:scale-95"
+            className="group mt-12 inline-flex items-center gap-3 text-white pl-10 pr-14 py-5 rounded-full text-sm font-semibold tracking-[0.18em] relative overflow-hidden transition-all duration-500 hover:pr-16 hover:shadow-[0_8px_40px_-8px_rgba(184,148,90,0.6)] active:scale-95 shadow-premium"
+            style={{ background: 'linear-gradient(135deg, #a6844e 0%, #d4aa72 50%, #b8945a 100%)' }}
           >
-            <span className="relative z-10">Experience the Concierge</span>
-            <ArrowRight className="w-4 h-4 absolute right-6 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-500" />
+            {/* Shimmer sweep */}
+            <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 ease-in-out pointer-events-none" />
+            <span className="relative z-10">Book a Session Now</span>
+            <ArrowRight className="w-4 h-4 relative z-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-500" />
           </button>
         </div>
 
