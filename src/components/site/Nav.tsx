@@ -13,8 +13,9 @@ export function Nav() {
   }, []);
 
   const links = [
-    { href: "#services", label: "Services" },
     { href: "#about", label: "About" },
+    { href: "#services", label: "Services" },
+    { href: "#how-it-works", label: "How It Works" },
     { href: "#faq", label: "FAQ" },
     { href: "#book", label: "Contact" },
   ];

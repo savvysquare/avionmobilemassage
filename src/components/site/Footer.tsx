@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "@/assets/avion-logo.png";
-import { Instagram, Facebook, Twitter } from "lucide-react";
+import { Instagram } from "lucide-react";
 
 export function Footer() {
   return (
@@ -12,16 +12,12 @@ export function Footer() {
           <a href="https://www.instagram.com/avionmobilemassage" target="_blank" rel="noreferrer" className="hover:text-sage transition-colors inline-flex items-center gap-2">
             <Instagram className="h-3.5 w-3.5" /> Instagram
           </a>
-          <a href="#" className="hover:text-sage transition-colors inline-flex items-center gap-2">
-            <Facebook className="h-3.5 w-3.5" /> Facebook
-          </a>
-          <a href="#" className="hover:text-sage transition-colors inline-flex items-center gap-2">
-            <Twitter className="h-3.5 w-3.5" /> Twitter
-          </a>
         </div>
 
-        <p className="text-[10px] text-charcoal/30 uppercase tracking-[0.25em]">
-          © 2026 Avion Mobile Massage. All Rights Reserved.
+        <p className="text-[10px] text-charcoal/30 uppercase tracking-[0.25em] text-center">
+          © 2026 Avion Mobile Massage.{" "}
+          <br className="sm:hidden" />
+          All Rights Reserved.
         </p>
       </div>
     </footer>
