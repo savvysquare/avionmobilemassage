@@ -1,5 +1,5 @@
 import React from "react";
-import { MapPin } from "lucide-react";
+import { MapPin, Navigation } from "lucide-react";
 
 const calgary = [
   "North Calgary",
@@ -9,7 +9,12 @@ const calgary = [
   "Southwest Calgary",
   "Southeast Calgary",
 ];
-const nearby = ["Airdrie", "Cochrane", "Chestermere"];
+
+const nearby = [
+  { name: "Airdrie", note: "~30 min north" },
+  { name: "Cochrane", note: "~30 min west" },
+  { name: "Chestermere", note: "~20 min east" },
+];
 
 export function Areas() {
   return (
@@ -20,31 +25,42 @@ export function Areas() {
       <h2 className="font-display text-4xl md:text-5xl font-bold leading-[1.05] text-charcoal mb-6">
         Areas We <span className="text-sage italic font-serif font-medium">Serve</span>
       </h2>
-      <p className="text-charcoal-muted text-[15px] leading-relaxed mb-8 max-w-md">
+      <p className="text-charcoal-muted text-[15px] leading-relaxed mb-10 max-w-md">
         Proudly bringing expert mobile massage therapy throughout Calgary and nearby communities.
       </p>
 
-      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+      {/* Calgary zones */}
+      <p className="text-[10px] uppercase tracking-[0.25em] font-bold text-charcoal/40 mb-4">
+        Calgary — All Quadrants
+      </p>
+      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
         {calgary.map((c) => (
-          <li key={c} className="flex items-center gap-3 text-[15px] text-charcoal">
-            <span className="w-8 h-8 rounded-full bg-soft-blue-light flex items-center justify-center text-sage">
-              <MapPin className="h-3.5 w-3.5" />
+          <li key={c} className="flex items-center gap-3 text-[15px] text-charcoal font-medium">
+            <span className="w-9 h-9 rounded-full bg-soft-blue-light flex items-center justify-center text-sage shrink-0 shadow-sm">
+              <MapPin className="h-4 w-4" />
             </span>
             <span>{c}</span>
           </li>
         ))}
       </ul>
 
-      <div className="flex flex-wrap gap-2.5">
+      {/* Nearby communities */}
+      <p className="text-[10px] uppercase tracking-[0.25em] font-bold text-charcoal/40 mb-4">
+        Nearby Communities
+      </p>
+      <ul className="flex flex-col gap-3">
         {nearby.map((n) => (
-          <span
-            key={n}
-            className="px-4 py-1.5 bg-white border border-sage/30 text-sage font-display font-semibold text-[11px] uppercase tracking-[0.22em] rounded-full"
-          >
-            {n}
-          </span>
+          <li key={n.name} className="flex items-center gap-3 text-[15px] text-charcoal font-medium">
+            <span className="w-9 h-9 rounded-full bg-sage-light/70 flex items-center justify-center text-sage shrink-0 shadow-sm">
+              <Navigation className="h-4 w-4" />
+            </span>
+            <span>
+              {n.name}
+              <span className="ml-2 text-[11px] text-charcoal/45 font-normal">{n.note}</span>
+            </span>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 }

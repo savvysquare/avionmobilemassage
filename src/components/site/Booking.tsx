@@ -35,6 +35,34 @@ export function Booking() {
 
   const [serviceType, setServiceType] = useState("Swedish/Relaxation");
   const [duration, setDuration] = useState(90); // default 90 min (recommended)
+
+// Mapping of service types to available duration options with pricing and descriptions
+const SERVICE_DURATION_OPTIONS: { [key: string]: { min: number; price: number; rec: string; desc: string; recommended?: boolean }[] } = {
+  "Therapeutic": [
+    { min: 60, price: 120, rec: "Targeted focus / quick reset", desc: "Best for targeting one or two specific areas (e.g. neck & shoulders) or a quick overall muscle flush." },
+    { min: 90, price: 165, rec: "Highly Recommended Sweet Spot", desc: "Allows the therapist to deliver a comprehensive full-body session while addressing specific areas of deep tightness.", recommended: true },
+    { min: 120, price: 220, rec: "Ultimate therapeutic restoration", desc: "Perfect for deep recovery, long-standing chronic tightness, or severe stiffness requiring slow, extended attention." }
+  ],
+  "Deep Tissue": [
+    { min: 60, price: 120, rec: "Targeted focus / quick reset", desc: "Best for targeting one or two specific areas (e.g. neck & shoulders) or a quick overall muscle flush." },
+    { min: 90, price: 165, rec: "Highly Recommended Sweet Spot", desc: "Allows the therapist to deliver a comprehensive full-body session while addressing specific areas of deep tightness.", recommended: true },
+    { min: 120, price: 220, rec: "Ultimate therapeutic restoration", desc: "Perfect for deep recovery, long-standing chronic tightness, or severe stiffness requiring slow, extended attention." }
+  ],
+  "Relaxation": [
+    { min: 60, price: 120, rec: "Targeted focus / quick reset", desc: "Best for targeting one or two specific areas (e.g. neck & shoulders) or a quick overall muscle flush." },
+    { min: 90, price: 165, rec: "Highly Recommended Sweet Spot", desc: "Allows the therapist to deliver a comprehensive full-body session while addressing specific areas of deep tightness.", recommended: true },
+    { min: 120, price: 220, rec: "Ultimate therapeutic restoration", desc: "Perfect for deep recovery, long-standing chronic tightness, or severe stiffness requiring slow, extended attention." }
+  ],
+  "Prenatal": [
+    { min: 60, price: 120, rec: "Targeted focus / quick reset", desc: "Best for targeting one or two specific areas (e.g. neck & shoulders) or a quick overall muscle flush." },
+    { min: 90, price: 165, rec: "Highly Recommended Sweet Spot", desc: "Allows the therapist to deliver a comprehensive full-body session while addressing specific areas of deep tightness.", recommended: true },
+    { min: 120, price: 220, rec: "Ultimate therapeutic restoration", desc: "Perfect for deep recovery, long-standing chronic tightness, or severe stiffness requiring slow, extended attention." }
+  ],
+  "Corporate Wellness": [
+    { min: 15, price: 45, rec: "Quick 15 min session", desc: "Ideal for on-site quick relief during team events." },
+    { min: 30, price: 80, rec: "Standard 30 min session", desc: "Balanced session for workplace wellness." }
+  ]
+};
   const [therapistGender, setTherapistGender] = useState("no_preference");
   const [date, setDate] = useState("");
   const [timeSlot, setTimeSlot] = useState("");
@@ -718,27 +746,7 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                       Prices match basic Canadian RMT service rates. No travel fees are added.
                     </p>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      {[
-                        {
-                          min: 60,
-                          price: 120,
-                          rec: "Targeted focus / quick reset",
-                          desc: "Best for targeting one or two specific areas (e.g. neck & shoulders) or a quick overall muscle flush."
-                        },
-                        {
-                          min: 90,
-                          price: 165,
-                          rec: "Highly Recommended Sweet Spot",
-                          desc: "Allows the therapist to deliver a comprehensive full-body session while addressing specific areas of deep tightness.",
-                          recommended: true
-                        },
-                        {
-                          min: 120,
-                          price: 220,
-                          rec: "Ultimate therapeutic restoration",
-                          desc: "Perfect for deep recovery, long-standing chronic tightness, or severe stiffness requiring slow, extended attention."
-                        }
-                      ].map((item) => (
+                      {SERVICE_DURATION_OPTIONS[serviceType] && SERVICE_DURATION_OPTIONS[serviceType].map((item) => (
                         <button
                           key={item.min}
                           type="button"
