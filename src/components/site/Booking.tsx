@@ -469,21 +469,24 @@ _Thank you for booking with Avion! We will review your slot availability and rea
     return () => document.removeEventListener("mousedown", handler);
   }, [codeOpen]);
 
+  const scrollToFormTop = () => {
+    if (!formCardRef.current) return;
+    const rect = formCardRef.current.getBoundingClientRect();
+    const offset = 140; // 40px announcement bar + ~100px header pill
+    window.scrollTo({ top: window.scrollY + rect.top - offset, behavior: "smooth" });
+  };
+
   const nextStep = () => {
     if (canGoNext()) {
       setStep(step + 1);
-      setTimeout(() => {
-        formCardRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 50);
+      setTimeout(scrollToFormTop, 60);
     }
   };
 
   const prevStep = () => {
     if (step > 1) {
       setStep(step - 1);
-      setTimeout(() => {
-        formCardRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 50);
+      setTimeout(scrollToFormTop, 60);
     }
   };
 

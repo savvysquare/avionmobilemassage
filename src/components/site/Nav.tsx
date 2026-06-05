@@ -23,7 +23,11 @@ export function Nav() {
   const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setOpen(false);
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+    const target = document.querySelector(href);
+    if (!target) return;
+    const rect = target.getBoundingClientRect();
+    const offset = 130; // 40px bar + ~90px header
+    window.scrollTo({ top: window.scrollY + rect.top - offset, behavior: "smooth" });
   };
 
   return (
@@ -76,7 +80,7 @@ export function Nav() {
               <img
                 src={logo}
                 alt="Avion Mobile Massage"
-                className="h-14 md:h-18 w-auto"
+                className="h-14 md:h-[72px] w-auto"
               />
             </a>
 
@@ -107,7 +111,7 @@ export function Nav() {
             {/* Mobile Toggle */}
             <button
               onClick={() => setOpen(!open)}
-              className="md:hidden h-9 w-9 flex items-center justify-center rounded-full bg-sage/8 hover:bg-sage/15 text-charcoal transition-colors"
+              className="md:hidden h-9 w-9 flex items-center justify-center rounded-full bg-sage/10 hover:bg-sage/20 text-charcoal transition-colors"
               aria-label="Toggle menu"
             >
               {open ? <X className="h-4.5 w-4.5" /> : <Menu className="h-4.5 w-4.5" />}
