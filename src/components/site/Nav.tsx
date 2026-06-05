@@ -27,19 +27,27 @@ export function Nav() {
   };
 
   return (
-    <header className="fixed top-4 md:top-6 inset-x-0 z-50 flex justify-center pointer-events-none select-none">
-      <div className="w-full max-w-7xl px-6">
-        <div
-          className={`relative w-full flex items-center justify-between gap-4 rounded-full px-5 md:px-8 py-3 md:py-4 border transition-all duration-300 pointer-events-auto ${
-            scrolled
-              ? "bg-white/85 border-soft-blue/30 shadow-soft"
-              : "bg-white/70 border-white/40 shadow-sm"
-          } backdrop-blur-md`}
-        >
-          {/* Logo + brand */}
-          <a href="#hero" onClick={(e) => scrollTo(e, "#hero")} className="flex items-center shrink-0">
-            <img src={logo} alt="Avion Mobile Massage" className="h-20 md:h-24 w-auto" />
-          </a>
+    <>
+      {/* Announcement Bar */}
+      <div className="fixed top-0 inset-x-0 z-50 bg-sage text-white text-[10px] md:text-[11px] font-bold uppercase tracking-[0.25em] py-2.5 px-4 text-center flex items-center justify-center gap-2 select-none shadow-sm h-10">
+        <span>✨ Direct Insurance Billing Available — We File Claims For You ✨</span>
+      </div>
+
+      <header className={`fixed inset-x-0 z-50 flex justify-center pointer-events-none select-none transition-all duration-300 ${
+        scrolled ? "top-2 md:top-3" : "top-12 md:top-14"
+      }`}>
+        <div className="w-full max-w-7xl px-6">
+          <div
+            className={`relative w-full flex items-center justify-between gap-4 rounded-full px-5 md:px-8 py-2.5 md:py-3.5 border transition-all duration-300 pointer-events-auto ${
+              scrolled
+                ? "bg-white/85 border-soft-blue/30 shadow-soft"
+                : "bg-white/70 border-white/40 shadow-sm"
+            } backdrop-blur-md`}
+          >
+            {/* Logo + brand */}
+            <a href="#hero" onClick={(e) => scrollTo(e, "#hero")} className="flex items-center shrink-0">
+              <img src={logo} alt="Avion Mobile Massage" className="h-16 md:h-20 w-auto" />
+            </a>
 
           {/* Links */}
           <nav className="hidden md:flex items-center gap-7 text-[13px] font-bold uppercase tracking-[0.18em] text-charcoal">
@@ -98,5 +106,6 @@ export function Nav() {
         </div>
       </div>
     </header>
+    </>
   );
 }

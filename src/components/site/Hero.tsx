@@ -30,9 +30,13 @@ export function Hero() {
                 Calgary&apos;s Concierge Registered Massage Therapist,{" "}
                 <span className="italic font-serif font-medium text-sage">delivered to you.</span>
               </p>
-              <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.32em] text-sage/80">
-                Registered Massage Therapists
-              </p>
+              <div className="mt-3 flex items-center gap-2.5 flex-wrap text-[11px] font-semibold uppercase tracking-[0.25em] text-sage/90">
+                <span>Licensed RMTs</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-sage/40" />
+                <span>Direct Billing Available</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-sage/40" />
+                <span>No Travel Fees</span>
+              </div>
             </div>
           </div>
 
