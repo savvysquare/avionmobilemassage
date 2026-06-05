@@ -47,7 +47,7 @@ export function Hero() {
           >
             {/* Shimmer sweep */}
             <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 ease-in-out pointer-events-none" />
-            <span className="relative z-10">Book a Session Now</span>
+            <span className="relative z-10">BOOK A SESSION NOW</span>
             <ArrowRight className="w-4 h-4 relative z-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-500" />
           </button>
         </div>

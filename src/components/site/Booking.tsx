@@ -25,6 +25,14 @@ export function Booking() {
   const [step, setStep] = useState(1);
 
   // Form states
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [countryCode, setCountryCode] = useState("+1");
+  const [directBilling, setDirectBilling] = useState(false);
+  const [insurer, setInsurer] = useState("Alberta Blue Cross");
+  const [otherInsurer, setOtherInsurer] = useState("");
+
   const [serviceType, setServiceType] = useState("Swedish/Relaxation");
   const [duration, setDuration] = useState(90); // default 90 min (recommended)
   const [therapistGender, setTherapistGender] = useState("no_preference");
@@ -33,12 +41,6 @@ export function Booking() {
   const [frequency, setFrequency] = useState("one-time");
   const [personsCount, setPersonsCount] = useState(1);
   const [address, setAddress] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [countryCode, setCountryCode] = useState("+1");
-  const [directBilling, setDirectBilling] = useState(false);
-  const [insurer, setInsurer] = useState("Alberta Blue Cross");
 
   // Geolocation fetching state
   const [locating, setLocating] = useState(false);
@@ -52,6 +54,14 @@ export function Booking() {
     if (saved) {
       try {
         const data = JSON.parse(saved);
+        if (data.name) setName(data.name);
+        if (data.email) setEmail(data.email);
+        if (data.phone) setPhone(data.phone);
+        if (data.countryCode) setCountryCode(data.countryCode);
+        if (data.directBilling !== undefined) setDirectBilling(data.directBilling);
+        if (data.insurer) setInsurer(data.insurer);
+        if (data.otherInsurer) setOtherInsurer(data.otherInsurer);
+        
         if (data.serviceType) setServiceType(data.serviceType);
         if (data.duration) setDuration(Number(data.duration));
         if (data.therapistGender) setTherapistGender(data.therapistGender);
@@ -60,12 +70,6 @@ export function Booking() {
         if (data.frequency) setFrequency(data.frequency);
         if (data.personsCount) setPersonsCount(Number(data.personsCount));
         if (data.address) setAddress(data.address);
-        if (data.name) setName(data.name);
-        if (data.email) setEmail(data.email);
-        if (data.phone) setPhone(data.phone);
-        if (data.countryCode) setCountryCode(data.countryCode);
-        if (data.directBilling !== undefined) setDirectBilling(data.directBilling);
-        if (data.insurer) setInsurer(data.insurer);
         if (data.step) setStep(Number(data.step));
       } catch (e) {
         console.error("Error loading booking cache:", e);
@@ -76,6 +80,13 @@ export function Booking() {
   // Save state to localStorage on any change
   useEffect(() => {
     const data = {
+      name,
+      email,
+      phone,
+      countryCode,
+      directBilling,
+      insurer,
+      otherInsurer,
       serviceType,
       duration,
       therapistGender,
@@ -84,16 +95,17 @@ export function Booking() {
       frequency,
       personsCount,
       address,
-      name,
-      email,
-      phone,
-      countryCode,
-      directBilling,
-      insurer,
       step,
     };
     localStorage.setItem("avion_booking_flow", JSON.stringify(data));
   }, [
+    name,
+    email,
+    phone,
+    countryCode,
+    directBilling,
+    insurer,
+    otherInsurer,
     serviceType,
     duration,
     therapistGender,
@@ -102,17 +114,18 @@ export function Booking() {
     frequency,
     personsCount,
     address,
-    name,
-    email,
-    phone,
-    countryCode,
-    directBilling,
-    insurer,
     step,
   ]);
 
   const resetForm = () => {
     localStorage.removeItem("avion_booking_flow");
+    setName("");
+    setEmail("");
+    setPhone("");
+    setCountryCode("+1");
+    setDirectBilling(false);
+    setInsurer("Alberta Blue Cross");
+    setOtherInsurer("");
     setServiceType("Swedish/Relaxation");
     setDuration(90);
     setTherapistGender("no_preference");
@@ -121,12 +134,6 @@ export function Booking() {
     setFrequency("one-time");
     setPersonsCount(1);
     setAddress("");
-    setName("");
-    setEmail("");
-    setPhone("");
-    setCountryCode("+1");
-    setDirectBilling(false);
-    setInsurer("Alberta Blue Cross");
     setStep(1);
     setSubmitted(false);
   };
@@ -179,7 +186,6 @@ export function Booking() {
           );
           const data = await response.json();
           if (data && data.display_name) {
-            // Shorten coordinates if too long or use returned address
             setAddress(data.display_name);
           } else {
             setAddress(`Calgary, AB (${latitude.toFixed(4)}, ${longitude.toFixed(4)})`);
@@ -205,9 +211,16 @@ export function Booking() {
 
     const formattedDateString = formatSelectedDate();
     const frequencyLabel = frequency === "one-time" ? "One-Time Session" : `Regular (${frequency})`;
+    const resolvedInsurer = insurer === "Other" ? (otherInsurer || "Other") : insurer;
 
     const message = `*Avion Mobile Massage Booking Inquiry*
 ----------------------------------------
+*Client Details:*
+- Client Name: ${name}
+- Email Address: ${email}
+- Contact Phone: ${countryCode} ${phone}
+- Direct Billing: ${directBilling ? `Yes - ${resolvedInsurer}` : "No (Self-pay)"}
+
 *Service Type:* ${serviceType}
 *Session Duration:* ${duration} Min
 *Therapist Gender:* ${
@@ -221,12 +234,6 @@ export function Booking() {
 *Frequency:* ${frequencyLabel}
 *Group Size:* ${personsCount} Person${personsCount > 1 ? "s" : ""}
 *Service Location:* ${address}
-
-*Client Details:*
-- Client Name: ${name}
-- Email Address: ${email}
-- Contact Phone: ${countryCode} ${phone}
-- Direct Billing: ${directBilling ? `Yes - ${insurer}` : "No (Self-pay)"}
 
 *Pricing Summary:*
 - Session Base Price: $${basePrice} CAD
@@ -312,11 +319,17 @@ export function Booking() {
 
   // Helper validation per step
   const canGoNext = () => {
-    if (step === 1) return serviceType && duration && therapistGender;
-    if (step === 2) return date && timeSlot;
-    if (step === 3) return frequency && personsCount > 0;
-    if (step === 4) return address.trim().length > 5;
-    if (step === 5) return name.trim().length > 1 && email.includes("@") && phone.trim().length >= 7;
+    if (step === 1) {
+      const basicValid = name.trim().length > 1 && email.includes("@") && phone.trim().length >= 7;
+      if (directBilling && insurer === "Other") {
+        return basicValid && otherInsurer.trim().length > 1;
+      }
+      return basicValid;
+    }
+    if (step === 2) return serviceType && duration && therapistGender;
+    if (step === 3) return date && timeSlot;
+    if (step === 4) return frequency && personsCount > 0;
+    if (step === 5) return address.trim().length > 5;
     return true;
   };
 
@@ -379,11 +392,11 @@ export function Booking() {
             {/* Step Progress Indicators */}
             <div className="flex border-b border-white/10 overflow-x-auto scrollbar-none select-none py-4 px-6 gap-6 justify-between items-center text-[10px] uppercase font-bold tracking-widest text-white/40">
               {[
-                { s: 1, label: "Service" },
-                { s: 2, label: "Schedule" },
-                { s: 3, label: "Quantity" },
-                { s: 4, label: "Location" },
-                { s: 5, label: "Contact" },
+                { s: 1, label: "Contact" },
+                { s: 2, label: "Service" },
+                { s: 3, label: "Schedule" },
+                { s: 4, label: "Quantity" },
+                { s: 5, label: "Location" },
                 { s: 6, label: "Review" },
               ].map((item) => (
                 <div
@@ -416,8 +429,147 @@ export function Booking() {
             {/* Form Step Body */}
             <div className="p-6 md:p-10 min-h-[350px]">
               
-              {/* STEP 1: SERVICE & DURATION */}
+              {/* STEP 1: CONTACT DETAILS & DIRECT INSURANCE BILLING */}
               {step === 1 && (
+                <div className="space-y-8 animate-fade-in">
+                  <h3 className="font-display text-xl font-bold text-soft-blue flex items-center gap-2 mb-2">
+                    <User className="h-5 w-5 text-sage" /> Contact Details
+                  </h3>
+                  <p className="text-white/60 text-xs tracking-wider uppercase mb-6">
+                    Please provide your contact information to get started.
+                  </p>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <label className="flex flex-col gap-2">
+                      <span className="text-[10px] uppercase tracking-widest font-bold text-white/50 px-2">
+                        Full Name
+                      </span>
+                      <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Jane Doe"
+                        required
+                        className="w-full bg-white/5 border border-white/15 rounded-2xl px-6 py-4 text-[15px] text-white placeholder-white/30 outline-none focus:border-sage transition-colors"
+                      />
+                    </label>
+
+                    <label className="flex flex-col gap-2">
+                      <span className="text-[10px] uppercase tracking-widest font-bold text-white/50 px-2">
+                        Email Address
+                      </span>
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="jane@example.com"
+                        required
+                        className="w-full bg-white/5 border border-white/15 rounded-2xl px-6 py-4 text-[15px] text-white placeholder-white/30 outline-none focus:border-sage transition-colors"
+                      />
+                    </label>
+
+                    <label className="flex flex-col gap-2 md:col-span-2">
+                      <span className="text-[10px] uppercase tracking-widest font-bold text-white/50 px-2">
+                        Phone Number
+                      </span>
+                      <div className="flex gap-2">
+                        <select
+                          value={countryCode}
+                          onChange={(e) => setCountryCode(e.target.value)}
+                          className="bg-white/5 border border-white/15 rounded-2xl pl-4 pr-12 py-4 text-xs font-bold text-white outline-none focus:border-sage transition-colors cursor-pointer shrink-0"
+                        >
+                          <option value="+1" className="bg-charcoal text-white">🇨🇦 CA (+1)</option>
+                          <option value="+1-US" className="bg-charcoal text-white">🇺🇸 US (+1)</option>
+                          <option value="+44" className="bg-charcoal text-white">🇬🇧 UK (+44)</option>
+                          <option value="+61" className="bg-charcoal text-white">🇦🇺 AU (+61)</option>
+                          <option value="+91" className="bg-charcoal text-white">🇮🇳 IN (+91)</option>
+                        </select>
+                        <input
+                          type="tel"
+                          value={phone}
+                          onChange={(e) => setPhone(e.target.value)}
+                          placeholder="(403) 555-0199"
+                          required
+                          className="w-full flex-1 bg-white/5 border border-white/15 rounded-2xl px-6 py-4 text-[15px] text-white placeholder-white/30 outline-none focus:border-sage transition-colors"
+                        />
+                      </div>
+                    </label>
+                  </div>
+
+                  {/* Direct Insurance Billing Option */}
+                  <div className="border-t border-white/10 pt-8 mt-4">
+                    <div className="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all">
+                      <div className="flex items-center h-6 shrink-0">
+                        <input
+                          id="direct-billing-check"
+                          type="checkbox"
+                          checked={directBilling}
+                          onChange={(e) => setDirectBilling(e.target.checked)}
+                          className="h-4.5 w-4.5 rounded border-white/20 bg-transparent text-sage focus:ring-sage checked:bg-sage focus:ring-2 cursor-pointer"
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <label htmlFor="direct-billing-check" className="font-display font-bold text-[15.5px] text-white cursor-pointer select-none">
+                          Request Direct Insurance Billing
+                        </label>
+                        <span className="block text-xs text-white/50 leading-relaxed font-light mt-1.5">
+                          Check this box if you have an extended health insurance policy and wish to submit this claim directly. Avion RMTs bill most providers directly in Alberta.
+                        </span>
+                      </div>
+                    </div>
+
+                    {directBilling && (
+                      <div className="mt-5 p-5 rounded-2xl bg-sage/5 border border-sage/30 animate-fade-in space-y-4">
+                        <div className="flex flex-col gap-2">
+                          <span className="text-[10px] uppercase tracking-widest font-bold text-sage">
+                            Select Insurance Provider
+                          </span>
+                          <select
+                            value={insurer}
+                            onChange={(e) => setInsurer(e.target.value)}
+                            className="w-full bg-white/5 border border-white/15 rounded-xl pl-4 pr-12 py-3 text-sm text-white outline-none focus:border-sage transition-colors cursor-pointer"
+                          >
+                            <option value="Alberta Blue Cross" className="bg-charcoal text-white">Alberta Blue Cross</option>
+                            <option value="Sun Life" className="bg-charcoal text-white">Sun Life Financial</option>
+                            <option value="Manulife" className="bg-charcoal text-white">Manulife Financial</option>
+                            <option value="Canada Life" className="bg-charcoal text-white">Canada Life</option>
+                            <option value="Desjardins Insurance" className="bg-charcoal text-white">Desjardins Insurance</option>
+                            <option value="Green Shield Canada" className="bg-charcoal text-white">Green Shield Canada</option>
+                            <option value="Equitable Life" className="bg-charcoal text-white">Equitable Life</option>
+                            <option value="Empire Life" className="bg-charcoal text-white">Empire Life</option>
+                            <option value="ClaimSecure" className="bg-charcoal text-white">ClaimSecure</option>
+                            <option value="Other" className="bg-charcoal text-white">Other Provider (Specify below)</option>
+                          </select>
+                        </div>
+
+                        {insurer === "Other" && (
+                          <div className="flex flex-col gap-2 mt-4 animate-fade-in">
+                            <span className="text-[10px] uppercase tracking-widest font-bold text-sage">
+                              Specify Insurance Provider
+                            </span>
+                            <input
+                              type="text"
+                              value={otherInsurer}
+                              onChange={(e) => setOtherInsurer(e.target.value)}
+                              placeholder="Name of your insurance provider"
+                              required
+                              className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3.5 text-sm text-white placeholder-white/35 outline-none focus:border-sage transition-colors"
+                            />
+                          </div>
+                        )}
+
+                        <div className="flex gap-2 text-[11px] text-white/50 leading-relaxed font-light pt-2">
+                          <ShieldCheck className="h-4 w-4 text-sage shrink-0" />
+                          <span>We will request your health claim information via email/SMS to file on your behalf. Direct billing is subject to individual policy limits.</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* STEP 2: SERVICE & DURATION */}
+              {step === 2 && (
                 <div className="space-y-8 animate-fade-in">
                   <div>
                     <h3 className="font-display text-xl font-bold text-soft-blue flex items-center gap-2 mb-2">
@@ -566,8 +718,8 @@ export function Booking() {
                 </div>
               )}
 
-              {/* STEP 2: DATE & TIME SELECTOR */}
-              {step === 2 && (
+              {/* STEP 3: DATE & TIME SELECTOR */}
+              {step === 3 && (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 animate-fade-in">
                   
                   {/* Calendar Widget */}
@@ -686,8 +838,8 @@ export function Booking() {
                 </div>
               )}
 
-              {/* STEP 3: FREQUENCY & QUANTITY */}
-              {step === 3 && (
+              {/* STEP 4: FREQUENCY & QUANTITY */}
+              {step === 4 && (
                 <div className="space-y-10 animate-fade-in">
                   
                   {/* Frequency of bookings */}
@@ -776,8 +928,8 @@ export function Booking() {
                 </div>
               )}
 
-              {/* STEP 4: LOCATION & ADDRESS MAP PICKER */}
-              {step === 4 && (
+              {/* STEP 5: LOCATION & ADDRESS MAP PICKER */}
+              {step === 5 && (
                 <div className="space-y-6 animate-fade-in">
                   <div>
                     <h3 className="font-display text-xl font-bold text-soft-blue flex items-center gap-2 mb-2">
@@ -840,121 +992,6 @@ export function Booking() {
                 </div>
               )}
 
-              {/* STEP 5: CONTACT DETAILS & DIRECT INSURANCE BILLING */}
-              {step === 5 && (
-                <div className="space-y-8 animate-fade-in">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <label className="flex flex-col gap-2">
-                      <span className="text-[10px] uppercase tracking-widest font-bold text-white/50 px-2">
-                        Full Name
-                      </span>
-                      <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="Jane Doe"
-                        required
-                        className="w-full bg-white/5 border border-white/15 rounded-2xl px-6 py-4 text-[15px] text-white placeholder-white/30 outline-none focus:border-sage transition-colors"
-                      />
-                    </label>
-
-                    <label className="flex flex-col gap-2">
-                      <span className="text-[10px] uppercase tracking-widest font-bold text-white/50 px-2">
-                        Email Address
-                      </span>
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="jane@example.com"
-                        required
-                        className="w-full bg-white/5 border border-white/15 rounded-2xl px-6 py-4 text-[15px] text-white placeholder-white/30 outline-none focus:border-sage transition-colors"
-                      />
-                    </label>
-
-                    <label className="flex flex-col gap-2 md:col-span-2">
-                      <span className="text-[10px] uppercase tracking-widest font-bold text-white/50 px-2">
-                        Phone Number
-                      </span>
-                      <div className="flex gap-2">
-                        <select
-                          value={countryCode}
-                          onChange={(e) => setCountryCode(e.target.value)}
-                          className="bg-white/5 border border-white/15 rounded-2xl px-4 py-4 text-xs font-bold text-white outline-none focus:border-sage transition-colors cursor-pointer shrink-0"
-                        >
-                          <option value="+1" className="bg-charcoal text-white">🇨🇦 CA (+1)</option>
-                          <option value="+1-US" className="bg-charcoal text-white">🇺🇸 US (+1)</option>
-                          <option value="+44" className="bg-charcoal text-white">🇬🇧 UK (+44)</option>
-                          <option value="+61" className="bg-charcoal text-white">🇦🇺 AU (+61)</option>
-                          <option value="+91" className="bg-charcoal text-white">🇮🇳 IN (+91)</option>
-                        </select>
-                        <input
-                          type="tel"
-                          value={phone}
-                          onChange={(e) => setPhone(e.target.value)}
-                          placeholder="(403) 555-0199"
-                          required
-                          className="w-full flex-1 bg-white/5 border border-white/15 rounded-2xl px-6 py-4 text-[15px] text-white placeholder-white/30 outline-none focus:border-sage transition-colors"
-                        />
-                      </div>
-                    </label>
-                  </div>
-
-                  {/* Direct Insurance Billing Option */}
-                  <div className="border-t border-white/10 pt-8 mt-4">
-                    <div className="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all">
-                      <div className="flex items-center h-6 shrink-0">
-                        <input
-                          id="direct-billing-check"
-                          type="checkbox"
-                          checked={directBilling}
-                          onChange={(e) => setDirectBilling(e.target.checked)}
-                          className="h-4.5 w-4.5 rounded border-white/20 bg-transparent text-sage focus:ring-sage checked:bg-sage focus:ring-2 cursor-pointer"
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <label htmlFor="direct-billing-check" className="font-display font-bold text-[15.5px] text-white cursor-pointer select-none">
-                          Request Direct Insurance Billing
-                        </label>
-                        <span className="block text-xs text-white/50 leading-relaxed font-light mt-1.5">
-                          Check this box if you have an extended health insurance policy and wish to submit this claim directly. Avion RMTs bill most providers directly in Alberta.
-                        </span>
-                      </div>
-                    </div>
-
-                    {directBilling && (
-                      <div className="mt-5 p-5 rounded-2xl bg-sage/5 border border-sage/30 animate-fade-in space-y-4">
-                        <div className="flex flex-col gap-2">
-                          <span className="text-[10px] uppercase tracking-widest font-bold text-sage">
-                            Select Insurance Provider
-                          </span>
-                          <select
-                            value={insurer}
-                            onChange={(e) => setInsurer(e.target.value)}
-                            className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-sage transition-colors cursor-pointer"
-                          >
-                            <option value="Alberta Blue Cross" className="bg-charcoal text-white">Alberta Blue Cross</option>
-                            <option value="Sun Life" className="bg-charcoal text-white">Sun Life Financial</option>
-                            <option value="Manulife" className="bg-charcoal text-white">Manulife Financial</option>
-                            <option value="Canada Life" className="bg-charcoal text-white">Canada Life</option>
-                            <option value="Desjardins Insurance" className="bg-charcoal text-white">Desjardins Insurance</option>
-                            <option value="Green Shield Canada" className="bg-charcoal text-white">Green Shield Canada</option>
-                            <option value="Equitable Life" className="bg-charcoal text-white">Equitable Life</option>
-                            <option value="Empire Life" className="bg-charcoal text-white">Empire Life</option>
-                            <option value="ClaimSecure" className="bg-charcoal text-white">ClaimSecure</option>
-                            <option value="Other" className="bg-charcoal text-white">Other Provider (Specify in notes)</option>
-                          </select>
-                        </div>
-                        <div className="flex gap-2 text-[11px] text-white/50 leading-relaxed font-light">
-                          <ShieldCheck className="h-4 w-4 text-sage shrink-0" />
-                          <span>We will request your health claim information via email/SMS to file on your behalf. Direct billing is subject to individual policy limits.</span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-
               {/* STEP 6: SUMMARY REVIEW & SUBMIT */}
               {step === 6 && (
                 <div className="space-y-8 animate-fade-in">
@@ -969,6 +1006,11 @@ export function Booking() {
                     
                     {/* Selected Info Summary */}
                     <div className="space-y-4 text-sm font-medium">
+                      <div>
+                        <span className="block text-[10px] uppercase tracking-wider text-white/40 mb-1">Client Contact</span>
+                        <span className="text-white font-bold block">{name}</span>
+                        <span className="text-white/60 text-xs block">{email} | {countryCode} {phone}</span>
+                      </div>
                       <div>
                         <span className="block text-[10px] uppercase tracking-wider text-white/40 mb-1">Service &amp; Modality</span>
                         <span className="text-white text-base font-bold">{serviceType} Massage</span>
@@ -1027,9 +1069,11 @@ export function Booking() {
                           </div>
                         )}
                         {directBilling && (
-                          <div className="flex justify-between text-[11px] text-soft-blue font-semibold bg-white/5 p-2 rounded-lg border border-white/5">
-                            <span>Submit insurance claim to</span>
-                            <span>{insurer}</span>
+                          <div className="flex flex-col gap-1 text-[11px] text-soft-blue font-semibold bg-white/5 p-2.5 rounded-lg border border-white/5">
+                            <div className="flex justify-between">
+                              <span>Direct Claim Carrier</span>
+                              <span>{insurer === "Other" ? (otherInsurer || "Other Provider") : insurer}</span>
+                            </div>
                           </div>
                         )}
                       </div>
