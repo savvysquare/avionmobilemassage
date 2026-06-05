@@ -46,12 +46,12 @@ export function Nav() {
             animation: "shimmer 3s linear infinite",
           }}
         />
-        <div className="relative flex items-center gap-2.5 text-white">
-          <Sparkles className="h-3 w-3 opacity-80 shrink-0" />
-          <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.28em]">
+        <div className="relative flex items-center justify-center gap-2 text-white w-full px-4">
+          <Sparkles className="h-3 w-3 opacity-80 shrink-0 hidden sm:block" />
+          <span className="text-[9px] sm:text-[10px] md:text-[11px] font-bold uppercase tracking-[0.12em] sm:tracking-[0.28em] text-center leading-tight">
             Direct Insurance Billing Available — We File Claims For You
           </span>
-          <Sparkles className="h-3 w-3 opacity-80 shrink-0" />
+          <Sparkles className="h-3 w-3 opacity-80 shrink-0 hidden sm:block" />
         </div>
       </div>
 
