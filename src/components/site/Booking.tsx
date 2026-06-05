@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   CheckCircle,
   Phone,
@@ -17,7 +17,8 @@ import {
   RefreshCw,
   Map,
   ShieldCheck,
-  Check
+  Check,
+  ChevronDown
 } from "lucide-react";
 
 export function Booking() {
@@ -441,12 +442,49 @@ _Thank you for booking with Avion! We will review your slot availability and rea
     return true;
   };
 
+  // Ref to scroll form into view on step change
+  const formCardRef = useRef<HTMLDivElement>(null);
+
+  // Country code dropdown
+  const codeDropdownRef = useRef<HTMLDivElement>(null);
+  const COUNTRY_OPTIONS = [
+    { value: "+1",    flag: "🇨🇦", name: "Canada",        short: "CA", dial: "+1" },
+    { value: "+1-US", flag: "🇺🇸", name: "United States", short: "US", dial: "+1" },
+    { value: "+44",   flag: "🇬🇧", name: "United Kingdom",short: "UK", dial: "+44" },
+    { value: "+61",   flag: "🇦🇺", name: "Australia",     short: "AU", dial: "+61" },
+    { value: "+91",   flag: "🇮🇳", name: "India",         short: "IN", dial: "+91" },
+  ];
+  const [codeOpen, setCodeOpen] = useState(false);
+  const selectedCountry = COUNTRY_OPTIONS.find((c) => c.value === countryCode) ?? COUNTRY_OPTIONS[0];
+
+  // Close country dropdown on outside click
+  useEffect(() => {
+    if (!codeOpen) return;
+    const handler = (e: MouseEvent) => {
+      if (codeDropdownRef.current && !codeDropdownRef.current.contains(e.target as Node)) {
+        setCodeOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [codeOpen]);
+
   const nextStep = () => {
-    if (canGoNext()) setStep(step + 1);
+    if (canGoNext()) {
+      setStep(step + 1);
+      setTimeout(() => {
+        formCardRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 50);
+    }
   };
 
   const prevStep = () => {
-    if (step > 1) setStep(step - 1);
+    if (step > 1) {
+      setStep(step - 1);
+      setTimeout(() => {
+        formCardRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 50);
+    }
   };
 
   return (
@@ -495,7 +533,7 @@ _Thank you for booking with Avion! We will review your slot availability and rea
             </div>
           </div>
         ) : (
-          <div className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden backdrop-blur-md shadow-premium">
+          <div ref={formCardRef} className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden backdrop-blur-md shadow-premium">
             
             {/* Step Progress Indicators */}
             <div className="flex border-b border-white/10 overflow-x-auto scrollbar-none select-none py-4 px-6 gap-6 justify-between items-center text-[10px] uppercase font-bold tracking-widest text-white/40">
@@ -581,17 +619,38 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                         Phone Number
                       </span>
                       <div className="flex gap-2">
-                        <select
-                          value={countryCode}
-                          onChange={(e) => setCountryCode(e.target.value)}
-                          className="bg-white/5 border border-white/15 rounded-2xl pl-4 pr-12 py-4 text-xs font-bold text-white outline-none focus:border-sage transition-colors cursor-pointer shrink-0"
-                        >
-                          <option value="+1" className="bg-charcoal text-white">🇨🇦 CA (+1)</option>
-                          <option value="+1-US" className="bg-charcoal text-white">🇺🇸 US (+1)</option>
-                          <option value="+44" className="bg-charcoal text-white">🇬🇧 UK (+44)</option>
-                          <option value="+61" className="bg-charcoal text-white">🇦🇺 AU (+61)</option>
-                          <option value="+91" className="bg-charcoal text-white">🇮🇳 IN (+91)</option>
-                        </select>
+                        {/* Custom country code dropdown */}
+                        <div ref={codeDropdownRef} className="relative shrink-0">
+                          <button
+                            type="button"
+                            onClick={() => setCodeOpen((o) => !o)}
+                            className="flex items-center gap-2.5 bg-white/5 border border-white/15 rounded-2xl pl-4 pr-3 py-4 text-xs font-bold text-white outline-none focus:border-sage transition-colors cursor-pointer h-full"
+                          >
+                            <span className="text-xl leading-none">{selectedCountry.flag}</span>
+                            <span className="hidden md:inline text-white/90">{selectedCountry.name}</span>
+                            <span className="md:hidden text-white/90">{selectedCountry.short}</span>
+                            <span className="text-white/50 text-[11px] font-normal hidden sm:inline">({selectedCountry.dial})</span>
+                            <ChevronDown className={`h-3.5 w-3.5 text-white/40 transition-transform duration-200 ${codeOpen ? "rotate-180" : ""}`} />
+                          </button>
+                          {codeOpen && (
+                            <div className="absolute top-full left-0 mt-2 z-50 bg-charcoal border border-white/15 rounded-2xl shadow-2xl overflow-hidden min-w-[200px] animate-fade-in">
+                              {COUNTRY_OPTIONS.map((opt) => (
+                                <button
+                                  key={opt.value}
+                                  type="button"
+                                  onClick={() => { setCountryCode(opt.value); setCodeOpen(false); }}
+                                  className={`w-full flex items-center gap-3 px-4 py-3 text-sm text-left hover:bg-white/10 transition-colors ${
+                                    countryCode === opt.value ? "bg-sage/15 text-sage" : "text-white"
+                                  }`}
+                                >
+                                  <span className="text-xl leading-none">{opt.flag}</span>
+                                  <span className="font-semibold">{opt.name}</span>
+                                  <span className="ml-auto text-white/40 text-xs">{opt.dial}</span>
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                         <input
                           type="tel"
                           value={phone}
@@ -632,22 +691,25 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                           <span className="text-[10px] uppercase tracking-widest font-bold text-sage">
                             Select Insurance Provider
                           </span>
-                          <select
-                            value={insurer}
-                            onChange={(e) => setInsurer(e.target.value)}
-                            className="w-full bg-white/5 border border-white/15 rounded-xl pl-4 pr-12 py-3 text-sm text-white outline-none focus:border-sage transition-colors cursor-pointer"
-                          >
-                            <option value="Alberta Blue Cross" className="bg-charcoal text-white">Alberta Blue Cross</option>
-                            <option value="Sun Life" className="bg-charcoal text-white">Sun Life Financial</option>
-                            <option value="Manulife" className="bg-charcoal text-white">Manulife Financial</option>
-                            <option value="Canada Life" className="bg-charcoal text-white">Canada Life</option>
-                            <option value="Desjardins Insurance" className="bg-charcoal text-white">Desjardins Insurance</option>
-                            <option value="Green Shield Canada" className="bg-charcoal text-white">Green Shield Canada</option>
-                            <option value="Equitable Life" className="bg-charcoal text-white">Equitable Life</option>
-                            <option value="Empire Life" className="bg-charcoal text-white">Empire Life</option>
-                            <option value="ClaimSecure" className="bg-charcoal text-white">ClaimSecure</option>
-                            <option value="Other" className="bg-charcoal text-white">Other Provider (Specify below)</option>
-                          </select>
+                          <div className="relative">
+                            <select
+                              value={insurer}
+                              onChange={(e) => setInsurer(e.target.value)}
+                              className="w-full appearance-none bg-white/5 border border-white/15 rounded-xl pl-4 pr-11 py-3 text-sm text-white outline-none focus:border-sage transition-colors cursor-pointer"
+                            >
+                              <option value="Alberta Blue Cross" className="bg-charcoal text-white">Alberta Blue Cross</option>
+                              <option value="Sun Life" className="bg-charcoal text-white">Sun Life Financial</option>
+                              <option value="Manulife" className="bg-charcoal text-white">Manulife Financial</option>
+                              <option value="Canada Life" className="bg-charcoal text-white">Canada Life</option>
+                              <option value="Desjardins Insurance" className="bg-charcoal text-white">Desjardins Insurance</option>
+                              <option value="Green Shield Canada" className="bg-charcoal text-white">Green Shield Canada</option>
+                              <option value="Equitable Life" className="bg-charcoal text-white">Equitable Life</option>
+                              <option value="Empire Life" className="bg-charcoal text-white">Empire Life</option>
+                              <option value="ClaimSecure" className="bg-charcoal text-white">ClaimSecure</option>
+                              <option value="Other" className="bg-charcoal text-white">Other Provider (Specify below)</option>
+                            </select>
+                            <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/35" />
+                          </div>
                         </div>
 
                         {insurer === "Other" && (
