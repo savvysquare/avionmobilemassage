@@ -80,9 +80,10 @@ export function Hero() {
           </div>
 
           {/* Floating trust seal */}
-          <div className="hidden md:flex absolute -top-6 -right-6 h-32 w-32 rounded-full bg-sage text-white flex-col items-center justify-center shadow-premium rotate-[8deg] border-[5px] border-white text-center leading-tight">
-            <span className="font-display font-bold text-[30px]">100%</span>
-            <span className="text-[9px] uppercase tracking-[0.2em] opacity-95 mt-0.5">Direct<br/>Billing</span>
+          <div className="flex absolute -top-4 -right-4 md:-top-6 md:-right-6 h-24 w-24 md:h-32 md:w-32 rounded-full bg-sage text-white flex-col items-center justify-center shadow-premium rotate-[8deg] border-[4px] md:border-[5px] border-white text-center leading-[1.15] z-20">
+            <span className="font-display font-bold text-[10px] md:text-[12px] uppercase tracking-widest text-white/90">Direct</span>
+            <span className="font-serif italic font-medium text-[14px] md:text-[20px] my-0.5">Billing</span>
+            <span className="text-[8px] md:text-[9px] uppercase tracking-[0.12em] opacity-95">Available</span>
           </div>
         </div>
       </div>

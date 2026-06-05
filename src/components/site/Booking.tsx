@@ -205,49 +205,43 @@ export function Booking() {
     );
   };
 
-  // Submit flow
-  const handleFinalSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const formattedDateString = formatSelectedDate();
-    const frequencyLabel = frequency === "one-time" ? "One-Time Session" : `Regular (${frequency})`;
-    const resolvedInsurer = insurer === "Other" ? (otherInsurer || "Other") : insurer;
-
-    const message = `*Avion Mobile Massage Booking Inquiry*
-----------------------------------------
-*Client Details:*
-- Client Name: ${name}
-- Email Address: ${email}
-- Contact Phone: ${countryCode} ${phone}
-- Direct Billing: ${directBilling ? `Yes - ${resolvedInsurer}` : "No (Self-pay)"}
-
-*Service Type:* ${serviceType}
-*Session Duration:* ${duration} Min
-*Therapist Gender:* ${
-      therapistGender === "female"
-        ? "Female Therapist"
-        : therapistGender === "male"
-        ? "Male Therapist"
-        : "Either (No Preference)"
+  // Time Slots definitions (Filtered by Weekend/Weekday date: Evenings & Weekends only)
+  const getAvailableTimeSlots = () => {
+    if (!date) {
+      // Default to evenings if no date is picked yet
+      return [
+        { time: "5:00 PM", label: "Evening Slot", priority: true },
+        { time: "6:30 PM", label: "Evening Slot", priority: true },
+        { time: "8:00 PM", label: "Evening Slot", priority: true },
+        { time: "9:30 PM", label: "Late Evening", priority: true }
+      ];
     }
-*Date & Time:* ${formattedDateString} at ${timeSlot}
-*Frequency:* ${frequencyLabel}
-*Group Size:* ${personsCount} Person${personsCount > 1 ? "s" : ""}
-*Service Location:* ${address}
 
-*Pricing Summary:*
-- Session Base Price: $${basePrice} CAD
-- Subtotal: $${subtotal} CAD
-- Group Discount Applied: ${discountRate * 100}% (-$${discountAmount.toFixed(2)} CAD)
-- *Estimated Total:* $${totalAmount.toFixed(2)} CAD`;
+    const selectedDate = new Date(date + "T00:00:00");
+    const day = selectedDate.getDay();
+    const isWeekend = day === 0 || day === 6; // Sunday or Saturday
 
-    const encoded = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/14039230323?text=${encoded}`;
-
-    window.open(whatsappUrl, "_blank");
-    setSubmitted(true);
-    // Clear cache upon successful submit
-    localStorage.removeItem("avion_booking_flow");
+    if (isWeekend) {
+      // Weekends: all day available
+      return [
+        { time: "9:00 AM", label: "Weekend Morning" },
+        { time: "10:30 AM", label: "Weekend Morning" },
+        { time: "12:00 PM", label: "Weekend Midday" },
+        { time: "1:30 PM", label: "Weekend Afternoon" },
+        { time: "3:00 PM", label: "Weekend Afternoon" },
+        { time: "4:30 PM", label: "Weekend Late Afternoon" },
+        { time: "6:00 PM", label: "Weekend Evening", priority: true },
+        { time: "7:30 PM", label: "Weekend Evening", priority: true },
+      ];
+    } else {
+      // Weekdays: evenings only
+      return [
+        { time: "5:00 PM", label: "Evening Slot", priority: true },
+        { time: "6:30 PM", label: "Evening Slot", priority: true },
+        { time: "8:00 PM", label: "Evening Slot", priority: true },
+        { time: "9:30 PM", label: "Late Evening", priority: true },
+      ];
+    }
   };
 
   // Custom Calendar Generator
@@ -286,7 +280,18 @@ export function Booking() {
     const y = day.getFullYear();
     const m = String(day.getMonth() + 1).padStart(2, "0");
     const d = String(day.getDate()).padStart(2, "0");
-    setDate(`${y}-${m}-${d}`);
+    const newDateStr = `${y}-${m}-${d}`;
+    setDate(newDateStr);
+
+    // Reset selected time slot if it's no longer valid for the selected date type
+    const dayOfWeek = day.getDay();
+    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+    if (!isWeekend) {
+      const validSlots = ["5:00 PM", "6:30 PM", "8:00 PM", "9:30 PM"];
+      if (timeSlot && !validSlots.includes(timeSlot)) {
+        setTimeSlot("");
+      }
+    }
   };
 
   const isDateInPast = (day: Date) => {
@@ -305,17 +310,92 @@ export function Booking() {
     address || "Calgary, AB"
   )}&t=&z=14&ie=UTF8&iwloc=&output=embed`;
 
-  // Time Slots definitions
-  const timeSlots = [
-    { time: "9:00 AM", label: "Morning" },
-    { time: "10:30 AM", label: "Morning" },
-    { time: "12:00 PM", label: "Midday" },
-    { time: "1:30 PM", label: "Afternoon" },
-    { time: "3:00 PM", label: "Afternoon" },
-    { time: "4:30 PM", label: "Late Afternoon" },
-    { time: "6:00 PM", label: "Evening Slot", priority: true },
-    { time: "7:30 PM", label: "Evening Slot", priority: true },
-  ];
+  // Submit flow
+  const handleFinalSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const formattedDateString = formatSelectedDate();
+    const frequencyLabel = frequency === "one-time" ? "One-Time Session" : `Regular (${frequency})`;
+    const resolvedInsurer = insurer === "Other" ? (otherInsurer || "Other") : insurer;
+
+    // Double-spaced, emoji bullets and clearly indented WhatsApp message
+    const message = `✨ *Avion Mobile Massage — Booking Inquiry* ✨
+
+👤 *Client Profile:*
+• *Name:* ${name}
+• *Email:* ${email}
+• *Phone:* ${countryCode} ${phone}
+
+💆 *Session Preferences:*
+• *Service Modality:* ${serviceType}
+• *Duration:* ${duration} Minutes
+• *Therapist Preference:* ${
+      therapistGender === "female"
+        ? "Female Therapist"
+        : therapistGender === "male"
+        ? "Male Therapist"
+        : "Either (No Preference)"
+    }
+
+📅 *Appointment Details:*
+• *Requested Date:* ${formattedDateString}
+• *Requested Time:* ${timeSlot}
+• *Frequency:* ${frequencyLabel}
+• *Group Size:* ${personsCount} Person${personsCount > 1 ? "s" : ""}
+
+📍 *Location Details:*
+• *Address:* ${address}
+
+💳 *Billing & Rates:*
+• *Direct Insurance Claim:* ${directBilling ? `Yes (${resolvedInsurer})` : "No (Self-pay)"}
+• *Base Rate per Person:* $${basePrice} CAD
+• *Multi-Person Discount:* ${discountRate * 100}%
+• *Estimated Total Amount:* *$${totalAmount.toFixed(2)} CAD*
+
+----------------------------------------
+_Thank you for booking with Avion! We will review your slot availability and reach out to finalize._`;
+
+    const encoded = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/14039230323?text=${encoded}`;
+
+    // Add booking record to global admin list in localStorage
+    const newBooking = {
+      id: "AV" + Math.floor(1000 + Math.random() * 9000),
+      name,
+      email,
+      phone: `${countryCode} ${phone}`,
+      serviceType,
+      duration,
+      therapistGender,
+      date,
+      timeSlot,
+      frequency,
+      personsCount,
+      address,
+      directBilling,
+      insurer: directBilling ? resolvedInsurer : "Self-pay",
+      totalAmount,
+      status: "Pending", // initial status
+      createdAt: new Date().toISOString()
+    };
+
+    const existingBookings = localStorage.getItem("avion_all_bookings");
+    let bookingsList = [];
+    if (existingBookings) {
+      try {
+        bookingsList = JSON.parse(existingBookings);
+      } catch (err) {
+        console.error("Error reading bookings list:", err);
+      }
+    }
+    bookingsList.unshift(newBooking);
+    localStorage.setItem("avion_all_bookings", JSON.stringify(bookingsList));
+
+    window.open(whatsappUrl, "_blank");
+    setSubmitted(true);
+    // Clear wizard cache
+    localStorage.removeItem("avion_booking_flow");
+  };
 
   // Helper validation per step
   const canGoNext = () => {
@@ -806,7 +886,7 @@ export function Booking() {
                     </h3>
                     
                     <div className="grid grid-cols-2 gap-3">
-                      {timeSlots.map((slot) => {
+                      {getAvailableTimeSlots().map((slot) => {
                         const isSelected = timeSlot === slot.time;
                         return (
                           <button
@@ -830,8 +910,8 @@ export function Booking() {
                     </div>
 
                     <div className="mt-6 p-4 rounded-2xl bg-white/5 border border-white/15 text-xs text-white/60 leading-relaxed font-light">
-                      <span className="font-semibold text-soft-blue uppercase block mb-1">Evening &amp; Weekend Booking Note</span>
-                      Avion's evening (6:00 PM onwards) and weekend sessions book out quickly. We hold your chosen slot for up to 10 minutes while you finalize this inquiry.
+                      <span className="font-semibold text-soft-blue uppercase block mb-1">Evening &amp; Weekend Schedule Only</span>
+                      We operate strictly on evenings (weekdays after 5:00 PM) and all-day weekends. Available slots are filtered based on your chosen date.
                     </div>
                   </div>
 
