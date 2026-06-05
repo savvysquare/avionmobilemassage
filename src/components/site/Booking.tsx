@@ -50,7 +50,7 @@ const SERVICE_DURATION_OPTIONS: { [key: string]: { min: number; price: number; r
     { min: 90, price: 165, rec: "Highly Recommended Sweet Spot", desc: "Allows the therapist to deliver a comprehensive full-body session while addressing specific areas of deep tightness.", recommended: true },
     { min: 120, price: 220, rec: "Ultimate therapeutic restoration", desc: "Perfect for deep recovery, long-standing chronic tightness, or severe stiffness requiring slow, extended attention." }
   ],
-  "Relaxation": [
+  "Swedish/Relaxation": [
     { min: 60, price: 120, rec: "Targeted focus / quick reset", desc: "Best for targeting one or two specific areas (e.g. neck & shoulders) or a quick overall muscle flush." },
     { min: 90, price: 165, rec: "Highly Recommended Sweet Spot", desc: "Allows the therapist to deliver a comprehensive full-body session while addressing specific areas of deep tightness.", recommended: true },
     { min: 120, price: 220, rec: "Ultimate therapeutic restoration", desc: "Perfect for deep recovery, long-standing chronic tightness, or severe stiffness requiring slow, extended attention." }
@@ -147,6 +147,18 @@ const SERVICE_DURATION_OPTIONS: { [key: string]: { min: number; price: number; r
     step,
   ]);
 
+  // Reset duration to first option if not valid for selected service type
+  useEffect(() => {
+    const options = SERVICE_DURATION_OPTIONS[serviceType];
+    if (options) {
+      const isValid = options.some(opt => opt.min === duration);
+      if (!isValid) {
+        const recommendedOpt = options.find(opt => opt.recommended) ?? options[0];
+        setDuration(recommendedOpt.min);
+      }
+    }
+  }, [serviceType]);
+
   const resetForm = () => {
     localStorage.removeItem("avion_booking_flow");
     setName("");
@@ -170,6 +182,14 @@ const SERVICE_DURATION_OPTIONS: { [key: string]: { min: number; price: number; r
 
   // Pricing calculations
   const getBasePrice = () => {
+    const options = SERVICE_DURATION_OPTIONS[serviceType];
+    if (options) {
+      const match = options.find((opt) => opt.min === duration);
+      if (match) return match.price;
+    }
+    // Fallbacks
+    if (duration === 15) return 45;
+    if (duration === 30) return 80;
     if (duration === 60) return 120;
     if (duration === 90) return 165;
     return 220; // 120 min
@@ -358,7 +378,7 @@ const SERVICE_DURATION_OPTIONS: { [key: string]: { min: number; price: number; r
 
 💆 *Session Preferences:*
 • *Service Modality:* ${serviceType}
-• *Duration:* ${duration} Minutes
+• *Duration:* ${duration} Minutes${serviceType === "Corporate Wellness" ? ` (per person)\n• *Total Massage Time:* ${personsCount * duration} mins (${Math.floor((personsCount * duration) / 60)}h ${(personsCount * duration) % 60}m)` : ""}
 • *Therapist Preference:* ${
       therapistGender === "female"
         ? "Female Therapist"
@@ -371,7 +391,7 @@ const SERVICE_DURATION_OPTIONS: { [key: string]: { min: number; price: number; r
 • *Requested Date:* ${formattedDateString}
 • *Requested Time:* ${timeSlot}
 • *Frequency:* ${frequencyLabel}
-• *Group Size:* ${personsCount} Person${personsCount > 1 ? "s" : ""}
+• *${serviceType === "Corporate Wellness" ? "Total Staff/Attendees" : "Group Size"}:* ${personsCount} Person${personsCount > 1 ? "s" : ""}
 
 📍 *Location Details:*
 • *Address:* ${address}
@@ -768,6 +788,11 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                           name: "Prenatal",
                           tagline: "Safe prenatal care for mothers",
                           desc: "Comfortable, specialized side-lying support for expectant moms."
+                        },
+                        {
+                          name: "Corporate Wellness",
+                          tagline: "On-site wellness for workplaces",
+                          desc: "Clothed chair or table massage for team events and employee wellness."
                         }
                       ].map((item) => (
                         <button
@@ -775,6 +800,8 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                           type="button"
                           onClick={() => setServiceType(item.name)}
                           className={`text-left p-5 rounded-2xl border transition-all relative ${
+                            item.name === "Corporate Wellness" ? "sm:col-span-2" : ""
+                          } ${
                             serviceType === item.name
                               ? "bg-sage/10 border-sage shadow-md text-white"
                               : "bg-white/5 border-white/10 hover:border-white/30 text-white/80"
@@ -863,6 +890,11 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                         </button>
                       ))}
                     </div>
+                    {serviceType === "Corporate Wellness" && (
+                      <p className="mt-3.5 text-xs text-sage leading-relaxed font-light bg-sage/5 border border-sage/10 p-3.5 rounded-xl">
+                        <strong>👥 Corporate Team:</strong> For larger events, we automatically dispatch a balanced team of multiple certified RMTs to accommodate your requested staff/group size.
+                      </p>
+                    )}
                   </div>
                 </div>
               )}
@@ -1065,6 +1097,32 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                       ))}
                     </div>
 
+                    {(personsCount >= 4 || serviceType === "Corporate Wellness") && (
+                      <div className="mt-5 p-5 rounded-2xl bg-white/5 border border-white/10 animate-fade-in space-y-3">
+                        <label className="flex flex-col gap-2">
+                          <span className="text-[10px] uppercase tracking-widest font-bold text-sage px-1">
+                            Specify Exact Number of Persons / Attendees
+                          </span>
+                          <div className="flex items-center gap-3">
+                            <input
+                              type="number"
+                              min={1}
+                              max={100}
+                              value={personsCount}
+                              onChange={(e) => setPersonsCount(Math.max(1, parseInt(e.target.value) || 1))}
+                              className="bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-sm text-white placeholder-white/35 outline-none focus:border-sage transition-colors w-32"
+                            />
+                            <span className="text-xs text-white/50 font-light">
+                              {serviceType === "Corporate Wellness" 
+                                ? "Enter the number of staff members/attendees receiving treatments." 
+                                : "Specify the total number of people scheduling back-to-back."
+                              }
+                            </span>
+                          </div>
+                        </label>
+                      </div>
+                    )}
+
                     <div className="mt-6 flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/10">
                       <Percent className="h-6 w-6 text-sage shrink-0 mt-0.5" />
                       <div className="text-xs leading-relaxed text-white/60 font-light">
@@ -1166,7 +1224,9 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <span className="block text-[10px] uppercase tracking-wider text-white/40 mb-1">Duration</span>
+                          <span className="block text-[10px] uppercase tracking-wider text-white/40 mb-1">
+                            {serviceType === "Corporate Wellness" ? "Duration per Person" : "Duration"}
+                          </span>
                           <span className="text-white">{duration} Minutes</span>
                         </div>
                         <div>
@@ -1186,9 +1246,19 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                           <span className="text-white">{timeSlot}</span>
                         </div>
                       </div>
-                      <div>
-                        <span className="block text-[10px] uppercase tracking-wider text-white/40 mb-1">Booking frequency</span>
-                        <span className="text-white capitalize">{frequency === "one-time" ? "One-time session" : `Regular (${frequency})`}</span>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <span className="block text-[10px] uppercase tracking-wider text-white/40 mb-1">Booking frequency</span>
+                          <span className="text-white capitalize">{frequency === "one-time" ? "One-time session" : `Regular (${frequency})`}</span>
+                        </div>
+                        {serviceType === "Corporate Wellness" && (
+                          <div>
+                            <span className="block text-[10px] uppercase tracking-wider text-white/40 mb-1">Total Massage Time</span>
+                            <span className="text-white font-bold">
+                              {personsCount * duration} mins ({Math.floor((personsCount * duration) / 60)}h { (personsCount * duration) % 60 }m)
+                            </span>
+                          </div>
+                        )}
                       </div>
                       <div>
                         <span className="block text-[10px] uppercase tracking-wider text-white/40 mb-1">Service Address</span>
@@ -1200,11 +1270,11 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                     <div className="border-t md:border-t-0 md:border-l border-white/10 pt-6 md:pt-0 md:pl-8 flex flex-col justify-between">
                       <div className="space-y-3">
                         <div className="flex justify-between text-xs text-white/60 font-light">
-                          <span>Base Rate per person</span>
+                          <span>{serviceType === "Corporate Wellness" ? "Rate per person/session" : "Base Rate per person"}</span>
                           <span>${basePrice}.00 CAD</span>
                         </div>
                         <div className="flex justify-between text-xs text-white/60 font-light">
-                          <span>Quantity booked ({personsCount} person{personsCount > 1 ? "s" : ""})</span>
+                          <span>{serviceType === "Corporate Wellness" ? `Total sessions / staff count` : `Quantity booked (${personsCount} person${personsCount > 1 ? "s" : ""})`}</span>
                           <span>x {personsCount}</span>
                         </div>
                         <div className="flex justify-between text-xs text-white/60 font-light border-b border-white/5 pb-2">
