@@ -54,29 +54,29 @@ export function Therapists() {
               <div className="flex-1 flex flex-col justify-between space-y-6">
                 <div>
                   <div className="flex flex-col gap-2 mb-3 items-start">
-                    <h3 className="font-display text-2xl font-bold text-charcoal leading-tight">
+                    <h3 className="font-display text-3xl font-extrabold text-charcoal leading-tight">
                       {t.name}
                     </h3>
-                    <span className="inline-flex items-center gap-1 bg-sage/10 text-sage border border-sage/15 rounded-full px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-wider">
-                      <Shield className="h-2.5 w-2.5" /> Registered RMT
+                    <span className="inline-flex items-center gap-1.5 bg-sage/10 text-sage border border-sage/15 rounded-full px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider">
+                      <Shield className="h-3 w-3" /> Registered RMT
                     </span>
                   </div>
-                  <p className="text-[12px] font-bold uppercase tracking-widest text-charcoal-muted mb-4">
+                  <p className="text-[13px] font-extrabold uppercase tracking-widest text-charcoal-muted mb-4">
                     {t.title}
                   </p>
-                  <p className="text-[14.5px] leading-[1.8] text-charcoal-muted/90 font-light mb-6">
+                  <p className="text-[17px] leading-[1.85] text-charcoal/80 font-medium mb-6">
                     {t.bio}
                   </p>
 
                   {/* Focus areas */}
                   <div className="space-y-2.5">
-                    <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-charcoal-muted">
+                    <p className="text-[11px] uppercase tracking-[0.2em] font-extrabold text-charcoal-muted">
                       Areas of Focus:
                     </p>
                     <ul className="grid grid-cols-1 gap-2">
                       {t.focus.map((item) => (
-                        <li key={item} className="flex items-start gap-2.5 text-xs text-charcoal/80 font-medium">
-                          <Check className="h-3.5 w-3.5 text-sage shrink-0 mt-0.5" />
+                        <li key={item} className="flex items-start gap-2.5 text-[13px] text-charcoal/85 font-semibold">
+                          <Check className="h-4 w-4 text-sage shrink-0 mt-0.5" />
                           <span>{item}</span>
                         </li>
                       ))}
@@ -86,11 +86,11 @@ export function Therapists() {
 
                 {/* Treatment style */}
                 <div className="pt-4 border-t border-border/60">
-                  <div className="flex items-start gap-3 bg-sage-light/60 border border-sage/10 p-3.5 rounded-xl">
-                    <Heart className="h-4 w-4 text-sage shrink-0 mt-0.5" />
+                  <div className="flex items-start gap-3 bg-sage-light/60 border border-sage/10 p-4 rounded-xl">
+                    <Heart className="h-4.5 w-4.5 text-sage shrink-0 mt-0.5" />
                     <div>
-                      <span className="block text-[9px] uppercase tracking-wider text-sage font-extrabold mb-0.5">Treatment Style:</span>
-                      <p className="text-xs text-charcoal/70 font-medium italic leading-relaxed">
+                      <span className="block text-[10px] uppercase tracking-wider text-sage font-extrabold mb-1">Treatment Style:</span>
+                      <p className="text-[13px] text-charcoal/75 font-semibold italic leading-relaxed">
                         {t.style}
                       </p>
                     </div>

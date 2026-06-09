@@ -162,22 +162,22 @@ export function Services() {
                 <span className="inline-block px-3 py-1 bg-sage-light text-sage border border-sage/10 rounded-full text-[9px] font-bold uppercase tracking-wider mb-5">
                   Individual
                 </span>
-                <h4 className="font-display text-xl font-bold text-charcoal mb-2">Single Booking</h4>
-                <p className="text-xs text-charcoal-muted mb-6 leading-relaxed">
+                <h4 className="font-display text-2xl font-bold text-charcoal mb-2">Single Booking</h4>
+                <p className="text-sm text-charcoal-muted mb-6 leading-relaxed">
                   One-on-one session with your dedicated therapist. Perfect for regular maintenance or specific pain relief.
                 </p>
                 <div className="space-y-4 border-t border-border/60 pt-5">
-                  <div className="flex justify-between items-center text-sm font-medium">
-                    <span className="text-charcoal-muted">45 Minutes</span>
-                    <span className="font-display font-bold text-charcoal text-[17px]">$100 <span className="text-[10px] text-charcoal-muted font-normal">CAD</span></span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-base font-semibold text-charcoal-muted">45 Minutes</span>
+                    <span className="font-display font-extrabold text-charcoal text-xl">$100 <span className="text-[11px] text-charcoal-muted font-normal">CAD</span></span>
                   </div>
-                  <div className="flex justify-between items-center text-sm font-medium">
-                    <span className="text-charcoal-muted">60 Minutes</span>
-                    <span className="font-display font-bold text-charcoal text-[17px]">$130 <span className="text-[10px] text-charcoal-muted font-normal">CAD</span></span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-base font-semibold text-charcoal-muted">60 Minutes</span>
+                    <span className="font-display font-extrabold text-charcoal text-xl">$130 <span className="text-[11px] text-charcoal-muted font-normal">CAD</span></span>
                   </div>
-                  <div className="flex justify-between items-center text-sm font-medium">
-                    <span className="text-charcoal-muted">90 Minutes</span>
-                    <span className="font-display font-bold text-charcoal text-[17px]">$175 <span className="text-[10px] text-charcoal-muted font-normal">CAD</span></span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-base font-semibold text-charcoal-muted">90 Minutes</span>
+                    <span className="font-display font-extrabold text-charcoal text-xl">$175 <span className="text-[11px] text-charcoal-muted font-normal">CAD</span></span>
                   </div>
                 </div>
               </div>
@@ -195,26 +195,26 @@ export function Services() {
                 <span className="inline-block px-3 py-1 bg-sage/10 text-sage border border-sage/15 rounded-full text-[9px] font-bold uppercase tracking-wider mb-5">
                   Multiple People
                 </span>
-                <h4 className="font-display text-xl font-bold text-charcoal mb-2">Group at Same Address</h4>
-                <p className="text-xs text-charcoal-muted mb-6 leading-relaxed">
+                <h4 className="font-display text-2xl font-bold text-charcoal mb-2">Group at Same Address</h4>
+                <p className="text-sm text-charcoal-muted mb-6 leading-relaxed">
                   Back-to-back sessions at the same location. Save on travel overhead and split the savings.
                 </p>
                 <div className="space-y-4 border-t border-border/60 pt-5">
-                  <div className="flex justify-between items-center text-sm font-medium">
-                    <span className="text-charcoal-muted">30 Minutes *</span>
-                    <span className="font-display font-bold text-sage text-[17px]">$80 <span className="text-[10px] text-charcoal-muted font-normal">/ person</span></span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-base font-semibold text-charcoal-muted">30 Minutes *</span>
+                    <span className="font-display font-extrabold text-sage text-xl">$80 <span className="text-[11px] text-charcoal-muted font-normal">/ person</span></span>
                   </div>
-                  <div className="flex justify-between items-center text-sm font-medium">
-                    <span className="text-charcoal-muted">45 Minutes</span>
-                    <span className="font-display font-bold text-sage text-[17px]">$95 <span className="text-[10px] text-charcoal-muted font-normal">/ person</span></span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-base font-semibold text-charcoal-muted">45 Minutes</span>
+                    <span className="font-display font-extrabold text-sage text-xl">$95 <span className="text-[11px] text-charcoal-muted font-normal">/ person</span></span>
                   </div>
-                  <div className="flex justify-between items-center text-sm font-medium">
-                    <span className="text-charcoal-muted">60 Minutes</span>
-                    <span className="font-display font-bold text-sage text-[17px]">$125 <span className="text-[10px] text-charcoal-muted font-normal">/ person</span></span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-base font-semibold text-charcoal-muted">60 Minutes</span>
+                    <span className="font-display font-extrabold text-sage text-xl">$125 <span className="text-[11px] text-charcoal-muted font-normal">/ person</span></span>
                   </div>
-                  <div className="flex justify-between items-center text-sm font-medium">
-                    <span className="text-charcoal-muted">90 Minutes</span>
-                    <span className="font-display font-bold text-sage text-[17px]">$165 <span className="text-[10px] text-charcoal-muted font-normal">/ person</span></span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-base font-semibold text-charcoal-muted">90 Minutes</span>
+                    <span className="font-display font-extrabold text-sage text-xl">$165 <span className="text-[11px] text-charcoal-muted font-normal">/ person</span></span>
                   </div>
                 </div>
               </div>
@@ -229,22 +229,22 @@ export function Services() {
                 <span className="inline-block px-3 py-1 bg-soft-blue-light text-charcoal-muted border border-soft-blue/20 rounded-full text-[9px] font-bold uppercase tracking-wider mb-5">
                   Bundles
                 </span>
-                <h4 className="font-display text-xl font-bold text-charcoal mb-2">Multi-Session Packages</h4>
-                <p className="text-xs text-charcoal-muted mb-6 leading-relaxed">
+                <h4 className="font-display text-2xl font-bold text-charcoal mb-2">Multi-Session Packages</h4>
+                <p className="text-sm text-charcoal-muted mb-6 leading-relaxed">
                   Book multiple appointments together. Lock in recurring relaxation and enjoy significant bulk discounts.
                 </p>
                 <div className="space-y-4 border-t border-border/60 pt-5">
-                  <div className="flex justify-between items-center text-sm font-medium">
-                    <span className="text-charcoal-muted">2 Sessions Booked</span>
-                    <span className="font-display font-bold text-charcoal text-[17px]"><span className="text-sage">5%</span> Off Total</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-base font-semibold text-charcoal-muted">2 Sessions Booked</span>
+                    <span className="font-display font-extrabold text-charcoal text-xl"><span className="text-sage">5%</span> Off Total</span>
                   </div>
-                  <div className="flex justify-between items-center text-sm font-medium">
-                    <span className="text-charcoal-muted">3 Sessions Booked</span>
-                    <span className="font-display font-bold text-charcoal text-[17px]"><span className="text-sage">10%</span> Off Total</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-base font-semibold text-charcoal-muted">3 Sessions Booked</span>
+                    <span className="font-display font-extrabold text-charcoal text-xl"><span className="text-sage">10%</span> Off Total</span>
                   </div>
-                  <div className="flex justify-between items-center text-sm font-medium">
-                    <span className="text-charcoal-muted">4+ Sessions Booked</span>
-                    <span className="font-display font-bold text-charcoal text-[17px]"><span className="text-sage">15%</span> Off Total</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-base font-semibold text-charcoal-muted">4+ Sessions Booked</span>
+                    <span className="font-display font-extrabold text-charcoal text-xl"><span className="text-sage">15%</span> Off Total</span>
                   </div>
                 </div>
               </div>
