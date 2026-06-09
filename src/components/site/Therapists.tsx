@@ -53,7 +53,7 @@ export function Therapists() {
               {/* Text info */}
               <div className="flex-1 flex flex-col justify-between space-y-6">
                 <div>
-                  <div className="flex items-center gap-2.5 mb-1.5">
+                  <div className="flex flex-col gap-2 mb-3 items-start">
                     <h3 className="font-display text-2xl font-bold text-charcoal leading-tight">
                       {t.name}
                     </h3>
