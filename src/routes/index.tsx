@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Nav } from "@/components/site/Nav";
 import { Hero } from "@/components/site/Hero";
 import { About } from "@/components/site/About";
+import { Therapists } from "@/components/site/Therapists";
 import { Services } from "@/components/site/Services";
 import { HowItWorks } from "@/components/site/HowItWorks";
 import { Areas } from "@/components/site/Areas";
@@ -39,6 +40,7 @@ function Index() {
       <main>
         <Hero />
         <About />
+        <Therapists />
         <Services />
         <HowItWorks />
         <section className="w-full py-28 md:py-36 px-6 bg-soft-blue-light/20 relative overflow-hidden">

@@ -22,7 +22,7 @@ const services: ServiceItem[] = [
     accent: "Massage",
     description:
       "Personalized treatment that targets your specific tension patterns, improves mobility, and supports recovery from the physical demands of daily life in Calgary. Ideal for clients managing chronic stress or rebuilding after injury.",
-    duration: "60, 90, or 120 Minutes",
+    duration: "30*, 45, 60, or 90 Minutes",
     image: therapeuticImg,
     tint: "#f5d3a8",
   },
@@ -31,7 +31,7 @@ const services: ServiceItem[] = [
     accent: "Massage",
     description:
       "Focused work on deeper muscle layers to release chronic tightness, stubborn knots, and long-held stress. Ideal after long workdays, intense training, or active Calgary weekends in the mountains.",
-    duration: "60, 90, or 120 Minutes",
+    duration: "30*, 45, 60, or 90 Minutes",
     image: deepTissueImg,
     tint: "#d4d9c4",
   },
@@ -40,7 +40,7 @@ const services: ServiceItem[] = [
     accent: "Massage",
     description:
       "A calming, flowing session designed to quiet the nervous system, reduce stress, and leave you feeling grounded and recharged — without ever leaving the comfort of your own space.",
-    duration: "60, 90, or 120 Minutes",
+    duration: "30*, 45, 60, or 90 Minutes",
     image: relaxationImg,
     tint: "#fde8d4",
   },
@@ -49,7 +49,7 @@ const services: ServiceItem[] = [
     accent: "Massage",
     description:
       "Safe, supportive care tailored for every stage of pregnancy. We ease lower back and hip discomfort, reduce leg swelling, and create a comfortable side-lying setup right in your home.",
-    duration: "60, 90, or 120 Minutes",
+    duration: "30*, 45, 60, or 90 Minutes",
     image: prenatalImg,
     tint: "#fce4e6",
   },
@@ -137,6 +137,124 @@ export function Services() {
             );
           })}
         </div>
+
+        {/* Pricing Summary Divider */}
+        <div className="h-px bg-charcoal/10 my-28" />
+
+        {/* Pricing Summary Section */}
+        <div id="pricing" className="scroll-mt-24">
+          <div className="text-center mb-16">
+            <p className="text-sage tracking-[0.32em] uppercase text-[11px] font-semibold mb-4">
+              Rates &amp; Packages
+            </p>
+            <h3 className="font-display text-4xl md:text-5xl font-bold text-charcoal">
+              Transparent <span className="text-sage italic font-serif font-medium">Pricing</span>
+            </h3>
+            <p className="mt-4 text-charcoal-muted text-sm max-w-xl mx-auto">
+              Professional, fully-equipped mobile RMT visits with no travel fees. We offer premium concierge rates for single clients, groups, and multi-session bundles.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+            {/* Card 1: Single Booking */}
+            <div className="bg-white border border-border/80 rounded-3xl p-8 shadow-soft flex flex-col justify-between hover:shadow-premium hover:-translate-y-1 transition-all duration-300">
+              <div>
+                <span className="inline-block px-3 py-1 bg-sage-light text-sage border border-sage/10 rounded-full text-[9px] font-bold uppercase tracking-wider mb-5">
+                  Individual
+                </span>
+                <h4 className="font-display text-xl font-bold text-charcoal mb-2">Single Booking</h4>
+                <p className="text-xs text-charcoal-muted mb-6 leading-relaxed">
+                  One-on-one session with your dedicated therapist. Perfect for regular maintenance or specific pain relief.
+                </p>
+                <div className="space-y-4 border-t border-border/60 pt-5">
+                  <div className="flex justify-between items-center text-sm font-medium">
+                    <span className="text-charcoal-muted">45 Minutes</span>
+                    <span className="font-display font-bold text-charcoal text-[17px]">$100 <span className="text-[10px] text-charcoal-muted font-normal">CAD</span></span>
+                  </div>
+                  <div className="flex justify-between items-center text-sm font-medium">
+                    <span className="text-charcoal-muted">60 Minutes</span>
+                    <span className="font-display font-bold text-charcoal text-[17px]">$130 <span className="text-[10px] text-charcoal-muted font-normal">CAD</span></span>
+                  </div>
+                  <div className="flex justify-between items-center text-sm font-medium">
+                    <span className="text-charcoal-muted">90 Minutes</span>
+                    <span className="font-display font-bold text-charcoal text-[17px]">$175 <span className="text-[10px] text-charcoal-muted font-normal">CAD</span></span>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-8 text-[11px] text-charcoal-muted/70 italic border-t border-border/40 pt-4">
+                *30-minute sessions are not available for single individual bookings.
+              </div>
+            </div>
+
+            {/* Card 2: Group Booking */}
+            <div className="bg-white border border-sage/35 rounded-3xl p-8 shadow-soft flex flex-col justify-between hover:shadow-premium hover:-translate-y-1 transition-all duration-300 relative">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-sage text-white text-[8px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-white shadow-sm">
+                Most Efficient
+              </div>
+              <div>
+                <span className="inline-block px-3 py-1 bg-sage/10 text-sage border border-sage/15 rounded-full text-[9px] font-bold uppercase tracking-wider mb-5">
+                  Multiple People
+                </span>
+                <h4 className="font-display text-xl font-bold text-charcoal mb-2">Group at Same Address</h4>
+                <p className="text-xs text-charcoal-muted mb-6 leading-relaxed">
+                  Back-to-back sessions at the same location. Save on travel overhead and split the savings.
+                </p>
+                <div className="space-y-4 border-t border-border/60 pt-5">
+                  <div className="flex justify-between items-center text-sm font-medium">
+                    <span className="text-charcoal-muted">30 Minutes *</span>
+                    <span className="font-display font-bold text-sage text-[17px]">$80 <span className="text-[10px] text-charcoal-muted font-normal">/ person</span></span>
+                  </div>
+                  <div className="flex justify-between items-center text-sm font-medium">
+                    <span className="text-charcoal-muted">45 Minutes</span>
+                    <span className="font-display font-bold text-sage text-[17px]">$95 <span className="text-[10px] text-charcoal-muted font-normal">/ person</span></span>
+                  </div>
+                  <div className="flex justify-between items-center text-sm font-medium">
+                    <span className="text-charcoal-muted">60 Minutes</span>
+                    <span className="font-display font-bold text-sage text-[17px]">$125 <span className="text-[10px] text-charcoal-muted font-normal">/ person</span></span>
+                  </div>
+                  <div className="flex justify-between items-center text-sm font-medium">
+                    <span className="text-charcoal-muted">90 Minutes</span>
+                    <span className="font-display font-bold text-sage text-[17px]">$165 <span className="text-[10px] text-charcoal-muted font-normal">/ person</span></span>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-8 text-[11px] text-charcoal-muted/70 italic border-t border-border/40 pt-4">
+                *30-minute duration is only available for multi-person or package bookings.
+              </div>
+            </div>
+
+            {/* Card 3: Packages */}
+            <div className="bg-white border border-border/80 rounded-3xl p-8 shadow-soft flex flex-col justify-between hover:shadow-premium hover:-translate-y-1 transition-all duration-300">
+              <div>
+                <span className="inline-block px-3 py-1 bg-soft-blue-light text-charcoal-muted border border-soft-blue/20 rounded-full text-[9px] font-bold uppercase tracking-wider mb-5">
+                  Bundles
+                </span>
+                <h4 className="font-display text-xl font-bold text-charcoal mb-2">Multi-Session Packages</h4>
+                <p className="text-xs text-charcoal-muted mb-6 leading-relaxed">
+                  Book multiple appointments together. Lock in recurring relaxation and enjoy significant bulk discounts.
+                </p>
+                <div className="space-y-4 border-t border-border/60 pt-5">
+                  <div className="flex justify-between items-center text-sm font-medium">
+                    <span className="text-charcoal-muted">2 Sessions Booked</span>
+                    <span className="font-display font-bold text-charcoal text-[17px]"><span className="text-sage">5%</span> Off Total</span>
+                  </div>
+                  <div className="flex justify-between items-center text-sm font-medium">
+                    <span className="text-charcoal-muted">3 Sessions Booked</span>
+                    <span className="font-display font-bold text-charcoal text-[17px]"><span className="text-sage">10%</span> Off Total</span>
+                  </div>
+                  <div className="flex justify-between items-center text-sm font-medium">
+                    <span className="text-charcoal-muted">4+ Sessions Booked</span>
+                    <span className="font-display font-bold text-charcoal text-[17px]"><span className="text-sage">15%</span> Off Total</span>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-8 text-[11px] text-charcoal-muted/70 leading-relaxed border-t border-border/40 pt-4">
+                Share sessions with family members in your household. Select your package option directly on the booking form.
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   );

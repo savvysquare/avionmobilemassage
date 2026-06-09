@@ -14,17 +14,28 @@ export function Nav() {
   }, []);
 
   const links = [
-    { href: "#about", label: "About" },
-    { href: "#services", label: "Services" },
-    { href: "#how-it-works", label: "How It Works" },
-    { href: "#faq", label: "FAQ" },
-    { href: "#book", label: "Contact" },
+    { href: "#about", label: "About", isHash: true },
+    { href: "#services", label: "Services", isHash: true },
+    { href: "#how-it-works", label: "How It Works", isHash: true },
+    { href: "#faq", label: "FAQ", isHash: true },
+    { href: "/blog", label: "Blog", isHash: false },
+    { href: "#book", label: "Contact", isHash: true },
   ];
 
-  const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    setOpen(false);
-    scrollToSection(href);
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, item: { href: string; isHash: boolean }) => {
+    const isHomepage = typeof window !== "undefined" && window.location.pathname === "/";
+    if (item.isHash) {
+      if (isHomepage) {
+        e.preventDefault();
+        setOpen(false);
+        scrollToSection(item.href);
+      } else {
+        // Navigate to homepage with hash
+        setOpen(false);
+      }
+    } else {
+      setOpen(false);
+    }
   };
 
   return (
@@ -49,7 +60,7 @@ export function Nav() {
         <div className="relative flex items-center justify-center gap-2 text-white w-full px-4">
           <Sparkles className="h-3 w-3 opacity-80 shrink-0 hidden sm:block" />
           <span className="text-[9px] sm:text-[10px] md:text-[11px] font-bold uppercase tracking-[0.12em] sm:tracking-[0.28em] text-center leading-tight">
-            Direct Insurance Billing Available — We File Claims For You
+            Direct Insurance Billing Available — Cooperators, Medavie Blue Cross, Alberta Blue Cross & More
           </span>
           <Sparkles className="h-3 w-3 opacity-80 shrink-0 hidden sm:block" />
         </div>
@@ -70,8 +81,13 @@ export function Nav() {
           >
             {/* Logo */}
             <a
-              href="#hero"
-              onClick={(e) => scrollTo(e, "#hero")}
+              href={typeof window !== "undefined" && window.location.pathname === "/" ? "#hero" : "/"}
+              onClick={(e) => {
+                if (typeof window !== "undefined" && window.location.pathname === "/") {
+                  e.preventDefault();
+                  scrollToSection("#hero");
+                }
+              }}
               className="flex items-center shrink-0"
             >
               <img
@@ -86,8 +102,8 @@ export function Nav() {
               {links.map((l) => (
                 <a
                   key={l.label}
-                  href={l.href}
-                  onClick={(e) => scrollTo(e, l.href)}
+                  href={l.isHash && typeof window !== "undefined" && window.location.pathname !== "/" ? `/${l.href}` : l.href}
+                  onClick={(e) => handleLinkClick(e, l)}
                   className="relative px-4 py-2 text-[12.5px] font-bold uppercase tracking-[0.16em] text-charcoal/70 hover:text-sage transition-colors duration-200 group"
                 >
                   {l.label}
@@ -98,8 +114,13 @@ export function Nav() {
 
             {/* CTA */}
             <a
-              href="#book"
-              onClick={(e) => scrollTo(e, "#book")}
+              href={typeof window !== "undefined" && window.location.pathname === "/" ? "#book" : "/#book"}
+              onClick={(e) => {
+                if (typeof window !== "undefined" && window.location.pathname === "/") {
+                  e.preventDefault();
+                  scrollToSection("#book");
+                }
+              }}
               className="hidden md:inline-flex items-center gap-2 bg-sage text-white px-6 py-2.5 rounded-full text-[11.5px] font-bold uppercase tracking-[0.2em] hover:bg-sage-hover transition-all duration-200 shadow-[0_4px_16px_-4px_rgba(184,148,90,0.5)] hover:shadow-[0_6px_20px_-4px_rgba(184,148,90,0.65)] active:scale-95"
             >
               Book Now
@@ -120,8 +141,8 @@ export function Nav() {
                 {links.map((l) => (
                   <a
                     key={l.label}
-                    href={l.href}
-                    onClick={(e) => scrollTo(e, l.href)}
+                    href={l.isHash && typeof window !== "undefined" && window.location.pathname !== "/" ? `/${l.href}` : l.href}
+                    onClick={(e) => handleLinkClick(e, l)}
                     className="flex items-center justify-between py-3 px-2 text-[13px] font-bold uppercase tracking-[0.15em] text-charcoal/70 hover:text-sage border-b border-border/30 last:border-0 transition-colors"
                   >
                     {l.label}
@@ -129,8 +150,14 @@ export function Nav() {
                   </a>
                 ))}
                 <a
-                  href="#book"
-                  onClick={(e) => scrollTo(e, "#book")}
+                  href={typeof window !== "undefined" && window.location.pathname === "/" ? "#book" : "/#book"}
+                  onClick={(e) => {
+                    setOpen(false);
+                    if (typeof window !== "undefined" && window.location.pathname === "/") {
+                      e.preventDefault();
+                      scrollToSection("#book");
+                    }
+                  }}
                   className="mt-4 flex items-center justify-center bg-sage text-white px-5 py-3.5 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] shadow-[0_4px_16px_-4px_rgba(184,148,90,0.5)]"
                 >
                   Book Now

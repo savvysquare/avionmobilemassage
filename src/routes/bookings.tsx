@@ -260,10 +260,19 @@ export function BookingsDashboard() {
     e.preventDefault();
 
     // calculate manual base price
-    const base = addDuration === 60 ? 120 : addDuration === 90 ? 165 : 220;
-    const sub = base * addPersons;
-    const disc = addPersons === 2 ? 0.10 : addPersons === 3 ? 0.15 : addPersons >= 4 ? 0.20 : 0;
-    const finalAmount = sub - sub * disc;
+    let base = 130;
+    if (addPersons === 1) {
+      if (addDuration === 30) base = 80;
+      else if (addDuration === 45) base = 100;
+      else if (addDuration === 60) base = 130;
+      else if (addDuration === 90) base = 175;
+    } else {
+      if (addDuration === 30) base = 80;
+      else if (addDuration === 45) base = 95;
+      else if (addDuration === 60) base = 125;
+      else if (addDuration === 90) base = 165;
+    }
+    const finalAmount = base * addPersons;
 
     const newRec: BookingRecord = {
       id: "AV" + Math.floor(1000 + Math.random() * 9000),
@@ -609,9 +618,10 @@ export function BookingsDashboard() {
                     onChange={(e) => setAddDuration(Number(e.target.value))}
                     className="p-3 border border-border rounded-xl bg-white text-sm text-charcoal font-medium outline-none focus:border-sage cursor-pointer"
                   >
+                    <option value={30}>30 Minutes</option>
+                    <option value={45}>45 Minutes</option>
                     <option value={60}>60 Minutes</option>
                     <option value={90}>90 Minutes</option>
-                    <option value={120}>120 Minutes</option>
                   </select>
                 </label>
 
@@ -688,6 +698,8 @@ export function BookingsDashboard() {
                       <option value="Manulife">Manulife Financial</option>
                       <option value="Canada Life">Canada Life</option>
                       <option value="Desjardins Insurance">Desjardins Insurance</option>
+                      <option value="Cooperators">Cooperators</option>
+                      <option value="Medavie Blue Cross">Medavie Blue Cross</option>
                       <option value="Other">Other Provider</option>
                     </select>
                   )}

@@ -18,9 +18,12 @@ import {
   Map,
   ShieldCheck,
   Check,
-  ChevronDown
+  ChevronDown,
+  Upload,
+  UserCheck
 } from "lucide-react";
 import { scrollToSection } from "@/lib/scrollTo";
+import { db, PricingOption } from "@/lib/db";
 
 export function Booking() {
   const [submitted, setSubmitted] = useState(false);
@@ -34,49 +37,42 @@ export function Booking() {
   const [directBilling, setDirectBilling] = useState(false);
   const [insurer, setInsurer] = useState("Alberta Blue Cross");
   const [otherInsurer, setOtherInsurer] = useState("");
+  
+  // Insurance specific fields
+  const [groupNo, setGroupNo] = useState("");
+  const [memberId, setMemberId] = useState("");
+  const [patientCode, setPatientCode] = useState("");
+  const [dob, setDob] = useState("");
+  const [cardFileName, setCardFileName] = useState("");
 
   const [serviceType, setServiceType] = useState("Swedish/Relaxation");
-  const [duration, setDuration] = useState(90); // default 90 min (recommended)
+  const [duration, setDuration] = useState(60); 
 
-// Mapping of service types to available duration options with pricing and descriptions
-const SERVICE_DURATION_OPTIONS: { [key: string]: { min: number; price: number; rec: string; desc: string; recommended?: boolean }[] } = {
-  "Therapeutic": [
-    { min: 60, price: 120, rec: "Targeted focus / quick reset", desc: "Best for targeting one or two specific areas (e.g. neck & shoulders) or a quick overall muscle flush." },
-    { min: 90, price: 165, rec: "Highly Recommended Sweet Spot", desc: "Allows the therapist to deliver a comprehensive full-body session while addressing specific areas of deep tightness.", recommended: true },
-    { min: 120, price: 220, rec: "Ultimate therapeutic restoration", desc: "Perfect for deep recovery, long-standing chronic tightness, or severe stiffness requiring slow, extended attention." }
-  ],
-  "Deep Tissue": [
-    { min: 60, price: 120, rec: "Targeted focus / quick reset", desc: "Best for targeting one or two specific areas (e.g. neck & shoulders) or a quick overall muscle flush." },
-    { min: 90, price: 165, rec: "Highly Recommended Sweet Spot", desc: "Allows the therapist to deliver a comprehensive full-body session while addressing specific areas of deep tightness.", recommended: true },
-    { min: 120, price: 220, rec: "Ultimate therapeutic restoration", desc: "Perfect for deep recovery, long-standing chronic tightness, or severe stiffness requiring slow, extended attention." }
-  ],
-  "Swedish/Relaxation": [
-    { min: 60, price: 120, rec: "Targeted focus / quick reset", desc: "Best for targeting one or two specific areas (e.g. neck & shoulders) or a quick overall muscle flush." },
-    { min: 90, price: 165, rec: "Highly Recommended Sweet Spot", desc: "Allows the therapist to deliver a comprehensive full-body session while addressing specific areas of deep tightness.", recommended: true },
-    { min: 120, price: 220, rec: "Ultimate therapeutic restoration", desc: "Perfect for deep recovery, long-standing chronic tightness, or severe stiffness requiring slow, extended attention." }
-  ],
-  "Prenatal": [
-    { min: 60, price: 120, rec: "Targeted focus / quick reset", desc: "Best for targeting one or two specific areas (e.g. neck & shoulders) or a quick overall muscle flush." },
-    { min: 90, price: 165, rec: "Highly Recommended Sweet Spot", desc: "Allows the therapist to deliver a comprehensive full-body session while addressing specific areas of deep tightness.", recommended: true },
-    { min: 120, price: 220, rec: "Ultimate therapeutic restoration", desc: "Perfect for deep recovery, long-standing chronic tightness, or severe stiffness requiring slow, extended attention." }
-  ],
-  "Corporate Wellness": [
-    { min: 15, price: 45, rec: "Quick 15 min session", desc: "Ideal for on-site quick relief during team events." },
-    { min: 30, price: 80, rec: "Standard 30 min session", desc: "Balanced session for workplace wellness." }
-  ]
-};
   const [therapistGender, setTherapistGender] = useState("no_preference");
   const [date, setDate] = useState("");
   const [timeSlot, setTimeSlot] = useState("");
   const [frequency, setFrequency] = useState("one-time");
   const [personsCount, setPersonsCount] = useState(1);
+  const [sessionsCount, setSessionsCount] = useState(1); // Package sessions: 1, 2, 3, 4
   const [address, setAddress] = useState("");
+
+  // Returning client state
+  const [isReturning, setIsReturning] = useState(false);
+  const [returningSearchEmail, setReturningSearchEmail] = useState("");
+  const [returningStatus, setReturningStatus] = useState<"idle" | "found" | "not_found">("idle");
 
   // Geolocation fetching state
   const [locating, setLocating] = useState(false);
 
   // Calendar state
   const [calendarDate, setCalendarDate] = useState(new Date());
+
+  // Pricing state loaded from DB
+  const [pricingTiers, setPricingTiers] = useState<PricingOption[]>([]);
+
+  useEffect(() => {
+    setPricingTiers(db.getPricing());
+  }, []);
 
   // Load state from localStorage on mount
   useEffect(() => {
@@ -91,6 +87,11 @@ const SERVICE_DURATION_OPTIONS: { [key: string]: { min: number; price: number; r
         if (data.directBilling !== undefined) setDirectBilling(data.directBilling);
         if (data.insurer) setInsurer(data.insurer);
         if (data.otherInsurer) setOtherInsurer(data.otherInsurer);
+        if (data.groupNo) setGroupNo(data.groupNo);
+        if (data.memberId) setMemberId(data.memberId);
+        if (data.patientCode) setPatientCode(data.patientCode);
+        if (data.dob) setDob(data.dob);
+        if (data.cardFileName) setCardFileName(data.cardFileName);
         
         if (data.serviceType) setServiceType(data.serviceType);
         if (data.duration) setDuration(Number(data.duration));
@@ -99,6 +100,7 @@ const SERVICE_DURATION_OPTIONS: { [key: string]: { min: number; price: number; r
         if (data.timeSlot) setTimeSlot(data.timeSlot);
         if (data.frequency) setFrequency(data.frequency);
         if (data.personsCount) setPersonsCount(Number(data.personsCount));
+        if (data.sessionsCount) setSessionsCount(Number(data.sessionsCount));
         if (data.address) setAddress(data.address);
         if (data.step) setStep(Number(data.step));
       } catch (e) {
@@ -117,6 +119,11 @@ const SERVICE_DURATION_OPTIONS: { [key: string]: { min: number; price: number; r
       directBilling,
       insurer,
       otherInsurer,
+      groupNo,
+      memberId,
+      patientCode,
+      dob,
+      cardFileName,
       serviceType,
       duration,
       therapistGender,
@@ -124,6 +131,7 @@ const SERVICE_DURATION_OPTIONS: { [key: string]: { min: number; price: number; r
       timeSlot,
       frequency,
       personsCount,
+      sessionsCount,
       address,
       step,
     };
@@ -136,6 +144,11 @@ const SERVICE_DURATION_OPTIONS: { [key: string]: { min: number; price: number; r
     directBilling,
     insurer,
     otherInsurer,
+    groupNo,
+    memberId,
+    patientCode,
+    dob,
+    cardFileName,
     serviceType,
     duration,
     therapistGender,
@@ -143,21 +156,24 @@ const SERVICE_DURATION_OPTIONS: { [key: string]: { min: number; price: number; r
     timeSlot,
     frequency,
     personsCount,
+    sessionsCount,
     address,
     step,
   ]);
 
-  // Reset duration to first option if not valid for selected service type
+  // Adjust duration if no longer valid for selected service type
   useEffect(() => {
-    const options = SERVICE_DURATION_OPTIONS[serviceType];
-    if (options) {
-      const isValid = options.some(opt => opt.min === duration);
-      if (!isValid) {
-        const recommendedOpt = options.find(opt => opt.recommended) ?? options[0];
-        setDuration(recommendedOpt.min);
+    if (serviceType === "Corporate Wellness") {
+      if (duration !== 15 && duration !== 30) {
+        setDuration(30);
+      }
+    } else {
+      // For core services, make sure duration is valid RMT tier
+      if (!pricingTiers.some(tier => tier.min === duration)) {
+        setDuration(60);
       }
     }
-  }, [serviceType]);
+  }, [serviceType, pricingTiers]);
 
   const resetForm = () => {
     localStorage.removeItem("avion_booking_flow");
@@ -168,45 +184,109 @@ const SERVICE_DURATION_OPTIONS: { [key: string]: { min: number; price: number; r
     setDirectBilling(false);
     setInsurer("Alberta Blue Cross");
     setOtherInsurer("");
+    setGroupNo("");
+    setMemberId("");
+    setPatientCode("");
+    setDob("");
+    setCardFileName("");
     setServiceType("Swedish/Relaxation");
-    setDuration(90);
+    setDuration(60);
     setTherapistGender("no_preference");
     setDate("");
     setTimeSlot("");
     setFrequency("one-time");
     setPersonsCount(1);
+    setSessionsCount(1);
     setAddress("");
     setStep(1);
+    setIsReturning(false);
+    setReturningStatus("idle");
+    setReturningSearchEmail("");
     setSubmitted(false);
+  };
+
+  // Check Local Storage for returning client profile matching search email
+  const handleCheckReturningClient = () => {
+    if (!returningSearchEmail || !returningSearchEmail.includes("@")) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    // Check returning client cache first
+    const returningCached = localStorage.getItem("avion_returning_client_data");
+    if (returningCached) {
+      try {
+        const client = JSON.parse(returningCached);
+        if (client.email.toLowerCase().trim() === returningSearchEmail.toLowerCase().trim()) {
+          setName(client.name);
+          setEmail(client.email);
+          setPhone(client.phone);
+          if (client.countryCode) setCountryCode(client.countryCode);
+          if (client.address) setAddress(client.address);
+          setReturningStatus("found");
+          return;
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Check global bookings list to find last booking under this email
+    const bookingsList = localStorage.getItem("avion_all_bookings");
+    if (bookingsList) {
+      try {
+        const list = JSON.parse(bookingsList);
+        const match = list.find((b: any) => b.email.toLowerCase().trim() === returningSearchEmail.toLowerCase().trim());
+        if (match) {
+          setName(match.name);
+          setEmail(match.email);
+          // Split phone if it contains code
+          const phoneClean = match.phone.replace(/^\+1\s*/, "");
+          setPhone(phoneClean);
+          setCountryCode("+1");
+          if (match.address) setAddress(match.address);
+          setReturningStatus("found");
+          
+          // Cache this for quick lookup later
+          localStorage.setItem("avion_returning_client_data", JSON.stringify({
+            name: match.name,
+            email: match.email,
+            phone: phoneClean,
+            countryCode: "+1",
+            address: match.address
+          }));
+          return;
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    setReturningStatus("not_found");
   };
 
   // Pricing calculations
   const getBasePrice = () => {
-    const options = SERVICE_DURATION_OPTIONS[serviceType];
-    if (options) {
-      const match = options.find((opt) => opt.min === duration);
-      if (match) return match.price;
+    if (serviceType === "Corporate Wellness") {
+      return duration === 15 ? 45 : 80;
     }
-    // Fallbacks
-    if (duration === 15) return 45;
-    if (duration === 30) return 80;
-    if (duration === 60) return 120;
-    if (duration === 90) return 165;
-    return 220; // 120 min
+    const tier = pricingTiers.find(t => t.min === duration);
+    if (!tier) return 130; // standard fallback
+    return personsCount > 1 ? tier.priceMultiple : tier.priceSingle;
   };
 
-  const getDiscountRate = () => {
-    if (personsCount === 2) return 0.10; // 10%
-    if (personsCount === 3) return 0.15; // 15%
-    if (personsCount >= 4) return 0.20; // 20%
+  const getPackageDiscountRate = () => {
+    if (sessionsCount === 2) return 0.05;
+    if (sessionsCount === 3) return 0.10;
+    if (sessionsCount >= 4) return 0.15;
     return 0;
   };
 
   const basePrice = getBasePrice();
-  const subtotal = basePrice * personsCount;
-  const discountRate = getDiscountRate();
-  const discountAmount = subtotal * discountRate;
-  const totalAmount = subtotal - discountAmount;
+  const rawSubtotal = basePrice * personsCount * sessionsCount;
+  const packageDiscountRate = getPackageDiscountRate();
+  const packageDiscountAmount = rawSubtotal * packageDiscountRate;
+  const totalAmount = rawSubtotal - packageDiscountAmount;
 
   // Format Date beautifully
   const formatSelectedDate = () => {
@@ -230,7 +310,6 @@ const SERVICE_DURATION_OPTIONS: { [key: string]: { min: number; price: number; r
       async (position) => {
         const { latitude, longitude } = position.coords;
         try {
-          // Fetch reverse geocode from OpenStreetMap (Nominatim API)
           const response = await fetch(
             `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`
           );
@@ -255,24 +334,23 @@ const SERVICE_DURATION_OPTIONS: { [key: string]: { min: number; price: number; r
     );
   };
 
-  // Time Slots definitions (Filtered by Weekend/Weekday date: Evenings & Weekends only)
+  // Dynamic Time Slots definitions based on selected date
   const getAvailableTimeSlots = () => {
     if (!date) {
-      // Default to evenings if no date is picked yet
+      // Default to weekdays after 4:00 PM if no date picked
       return [
-        { time: "5:00 PM", label: "Evening Slot", priority: true },
-        { time: "6:30 PM", label: "Evening Slot", priority: true },
-        { time: "8:00 PM", label: "Evening Slot", priority: true },
-        { time: "9:30 PM", label: "Late Evening", priority: true }
+        { time: "4:00 PM", label: "Late Afternoon" },
+        { time: "5:30 PM", label: "Evening Slot", priority: true },
+        { time: "7:00 PM", label: "Evening Slot", priority: true },
       ];
     }
 
     const selectedDate = new Date(date + "T00:00:00");
     const day = selectedDate.getDay();
-    const isWeekend = day === 0 || day === 6; // Sunday or Saturday
+    const isWeekend = day === 0 || day === 5 || day === 6; // Sunday (0), Friday (5), Saturday (6)
 
     if (isWeekend) {
-      // Weekends: all day available
+      // Weekends (Fri, Sat, Sun): All day
       return [
         { time: "9:00 AM", label: "Weekend Morning" },
         { time: "10:30 AM", label: "Weekend Morning" },
@@ -284,12 +362,11 @@ const SERVICE_DURATION_OPTIONS: { [key: string]: { min: number; price: number; r
         { time: "7:30 PM", label: "Weekend Evening", priority: true },
       ];
     } else {
-      // Weekdays: evenings only
+      // Weekdays (Mon-Thu): 4:00 PM - 8:00 PM only
       return [
-        { time: "5:00 PM", label: "Evening Slot", priority: true },
-        { time: "6:30 PM", label: "Evening Slot", priority: true },
-        { time: "8:00 PM", label: "Evening Slot", priority: true },
-        { time: "9:30 PM", label: "Late Evening", priority: true },
+        { time: "4:00 PM", label: "Late Afternoon" },
+        { time: "5:30 PM", label: "Evening Slot", priority: true },
+        { time: "7:00 PM", label: "Evening Slot", priority: true },
       ];
     }
   };
@@ -298,18 +375,13 @@ const SERVICE_DURATION_OPTIONS: { [key: string]: { min: number; price: number; r
   const generateDays = () => {
     const year = calendarDate.getFullYear();
     const month = calendarDate.getMonth();
-    
-    // First day of month index (0-6)
     const firstDayIndex = new Date(year, month, 1).getDay();
-    // Total days in month
     const totalDays = new Date(year, month + 1, 0).getDate();
 
     const days = [];
-    // Placeholders for previous month alignment
     for (let i = 0; i < firstDayIndex; i++) {
       days.push(null);
     }
-    // Days of current month
     for (let d = 1; d <= totalDays; d++) {
       days.push(new Date(year, month, d));
     }
@@ -333,11 +405,11 @@ const SERVICE_DURATION_OPTIONS: { [key: string]: { min: number; price: number; r
     const newDateStr = `${y}-${m}-${d}`;
     setDate(newDateStr);
 
-    // Reset selected time slot if it's no longer valid for the selected date type
+    // Filter valid slots
     const dayOfWeek = day.getDay();
-    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+    const isWeekend = dayOfWeek === 0 || dayOfWeek === 5 || dayOfWeek === 6;
     if (!isWeekend) {
-      const validSlots = ["5:00 PM", "6:30 PM", "8:00 PM", "9:30 PM"];
+      const validSlots = ["4:00 PM", "5:30 PM", "7:00 PM"];
       if (timeSlot && !validSlots.includes(timeSlot)) {
         setTimeSlot("");
       }
@@ -360,6 +432,13 @@ const SERVICE_DURATION_OPTIONS: { [key: string]: { min: number; price: number; r
     address || "Calgary, AB"
   )}&t=&z=14&ie=UTF8&iwloc=&output=embed`;
 
+  // Handle image upload mock
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setCardFileName(e.target.files[0].name);
+    }
+  };
+
   // Submit flow
   const handleFinalSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -368,13 +447,14 @@ const SERVICE_DURATION_OPTIONS: { [key: string]: { min: number; price: number; r
     const frequencyLabel = frequency === "one-time" ? "One-Time Session" : `Regular (${frequency})`;
     const resolvedInsurer = insurer === "Other" ? (otherInsurer || "Other") : insurer;
 
-    // Double-spaced, emoji bullets and clearly indented WhatsApp message
+    // Double-spaced, precomposed WhatsApp message
     const message = `✨ *Avion Mobile Massage — Booking Inquiry* ✨
 
 👤 *Client Profile:*
 • *Name:* ${name}
 • *Email:* ${email}
 • *Phone:* ${countryCode} ${phone}
+• *Returning Patient:* ${isReturning ? "Yes" : "No (New Patient)"}
 
 💆 *Session Preferences:*
 • *Service Modality:* ${serviceType}
@@ -391,19 +471,29 @@ const SERVICE_DURATION_OPTIONS: { [key: string]: { min: number; price: number; r
 • *Requested Date:* ${formattedDateString}
 • *Requested Time:* ${timeSlot}
 • *Frequency:* ${frequencyLabel}
-• *${serviceType === "Corporate Wellness" ? "Total Staff/Attendees" : "Group Size"}:* ${personsCount} Person${personsCount > 1 ? "s" : ""}
+• *Group Size / Staff Count:* ${personsCount} Person${personsCount > 1 ? "s" : ""}
+• *Package Size:* ${sessionsCount} Session${sessionsCount > 1 ? "s" : " (Single)"}
 
 📍 *Location Details:*
 • *Address:* ${address}
 
-💳 *Billing & Rates:*
-• *Direct Insurance Claim:* ${directBilling ? `Yes (${resolvedInsurer})` : "No (Self-pay)"}
+🛡️ *Direct Insurance Billing:*
+${directBilling ? `• *Provider:* ${resolvedInsurer}
+• *Group/Policy No:* ${groupNo}
+• *Member ID No:* ${memberId}
+• *Patient Code:* ${patientCode || "N/A"}
+• *Date of Birth:* ${dob}
+• *Card Attached:* ${cardFileName ? `Yes (${cardFileName})` : "No"}` : "• *Payment Modality:* Self-pay (Official RMT receipt will be issued)"}
+
+💳 *Rates & Surcharges:*
 • *Base Rate per Person:* $${basePrice} CAD
-• *Multi-Person Discount:* ${discountRate * 100}%
+• *Number of Sessions:* ${sessionsCount}
+• *Raw Subtotal:* $${rawSubtotal.toFixed(2)} CAD
+${sessionsCount > 1 ? `• *Multi-Session Discount (${packageDiscountRate * 100}%):* -$${packageDiscountAmount.toFixed(2)} CAD` : ""}
 • *Estimated Total Amount:* *$${totalAmount.toFixed(2)} CAD*
 
 ----------------------------------------
-_Thank you for booking with Avion! We will review your slot availability and reach out to finalize._`;
+_Thank you for booking with Avion! We will verify therapist schedules and contact you directly to finalize your appointment._`;
 
     const encoded = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/14039230323?text=${encoded}`;
@@ -421,11 +511,17 @@ _Thank you for booking with Avion! We will review your slot availability and rea
       timeSlot,
       frequency,
       personsCount,
+      sessionsCount,
       address,
       directBilling,
       insurer: directBilling ? resolvedInsurer : "Self-pay",
+      groupNo: directBilling ? groupNo : "",
+      memberId: directBilling ? memberId : "",
+      patientCode: directBilling ? patientCode : "",
+      dob: directBilling ? dob : "",
+      cardFileName: directBilling ? cardFileName : "",
       totalAmount,
-      status: "Pending", // initial status
+      status: "Pending",
       createdAt: new Date().toISOString()
     };
 
@@ -441,9 +537,17 @@ _Thank you for booking with Avion! We will review your slot availability and rea
     bookingsList.unshift(newBooking);
     localStorage.setItem("avion_all_bookings", JSON.stringify(bookingsList));
 
+    // Cache the client's information to allow auto prefill next time
+    localStorage.setItem("avion_returning_client_data", JSON.stringify({
+      name,
+      email,
+      phone,
+      countryCode,
+      address
+    }));
+
     window.open(whatsappUrl, "_blank");
     setSubmitted(true);
-    // Clear wizard cache
     localStorage.removeItem("avion_booking_flow");
   };
 
@@ -451,20 +555,29 @@ _Thank you for booking with Avion! We will review your slot availability and rea
   const canGoNext = () => {
     if (step === 1) {
       const basicValid = name.trim().length > 1 && email.includes("@") && phone.trim().length >= 7;
-      if (directBilling && insurer === "Other") {
-        return basicValid && otherInsurer.trim().length > 1;
+      if (directBilling) {
+        return (
+          basicValid &&
+          groupNo.trim().length > 1 &&
+          memberId.trim().length > 1 &&
+          dob.trim().length > 4 &&
+          (insurer !== "Other" || otherInsurer.trim().length > 1)
+        );
       }
       return basicValid;
     }
-    if (step === 2) return serviceType && duration && therapistGender;
+    if (step === 2) {
+      // 30 min is restricted only for family or bulk bookings (personsCount > 1 or sessionsCount > 1)
+      if (duration === 30 && personsCount === 1 && sessionsCount === 1) {
+        return false;
+      }
+      return serviceType && duration && therapistGender;
+    }
     if (step === 3) return date && timeSlot;
-    if (step === 4) return frequency && personsCount > 0;
+    if (step === 4) return frequency && personsCount > 0 && sessionsCount > 0;
     if (step === 5) return address.trim().length > 5;
     return true;
   };
-
-  // Ref to scroll form into view on step change
-  const formCardRef = useRef<HTMLDivElement>(null);
 
   // Country code dropdown
   const codeDropdownRef = useRef<HTMLDivElement>(null);
@@ -478,7 +591,6 @@ _Thank you for booking with Avion! We will review your slot availability and rea
   const [codeOpen, setCodeOpen] = useState(false);
   const selectedCountry = COUNTRY_OPTIONS.find((c) => c.value === countryCode) ?? COUNTRY_OPTIONS[0];
 
-  // Close country dropdown on outside click
   useEffect(() => {
     if (!codeOpen) return;
     const handler = (e: MouseEvent) => {
@@ -507,7 +619,7 @@ _Thank you for booking with Avion! We will review your slot availability and rea
   };
 
   return (
-    <section id="book" className="w-full py-28 md:py-36 px-6 bg-charcoal text-white relative overflow-hidden">
+    <section id="book" className="w-full py-28 md:py-36 px-6 bg-charcoal text-white relative overflow-hidden scroll-mt-20">
       {/* Background blobs */}
       <div className="pointer-events-none absolute top-0 right-0 w-[480px] h-[480px] bg-sage rounded-full blur-[120px] opacity-20" />
       <div className="pointer-events-none absolute bottom-0 left-0 w-[400px] h-[400px] bg-soft-blue rounded-full blur-[120px] opacity-10" />
@@ -521,7 +633,7 @@ _Thank you for booking with Avion! We will review your slot availability and rea
             Book a <span className="italic font-serif font-medium text-white">Session</span>
           </h2>
           <p className="mt-5 text-white/60 max-w-xl mx-auto text-[15px] leading-relaxed">
-            Select your preferences below to reserve your custom RMT session. We will handle claim filing, travel setup, and match you with a certified therapist.
+            Select your preferences below to reserve your custom RMT session. We will handle travel setup and coordinate therapist details.
           </p>
         </div>
 
@@ -534,7 +646,7 @@ _Thank you for booking with Avion! We will review your slot availability and rea
               Booking Inquiry <span className="italic font-serif font-medium text-white">Prefilled</span>
             </h3>
             <p className="mt-4 text-[15.5px] text-white/70 max-w-md leading-relaxed">
-              We have opened WhatsApp to send your complete booking inquiry. If it didn't open or you need to start over, click the button below. We will reach back shortly to confirm your booking!
+              We have opened WhatsApp to send your complete booking details. If you need to re-open or edit, click below. We will reach back shortly!
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
               <button
@@ -552,7 +664,7 @@ _Thank you for booking with Avion! We will review your slot availability and rea
             </div>
           </div>
         ) : (
-          <div ref={formCardRef} className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden backdrop-blur-md shadow-premium">
+          <div className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden backdrop-blur-md shadow-premium">
             
             {/* Step Progress Indicators */}
             <div className="flex border-b border-white/10 overflow-x-auto scrollbar-none select-none py-4 px-6 gap-6 justify-between items-center text-[10px] uppercase font-bold tracking-widest text-white/40">
@@ -560,7 +672,7 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                 { s: 1, label: "Contact" },
                 { s: 2, label: "Service" },
                 { s: 3, label: "Schedule" },
-                { s: 4, label: "Quantity" },
+                { s: 4, label: "Bundles" },
                 { s: 5, label: "Location" },
                 { s: 6, label: "Review" },
               ].map((item) => (
@@ -597,12 +709,85 @@ _Thank you for booking with Avion! We will review your slot availability and rea
               {/* STEP 1: CONTACT DETAILS & DIRECT INSURANCE BILLING */}
               {step === 1 && (
                 <div className="space-y-8 animate-fade-in">
+                  
+                  {/* Returning Client Toggle */}
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div className="flex items-start gap-3.5">
+                      <div className="flex items-center h-5 shrink-0 mt-0.5">
+                        <input
+                          id="returning-client-check"
+                          type="checkbox"
+                          checked={isReturning}
+                          onChange={(e) => {
+                            setIsReturning(e.target.checked);
+                            setReturningStatus("idle");
+                            if (!e.target.checked) {
+                              setName("");
+                              setEmail("");
+                              setPhone("");
+                              setAddress("");
+                            }
+                          }}
+                          className="h-4.5 w-4.5 rounded border-white/20 bg-transparent text-sage focus:ring-sage checked:bg-sage focus:ring-2 cursor-pointer"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="returning-client-check" className="font-display font-bold text-[14.5px] text-white cursor-pointer select-none">
+                          I am a returning client
+                        </label>
+                        <span className="block text-xs text-white/50 leading-relaxed font-light mt-0.5">
+                          Check this box to pre-fill your previous contact details and address details.
+                        </span>
+                      </div>
+                    </div>
+
+                    {isReturning && returningStatus !== "found" && (
+                      <div className="flex gap-2 w-full md:w-auto">
+                        <input
+                          type="email"
+                          value={returningSearchEmail}
+                          onChange={(e) => setReturningSearchEmail(e.target.value)}
+                          placeholder="Enter your email"
+                          className="bg-white/5 border border-white/15 rounded-xl px-4 py-2 text-xs text-white placeholder-white/30 outline-none focus:border-sage flex-1 md:w-48"
+                        />
+                        <button
+                          type="button"
+                          onClick={handleCheckReturningClient}
+                          className="bg-sage hover:bg-sage-hover text-white px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-colors whitespace-nowrap flex items-center gap-1"
+                        >
+                          <UserCheck className="h-3.5 w-3.5" /> Find Info
+                        </button>
+                      </div>
+                    )}
+
+                    {isReturning && returningStatus === "found" && (
+                      <span className="inline-flex items-center gap-1.5 bg-sage/20 border border-sage/30 text-sage rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider shrink-0">
+                        <CheckCircle className="h-3.5 w-3.5" /> Profile Loaded
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Welcome banner for new clients */}
+                  {!isReturning && (
+                    <div className="bg-sage/10 border border-sage/20 rounded-2xl p-4 flex items-center gap-3">
+                      <Sparkles className="h-5 w-5 text-sage shrink-0 animate-pulse" />
+                      <p className="text-xs text-white/90 font-medium">
+                        New patients are welcome! Book your first appointment today.
+                      </p>
+                    </div>
+                  )}
+
+                  {isReturning && returningStatus === "not_found" && (
+                    <div className="bg-rose-500/10 border border-rose-500/20 rounded-2xl p-4 flex items-center gap-3">
+                      <p className="text-xs text-rose-300 font-medium">
+                        We couldn't find a cached profile for this email. Please fill out your details below to begin.
+                      </p>
+                    </div>
+                  )}
+
                   <h3 className="font-display text-xl font-bold text-soft-blue flex items-center gap-2 mb-2">
                     <User className="h-5 w-5 text-sage" /> Contact Details
                   </h3>
-                  <p className="text-white/60 text-xs tracking-wider uppercase mb-6">
-                    Please provide your contact information to get started.
-                  </p>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <label className="flex flex-col gap-2">
@@ -638,7 +823,6 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                         Phone Number
                       </span>
                       <div className="flex gap-2">
-                        {/* Custom country code dropdown */}
                         <div ref={codeDropdownRef} className="relative shrink-0">
                           <button
                             type="button"
@@ -648,7 +832,6 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                             <span className="text-xl leading-none">{selectedCountry.flag}</span>
                             <span className="hidden md:inline text-white/90">{selectedCountry.name}</span>
                             <span className="md:hidden text-white/90">{selectedCountry.short}</span>
-                            <span className="text-white/50 text-[11px] font-normal hidden sm:inline">({selectedCountry.dial})</span>
                             <ChevronDown className={`h-3.5 w-3.5 text-white/40 transition-transform duration-200 ${codeOpen ? "rotate-180" : ""}`} />
                           </button>
                           {codeOpen && (
@@ -674,7 +857,7 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                           type="tel"
                           value={phone}
                           onChange={(e) => setPhone(e.target.value)}
-                          placeholder="(403) 555-0199"
+                          placeholder="(403) 923-0323"
                           required
                           className="w-full flex-1 bg-white/5 border border-white/15 rounded-2xl px-6 py-4 text-[15px] text-white placeholder-white/30 outline-none focus:border-sage transition-colors"
                         />
@@ -695,17 +878,18 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                         />
                       </div>
                       <div className="flex-1">
-                        <label htmlFor="direct-billing-check" className="font-display font-bold text-[15.5px] text-white cursor-pointer select-none">
+                        <label htmlFor="direct-billing-check" className="font-display font-bold text-[15.5px] text-white cursor-pointer select-none flex items-center gap-2">
                           Request Direct Insurance Billing
                         </label>
                         <span className="block text-xs text-white/50 leading-relaxed font-light mt-1.5">
-                          Check this box if you have an extended health insurance policy and wish to submit this claim directly. Avion RMTs bill most providers directly in Alberta.
+                          Avion RMTs bill most providers directly in Alberta. Check this box to submit your extended health insurance details.
                         </span>
                       </div>
                     </div>
 
                     {directBilling && (
-                      <div className="mt-5 p-5 rounded-2xl bg-sage/5 border border-sage/30 animate-fade-in space-y-4">
+                      <div className="mt-5 p-5 rounded-2xl bg-sage/5 border border-sage/30 animate-fade-in space-y-5">
+                        
                         <div className="flex flex-col gap-2">
                           <span className="text-[10px] uppercase tracking-widest font-bold text-sage">
                             Select Insurance Provider
@@ -721,6 +905,8 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                               <option value="Manulife" className="bg-charcoal text-white">Manulife Financial</option>
                               <option value="Canada Life" className="bg-charcoal text-white">Canada Life</option>
                               <option value="Desjardins Insurance" className="bg-charcoal text-white">Desjardins Insurance</option>
+                              <option value="Cooperators" className="bg-charcoal text-white">Cooperators</option>
+                              <option value="Medavie Blue Cross" className="bg-charcoal text-white">Medavie Blue Cross</option>
                               <option value="Green Shield Canada" className="bg-charcoal text-white">Green Shield Canada</option>
                               <option value="Equitable Life" className="bg-charcoal text-white">Equitable Life</option>
                               <option value="Empire Life" className="bg-charcoal text-white">Empire Life</option>
@@ -732,7 +918,7 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                         </div>
 
                         {insurer === "Other" && (
-                          <div className="flex flex-col gap-2 mt-4 animate-fade-in">
+                          <div className="flex flex-col gap-2 animate-fade-in">
                             <span className="text-[10px] uppercase tracking-widest font-bold text-sage">
                               Specify Insurance Provider
                             </span>
@@ -742,14 +928,94 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                               onChange={(e) => setOtherInsurer(e.target.value)}
                               placeholder="Name of your insurance provider"
                               required
-                              className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3.5 text-sm text-white placeholder-white/35 outline-none focus:border-sage transition-colors"
+                              className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-sm text-white placeholder-white/35 outline-none focus:border-sage transition-colors"
                             />
                           </div>
                         )}
 
+                        {/* Direct billing fields */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <label className="flex flex-col gap-1.5">
+                            <span className="text-[10px] uppercase tracking-widest font-bold text-white/50">
+                              Group / Policy / Plan / Contract No. *
+                            </span>
+                            <input
+                              type="text"
+                              value={groupNo}
+                              onChange={(e) => setGroupNo(e.target.value)}
+                              placeholder="e.g. 123456"
+                              required
+                              className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-2.5 text-xs text-white placeholder-white/35 outline-none focus:border-sage transition-colors"
+                            />
+                          </label>
+
+                          <label className="flex flex-col gap-1.5">
+                            <span className="text-[10px] uppercase tracking-widest font-bold text-white/50">
+                              Member ID No. / Certificate No. *
+                            </span>
+                            <input
+                              type="text"
+                              value={memberId}
+                              onChange={(e) => setMemberId(e.target.value)}
+                              placeholder="e.g. 789012345"
+                              required
+                              className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-2.5 text-xs text-white placeholder-white/35 outline-none focus:border-sage transition-colors"
+                            />
+                          </label>
+
+                          <label className="flex flex-col gap-1.5">
+                            <span className="text-[10px] uppercase tracking-widest font-bold text-white/50">
+                              Patient Code (e.g. 01 for primary member)
+                            </span>
+                            <input
+                              type="text"
+                              value={patientCode}
+                              onChange={(e) => setPatientCode(e.target.value)}
+                              placeholder="e.g. 01"
+                              className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-2.5 text-xs text-white placeholder-white/35 outline-none focus:border-sage transition-colors"
+                            />
+                          </label>
+
+                          <label className="flex flex-col gap-1.5">
+                            <span className="text-[10px] uppercase tracking-widest font-bold text-white/50">
+                              Date of Birth (YYYY-MM-DD) *
+                            </span>
+                            <input
+                              type="text"
+                              value={dob}
+                              onChange={(e) => setDob(e.target.value)}
+                              placeholder="e.g. 1988-12-31"
+                              required
+                              className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-2.5 text-xs text-white placeholder-white/35 outline-none focus:border-sage transition-colors"
+                            />
+                          </label>
+
+                          {/* Optional Benefit Card Upload */}
+                          <div className="md:col-span-2 flex flex-col gap-1.5">
+                            <span className="text-[10px] uppercase tracking-widest font-bold text-white/50">
+                              Upload Benefit Card (Optional)
+                            </span>
+                            <div className="flex items-center justify-center border border-dashed border-white/20 hover:border-sage/50 rounded-xl p-4 bg-white/5 transition-colors relative cursor-pointer group">
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleFileUpload}
+                                className="absolute inset-0 opacity-0 cursor-pointer"
+                              />
+                              <div className="text-center">
+                                <Upload className="h-5 w-5 text-white/40 group-hover:text-sage mx-auto mb-1 transition-colors" />
+                                <p className="text-[11px] font-bold text-white/60 group-hover:text-white transition-colors">
+                                  {cardFileName || "Drag or browse photo of benefits card"}
+                                </p>
+                                <p className="text-[9px] text-white/35 mt-0.5">JPEG, PNG up to 10MB</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
                         <div className="flex gap-2 text-[11px] text-white/50 leading-relaxed font-light pt-2">
                           <ShieldCheck className="h-4 w-4 text-sage shrink-0" />
-                          <span>We will request your health claim information via email/SMS to file on your behalf. Direct billing is subject to individual policy limits.</span>
+                          <span>We submit your claims directly to save you out-of-pocket costs. Direct billing is subject to individual coverage parameters.</span>
                         </div>
                       </div>
                     )}
@@ -833,35 +1099,76 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                     <p className="text-white/60 text-xs tracking-wider uppercase mb-5">
                       Prices match basic Canadian RMT service rates. No travel fees are added.
                     </p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      {SERVICE_DURATION_OPTIONS[serviceType] && SERVICE_DURATION_OPTIONS[serviceType].map((item) => (
-                        <button
-                          key={item.min}
-                          type="button"
-                          onClick={() => setDuration(item.min)}
-                          className={`text-left p-5 rounded-2xl border transition-all relative ${
-                            duration === item.min
-                              ? "bg-sage/10 border-sage shadow-md text-white"
-                              : "bg-white/5 border-white/10 hover:border-white/30 text-white/80"
-                          }`}
-                        >
-                          {item.recommended && (
-                            <span className="absolute -top-3 left-4 bg-sage text-white text-[8px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full border border-charcoal whitespace-nowrap">
-                              Recommended
-                            </span>
-                          )}
-                          <div className="flex justify-between items-baseline mb-2 mt-1 gap-2">
-                            <span className="font-display font-bold text-lg whitespace-nowrap">{item.min} Minutes</span>
-                            <span className="font-display font-semibold text-base text-sage whitespace-nowrap shrink-0">${item.price} CAD</span>
-                          </div>
-                          <span className="block text-[10px] font-bold uppercase tracking-wider text-soft-blue mb-2.5 whitespace-nowrap">
-                            {item.rec}
-                          </span>
-                          <p className="text-xs text-white/50 leading-relaxed font-light">
-                            {item.desc}
-                          </p>
-                        </button>
-                      ))}
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                      {serviceType === "Corporate Wellness" ? (
+                        <>
+                          {[
+                            { min: 15, price: 45, rec: "Quick relief", desc: "For corporate chairs" },
+                            { min: 30, price: 80, rec: "Standard corporate", desc: "Ideal wellness break" }
+                          ].map((item) => (
+                            <button
+                              key={item.min}
+                              type="button"
+                              onClick={() => setDuration(item.min)}
+                              className={`text-left p-5 rounded-2xl border transition-all md:col-span-2 ${
+                                duration === item.min
+                                  ? "bg-sage/10 border-sage shadow-md text-white"
+                                  : "bg-white/5 border-white/10 hover:border-white/30 text-white/80"
+                              }`}
+                            >
+                              <div className="flex justify-between items-baseline mb-2">
+                                <span className="font-display font-bold text-lg">{item.min} Min</span>
+                                <span className="font-display font-semibold text-base text-sage">${item.price} CAD</span>
+                              </div>
+                              <p className="text-xs text-white/50 leading-relaxed font-light">{item.desc}</p>
+                            </button>
+                          ))}
+                        </>
+                      ) : (
+                        pricingTiers.map((item) => {
+                          const isRestricted = item.restricted && personsCount === 1 && sessionsCount === 1;
+                          const currentPrice = personsCount > 1 ? item.priceMultiple : item.priceSingle;
+
+                          return (
+                            <button
+                              key={item.min}
+                              type="button"
+                              disabled={isRestricted}
+                              onClick={() => setDuration(item.min)}
+                              className={`text-left p-5 rounded-2xl border transition-all relative flex flex-col justify-between ${
+                                isRestricted
+                                  ? "opacity-30 border-white/5 cursor-not-allowed text-white/30 bg-white/0"
+                                  : duration === item.min
+                                  ? "bg-sage/10 border-sage shadow-md text-white"
+                                  : "bg-white/5 border-white/10 hover:border-white/30 text-white/80"
+                              }`}
+                            >
+                              {item.recommended && (
+                                <span className="absolute -top-3 left-4 bg-sage text-white text-[8px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full border border-charcoal whitespace-nowrap">
+                                  Recommended
+                                </span>
+                              )}
+                              <div>
+                                <div className="flex justify-between items-baseline mb-2 mt-1 gap-2">
+                                  <span className="font-display font-bold text-base whitespace-nowrap">{item.min} Mins</span>
+                                  <span className="font-display font-semibold text-sm text-sage whitespace-nowrap">${currentPrice} CAD</span>
+                                </div>
+                                <span className="block text-[9px] font-bold uppercase tracking-wider text-soft-blue mb-2.5">
+                                  {item.rec}
+                                </span>
+                                <p className="text-[11px] text-white/50 leading-relaxed font-light mb-3">
+                                  {item.description}
+                                </p>
+                              </div>
+                              {item.restricted && (
+                                <span className="block text-[9px] font-semibold text-amber-400 bg-amber-400/10 border border-amber-400/20 px-2 py-1 rounded-lg">
+                                  Requires family or bulk booking
+                                </span>
+                              )}
+                            </button>
+                          );
+                        })
+                      )}
                     </div>
                   </div>
 
@@ -890,11 +1197,6 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                         </button>
                       ))}
                     </div>
-                    {serviceType === "Corporate Wellness" && (
-                      <p className="mt-3.5 text-xs text-sage leading-relaxed font-light bg-sage/5 border border-sage/10 p-3.5 rounded-xl">
-                        <strong>👥 Corporate Team:</strong> For larger events, we automatically dispatch a balanced team of multiple certified RMTs to accommodate your requested staff/group size.
-                      </p>
-                    )}
                   </div>
                 </div>
               )}
@@ -1011,25 +1313,87 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                     </div>
 
                     <div className="mt-6 p-4 rounded-2xl bg-white/5 border border-white/15 text-xs text-white/60 leading-relaxed font-light">
-                      <span className="font-semibold text-soft-blue uppercase block mb-1">Evening &amp; Weekend Schedule Only</span>
-                      We operate strictly on evenings (weekdays after 5:00 PM) and all-day weekends. Available slots are filtered based on your chosen date.
+                      <span className="font-semibold text-soft-blue uppercase block mb-1">Availability Schedule</span>
+                      <strong>Friday, Saturday, Sunday:</strong> All day operating hours. <br />
+                      <strong>Monday – Thursday:</strong> 4:00 PM – 8:00 PM evening appointments only.
                     </div>
                   </div>
 
                 </div>
               )}
 
-              {/* STEP 4: FREQUENCY & QUANTITY */}
+              {/* STEP 4: FREQUENCY, QUANTITY & MULTI-SESSION PACKAGES */}
               {step === 4 && (
                 <div className="space-y-10 animate-fade-in">
                   
+                  {/* Multi-session Packages */}
+                  <div>
+                    <h3 className="font-display text-xl font-bold text-soft-blue flex items-center gap-2 mb-2">
+                      <Percent className="h-5 w-5 text-sage" /> Multi-Session Packages
+                    </h3>
+                    <p className="text-white/60 text-xs tracking-wider uppercase mb-5">
+                      Book multiple sessions together to lock in ongoing recovery and receive package discounts.
+                    </p>
+                    
+                    <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                      {[
+                        { count: 1, label: "1 Session", note: "Standard rate", discount: "0% Off" },
+                        { count: 2, label: "2 Sessions", note: "Save 5% on total", discount: "5% Off" },
+                        { count: 3, label: "3 Sessions", note: "Save 10% on total", discount: "10% Off" },
+                        { count: 4, label: "4+ Sessions", note: "Save 15% on total", discount: "15% Off" },
+                      ].map((item) => (
+                        <button
+                          key={item.count}
+                          type="button"
+                          onClick={() => setSessionsCount(item.count)}
+                          className={`p-5 rounded-2xl border text-left transition-all relative ${
+                            sessionsCount === item.count
+                              ? "bg-sage/10 border-sage text-white"
+                              : "bg-white/5 border-white/10 hover:border-white/30 text-white/70"
+                          }`}
+                        >
+                          {item.discount && item.count > 1 && (
+                            <span className="absolute top-3 right-3 bg-sage text-white text-[8px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full whitespace-nowrap">
+                              {item.discount}
+                            </span>
+                          )}
+                          <div className="font-display font-bold text-lg mb-1 whitespace-nowrap">{item.label}</div>
+                          <div className="text-xs text-white/45 font-light whitespace-nowrap">{item.note}</div>
+                        </button>
+                      ))}
+                    </div>
+
+                    {sessionsCount >= 4 && (
+                      <div className="mt-5 p-5 rounded-2xl bg-white/5 border border-white/10 animate-fade-in space-y-3">
+                        <label className="flex flex-col gap-2">
+                          <span className="text-[10px] uppercase tracking-widest font-bold text-sage px-1">
+                            Specify Exact Number of Sessions
+                          </span>
+                          <div className="flex items-center gap-3">
+                            <input
+                              type="number"
+                              min={4}
+                              max={20}
+                              value={sessionsCount}
+                              onChange={(e) => setSessionsCount(Math.max(4, parseInt(e.target.value) || 4))}
+                              className="bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-sm text-white placeholder-white/35 outline-none focus:border-sage transition-colors w-32"
+                            />
+                            <span className="text-xs text-white/50 font-light">
+                              Choose the total number of bundled sessions (5% for 2, 10% for 3, 15% for 4+).
+                            </span>
+                          </div>
+                        </label>
+                      </div>
+                    )}
+                  </div>
+
                   {/* Frequency of bookings */}
                   <div>
                     <h3 className="font-display text-xl font-bold text-soft-blue flex items-center gap-2 mb-2">
                       <RefreshCw className="h-5 w-5 text-sage" /> Booking Frequency
                     </h3>
                     <p className="text-white/60 text-xs tracking-wider uppercase mb-5">
-                      Select if this is a one-time session or if you'd like to lock in this recurring schedule.
+                      Select if this is a one-time session or if you'd like to hold this recurring schedule.
                     </p>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                       {[
@@ -1053,28 +1417,23 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                         </button>
                       ))}
                     </div>
-                    {frequency !== "one-time" && (
-                      <p className="mt-3 text-xs text-sage leading-relaxed font-light">
-                        <strong>🔒 Reserved Slot:</strong> We will hold this exact day and time slot for you recurringly. You are under no contract; change frequency or cancel any future sessions at your convenience.
-                      </p>
-                    )}
                   </div>
 
-                  {/* Persons / Quantities with discount */}
+                  {/* Persons / Quantities at same location */}
                   <div>
                     <h3 className="font-display text-xl font-bold text-soft-blue flex items-center gap-2 mb-2">
                       <Users className="h-5 w-5 text-sage" /> Number of Persons
                     </h3>
                     <p className="text-white/60 text-xs tracking-wider uppercase mb-5">
-                      Save on travel costs by booking back-to-back sessions at the same address.
+                      Save by booking back-to-back sessions at the same address. Group rate: $125/person (60m) or $165/person (90m).
                     </p>
                     
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                       {[
-                        { count: 1, label: "1 Person", note: "Standard rate" },
-                        { count: 2, label: "2 Persons", note: "Save 10% total", discount: "10% Off" },
-                        { count: 3, label: "3 Persons", note: "Save 15% total", discount: "15% Off" },
-                        { count: 4, label: "4+ Persons", note: "Save 20% total", discount: "20% Off" },
+                        { count: 1, label: "1 Person", note: "Standard single rate" },
+                        { count: 2, label: "2 Persons", note: "Group rates apply" },
+                        { count: 3, label: "3 Persons", note: "Group rates apply" },
+                        { count: 4, label: "4+ Persons", note: "Group rates apply" },
                       ].map((item) => (
                         <button
                           key={item.count}
@@ -1086,9 +1445,9 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                               : "bg-white/5 border-white/10 hover:border-white/30 text-white/70"
                           }`}
                         >
-                          {item.discount && (
+                          {item.count > 1 && (
                             <span className="absolute top-3 right-3 bg-sage text-white text-[8px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full whitespace-nowrap">
-                              {item.discount}
+                              Discounted Rate
                             </span>
                           )}
                           <div className="font-display font-bold text-lg mb-1 whitespace-nowrap">{item.label}</div>
@@ -1097,39 +1456,28 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                       ))}
                     </div>
 
-                    {(personsCount >= 4 || serviceType === "Corporate Wellness") && (
+                    {personsCount >= 4 && (
                       <div className="mt-5 p-5 rounded-2xl bg-white/5 border border-white/10 animate-fade-in space-y-3">
                         <label className="flex flex-col gap-2">
                           <span className="text-[10px] uppercase tracking-widest font-bold text-sage px-1">
-                            Specify Exact Number of Persons / Attendees
+                            Specify Exact Number of Attendees
                           </span>
                           <div className="flex items-center gap-3">
                             <input
                               type="number"
-                              min={1}
+                              min={4}
                               max={100}
                               value={personsCount}
-                              onChange={(e) => setPersonsCount(Math.max(1, parseInt(e.target.value) || 1))}
+                              onChange={(e) => setPersonsCount(Math.max(4, parseInt(e.target.value) || 4))}
                               className="bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-sm text-white placeholder-white/35 outline-none focus:border-sage transition-colors w-32"
                             />
                             <span className="text-xs text-white/50 font-light">
-                              {serviceType === "Corporate Wellness" 
-                                ? "Enter the number of staff members/attendees receiving treatments." 
-                                : "Specify the total number of people scheduling back-to-back."
-                              }
+                              Specify the total number of people scheduling back-to-back.
                             </span>
                           </div>
                         </label>
                       </div>
                     )}
-
-                    <div className="mt-6 flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/10">
-                      <Percent className="h-6 w-6 text-sage shrink-0 mt-0.5" />
-                      <div className="text-xs leading-relaxed text-white/60 font-light">
-                        <span className="font-semibold text-soft-blue uppercase block mb-1">Group Booking Discount Explanation</span>
-                        Since mobile massage RMTs spend significant time and transport overhead traveling between locations, booking multiple sessions sequentially in the same house is much more efficient. We pass these resource savings directly back to you as an automatic discount.
-                      </div>
-                    </div>
                   </div>
 
                 </div>
@@ -1215,7 +1563,7 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                     <div className="space-y-4 text-sm font-medium">
                       <div>
                         <span className="block text-[10px] uppercase tracking-wider text-white/40 mb-1">Client Contact</span>
-                        <span className="text-white font-bold block">{name}</span>
+                        <span className="text-white font-bold block">{name} {isReturning && <span className="text-sage text-[10px] uppercase font-bold">(Returning)</span>}</span>
                         <span className="text-white/60 text-xs block">{email} | {countryCode} {phone}</span>
                       </div>
                       <div>
@@ -1224,9 +1572,7 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <span className="block text-[10px] uppercase tracking-wider text-white/40 mb-1">
-                            {serviceType === "Corporate Wellness" ? "Duration per Person" : "Duration"}
-                          </span>
+                          <span className="block text-[10px] uppercase tracking-wider text-white/40 mb-1">Duration</span>
                           <span className="text-white">{duration} Minutes</span>
                         </div>
                         <div>
@@ -1251,14 +1597,10 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                           <span className="block text-[10px] uppercase tracking-wider text-white/40 mb-1">Booking frequency</span>
                           <span className="text-white capitalize">{frequency === "one-time" ? "One-time session" : `Regular (${frequency})`}</span>
                         </div>
-                        {serviceType === "Corporate Wellness" && (
-                          <div>
-                            <span className="block text-[10px] uppercase tracking-wider text-white/40 mb-1">Total Massage Time</span>
-                            <span className="text-white font-bold">
-                              {personsCount * duration} mins ({Math.floor((personsCount * duration) / 60)}h { (personsCount * duration) % 60 }m)
-                            </span>
-                          </div>
-                        )}
+                        <div>
+                          <span className="block text-[10px] uppercase tracking-wider text-white/40 mb-1">Package Size</span>
+                          <span className="text-white font-bold">{sessionsCount} Session{sessionsCount > 1 ? "s" : ""}</span>
+                        </div>
                       </div>
                       <div>
                         <span className="block text-[10px] uppercase tracking-wider text-white/40 mb-1">Service Address</span>
@@ -1270,21 +1612,25 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                     <div className="border-t md:border-t-0 md:border-l border-white/10 pt-6 md:pt-0 md:pl-8 flex flex-col justify-between">
                       <div className="space-y-3">
                         <div className="flex justify-between text-xs text-white/60 font-light">
-                          <span>{serviceType === "Corporate Wellness" ? "Rate per person/session" : "Base Rate per person"}</span>
+                          <span>Base Rate ({personsCount > 1 ? "Group Rate" : "Single Rate"})</span>
                           <span>${basePrice}.00 CAD</span>
                         </div>
                         <div className="flex justify-between text-xs text-white/60 font-light">
-                          <span>{serviceType === "Corporate Wellness" ? `Total sessions / staff count` : `Quantity booked (${personsCount} person${personsCount > 1 ? "s" : ""})`}</span>
-                          <span>x {personsCount}</span>
+                          <span>Group Size</span>
+                          <span>x {personsCount} person{personsCount > 1 ? "s" : ""}</span>
+                        </div>
+                        <div className="flex justify-between text-xs text-white/60 font-light">
+                          <span>Number of Sessions (Package)</span>
+                          <span>x {sessionsCount} session{sessionsCount > 1 ? "s" : ""}</span>
                         </div>
                         <div className="flex justify-between text-xs text-white/60 font-light border-b border-white/5 pb-2">
                           <span>Raw Subtotal</span>
-                          <span>${subtotal}.00 CAD</span>
+                          <span>${rawSubtotal.toFixed(2)} CAD</span>
                         </div>
-                        {personsCount > 1 && (
+                        {sessionsCount > 1 && (
                           <div className="flex justify-between text-xs text-sage font-bold">
-                            <span>Group Discount ({discountRate * 100}%)</span>
-                            <span>-${discountAmount.toFixed(2)} CAD</span>
+                            <span>Package Discount ({packageDiscountRate * 100}%)</span>
+                            <span>-$${packageDiscountAmount.toFixed(2)} CAD</span>
                           </div>
                         )}
                         {directBilling && (
@@ -1292,6 +1638,9 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                             <div className="flex justify-between">
                               <span>Direct Claim Carrier</span>
                               <span>{insurer === "Other" ? (otherInsurer || "Other Provider") : insurer}</span>
+                            </div>
+                            <div className="flex justify-between text-[9px] text-white/40">
+                              <span>DOB: {dob} | ID: {memberId}</span>
                             </div>
                           </div>
                         )}
@@ -1303,7 +1652,7 @@ _Thank you for booking with Avion! We will review your slot availability and rea
                           <span className="font-display font-bold text-2xl text-soft-blue">${totalAmount.toFixed(2)} CAD</span>
                         </div>
                         <p className="text-[10px] leading-relaxed text-white/35 font-light">
-                          *Tax included. Final pricing is confirmed on check-in. If claim submission fails, receipts will be provided.
+                          *Tax included. Final pricing is confirmed on check-in. Coverage details subject to insurance limits.
                         </p>
                       </div>
 

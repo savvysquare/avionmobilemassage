@@ -3,8 +3,9 @@ import { Plus, Minus } from "lucide-react";
 
 const faqs = [
   { q: "Do I need a massage table?", a: "No. We bring a professional table, linens, and everything else required." },
-  { q: "Do you offer direct billing?", a: "Yes — we direct bill many extended health insurance providers. Coverage varies by plan, so we recommend checking with your insurer. If direct billing isn't available, we provide an official receipt for reimbursement." },
-  { q: "How long are appointments?", a: "We offer 60-minute and 90-minute sessions." },
+  { q: "Do you offer direct billing?", a: "Yes — we direct bill many extended health insurance providers in Alberta, including Alberta Blue Cross, Sun Life, Manulife, Canada Life, Desjardins, Cooperators, and Medavie Blue Cross. Coverage varies by plan. If direct billing is not supported by your plan, we will provide an official RMT receipt for manual reimbursement." },
+  { q: "What are your operating hours?", a: "We operate on weekends (Friday, Saturday, and Sunday) all day, and on weekdays (Monday through Thursday) from 4:00 PM to 8:00 PM only. Our calendar filters available slots based on these hours." },
+  { q: "How long are appointments?", a: "We offer 30-minute*, 45-minute, 60-minute, and 90-minute sessions. (*Please note that 30-minute sessions are available only as part of family or bulk group bookings at the same address.)" },
   { q: "What areas do you serve?", a: "All of Calgary plus Airdrie, Cochrane, and Chestermere." },
   { q: "What should I wear?", a: "Whatever feels comfortable. Your therapist will discuss preferences and ensure you're always properly draped and at ease." },
   { q: "What is your cancellation policy?", a: "We kindly ask for at least 48 hours' notice for cancellations. Appointments cancelled with less notice may be subject to a fee." },
