@@ -57,7 +57,7 @@ const DEFAULT_POSTS: BlogPost[] = [
     date: "June 8, 2026",
     readTime: "4 min read",
     author: "Mary Ann Rebosura, RMT",
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?auto=format&fit=crop&q=80&w=800",
     content: `
 Calgary is a city of high-achievers. Between corporate desks in the downtown core, weekend mountain sports in Banff, and family life, time is a premium commodity. For many busy professionals, chronic neck and shoulder tension is a constant companion—yet finding the time to drive across the city, find parking, and visit a clinic often adds more stress than it relieves.
 
@@ -89,7 +89,7 @@ Mobile RMT care isn't just about luxury; it is about smart recovery that works o
     date: "June 6, 2026",
     readTime: "5 min read",
     author: "Mico Yang",
-    image: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&q=80&w=800",
     content: `
 Pregnancy is a beautiful journey, but it also brings significant physical changes. Lower back soreness, heavy legs, swelling, and hip pressure are incredibly common as your body adapts to support your growing baby. 
 
@@ -121,7 +121,7 @@ Whether you are in your first trimester or preparing for delivery, prenatal mobi
     date: "May 28, 2026",
     readTime: "3 min read",
     author: "Avion Billing Team",
-    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&q=80&w=800",
     content: `
 Did you know that millions of dollars in employer-sponsored health benefits go unclaimed in Calgary every single year? Massage therapy is one of the most widely covered services, yet many professionals avoid booking because they dislike dealing with insurance claims, portals, and receipts.
 
@@ -165,7 +165,7 @@ Invest in your wellness today without the administrative headache—let Avion ta
     date: "May 15, 2026",
     readTime: "4 min read",
     author: "Mico Yang",
-    image: "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&q=80&w=800",
     content: `
 If you sit at a computer for eight hours a day in a Calgary office or home study, you are likely familiar with the dull ache at the base of your neck and tightness across your shoulders. 
 
@@ -199,7 +199,7 @@ const DEFAULT_THERAPISTS: Therapist[] = [
     id: "mico-yang",
     name: "Mico Yang",
     title: "Licensed Massage Therapist",
-    photo: "/src/assets/therapist-mico.png",
+    photo: "/therapist-mico.png",
     bio: "Mico Yang is a skilled massage therapist with several years of hands-on experience. She offers personalized treatments focused on comfort, relaxation, and effective muscle tension relief. Each session is tailored to the client’s condition to help reduce stress and improve overall wellbeing.",
     focus: [
       "Neck & shoulder tension relief",
@@ -214,7 +214,7 @@ const DEFAULT_THERAPISTS: Therapist[] = [
     id: "mary-ann-rebosura",
     name: "Mary Ann Rebosura",
     title: "Registered Massage Therapist",
-    photo: "https://images.unsplash.com/photo-1594824813573-246434de83fb?auto=format&fit=crop&q=80&w=800", // High quality professional clinical RMT photo
+    photo: "/therapist-maryann.jpg",
     bio: "As a Registered Massage Therapist, Mary Ann is passionate about helping clients improve their overall health, mobility, and wellbeing through personalized massage therapy. She works alongside physiotherapists and chiropractors in a multidisciplinary clinic in Calgary, collaborating with other healthcare professionals to support recovery, pain management, and wellness goals.",
     focus: [
       "Therapeutic and rehabilitation massage",
@@ -281,6 +281,8 @@ const DEFAULT_CONTACT: GeneralContent = {
 };
 
 // Database utility class
+const DB_VERSION = "2.1.0";
+
 class LocalDb {
   private getStorageItem<T>(key: string, defaultValue: T): T {
     if (typeof window === "undefined") return defaultValue;
@@ -299,6 +301,17 @@ class LocalDb {
   private setStorageItem<T>(key: string, value: T): void {
     if (typeof window !== "undefined") {
       localStorage.setItem(key, JSON.stringify(value));
+    }
+  }
+
+  // Version check — resets therapists & blog posts if app version has changed
+  init(): void {
+    if (typeof window === "undefined") return;
+    const storedVersion = localStorage.getItem("avion_db_version");
+    if (storedVersion !== DB_VERSION) {
+      localStorage.setItem("avion_therapists", JSON.stringify(DEFAULT_THERAPISTS));
+      localStorage.setItem("avion_blog_posts", JSON.stringify(DEFAULT_POSTS));
+      localStorage.setItem("avion_db_version", DB_VERSION);
     }
   }
 
