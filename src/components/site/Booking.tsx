@@ -1126,7 +1126,11 @@ _Thank you for booking with Avion! We will verify therapist schedules and contac
                         </>
                       ) : (
                         pricingTiers.map((item) => {
-                          const isRestricted = item.restricted && personsCount === 1 && sessionsCount === 1;
+                          // 30-min and 45-min: not available for single bookings
+                          const isSingleRestricted = item.restricted && personsCount === 1 && sessionsCount === 1;
+                          // 90-min: not available for group bookings
+                          const isGroupRestricted = item.min === 90 && personsCount > 1;
+                          const isRestricted = isSingleRestricted || isGroupRestricted;
                           const currentPrice = personsCount > 1 ? item.priceMultiple : item.priceSingle;
 
                           return (
@@ -1160,9 +1164,14 @@ _Thank you for booking with Avion! We will verify therapist schedules and contac
                                   {item.description}
                                 </p>
                               </div>
-                              {item.restricted && (
+                              {isSingleRestricted && (
                                 <span className="block text-[9px] font-semibold text-amber-400 bg-amber-400/10 border border-amber-400/20 px-2 py-1 rounded-lg">
-                                  Requires family or bulk booking
+                                  Requires group or bulk booking
+                                </span>
+                              )}
+                              {isGroupRestricted && (
+                                <span className="block text-[9px] font-semibold text-amber-400 bg-amber-400/10 border border-amber-400/20 px-2 py-1 rounded-lg">
+                                  Not available for group bookings
                                 </span>
                               )}
                             </button>

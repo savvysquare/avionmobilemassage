@@ -214,7 +214,7 @@ const DEFAULT_THERAPISTS: Therapist[] = [
     id: "mary-ann-rebosura",
     name: "Mary Ann Rebosura",
     title: "Registered Massage Therapist",
-    photo: "/therapist-maryann.jpg",
+    photo: "",
     bio: "As a Registered Massage Therapist, Mary Ann is passionate about helping clients improve their overall health, mobility, and wellbeing through personalized massage therapy. She works alongside physiotherapists and chiropractors in a multidisciplinary clinic in Calgary, collaborating with other healthcare professionals to support recovery, pain management, and wellness goals.",
     focus: [
       "Therapeutic and rehabilitation massage",
@@ -240,9 +240,10 @@ const DEFAULT_PRICING: PricingOption[] = [
   {
     min: 45,
     priceSingle: 100,
-    priceMultiple: 95,
+    priceMultiple: 100,
     description: "Focused session for specific tension relief",
-    rec: "Ideal for spot treatments"
+    rec: "Ideal for spot treatments",
+    restricted: true
   },
   {
     min: 60,
@@ -281,7 +282,7 @@ const DEFAULT_CONTACT: GeneralContent = {
 };
 
 // Database utility class
-const DB_VERSION = "2.1.0";
+const DB_VERSION = "2.2.0";
 
 class LocalDb {
   private getStorageItem<T>(key: string, defaultValue: T): T {
@@ -304,13 +305,15 @@ class LocalDb {
     }
   }
 
-  // Version check — resets therapists & blog posts if app version has changed
+  // Version check — resets all data if app version has changed
   init(): void {
     if (typeof window === "undefined") return;
     const storedVersion = localStorage.getItem("avion_db_version");
     if (storedVersion !== DB_VERSION) {
       localStorage.setItem("avion_therapists", JSON.stringify(DEFAULT_THERAPISTS));
       localStorage.setItem("avion_blog_posts", JSON.stringify(DEFAULT_POSTS));
+      localStorage.setItem("avion_pricing_tiers", JSON.stringify(DEFAULT_PRICING));
+      localStorage.setItem("avion_package_discounts", JSON.stringify(DEFAULT_DISCOUNTS));
       localStorage.setItem("avion_db_version", DB_VERSION);
     }
   }

@@ -168,10 +168,6 @@ export function Services() {
                 </p>
                 <div className="space-y-4 border-t border-border/60 pt-5">
                   <div className="flex justify-between items-center">
-                    <span className="text-base font-semibold text-charcoal-muted">45 Minutes</span>
-                    <span className="font-display font-extrabold text-charcoal text-xl">$100 <span className="text-[11px] text-charcoal-muted font-normal">CAD</span></span>
-                  </div>
-                  <div className="flex justify-between items-center">
                     <span className="text-base font-semibold text-charcoal-muted">60 Minutes</span>
                     <span className="font-display font-extrabold text-charcoal text-xl">$130 <span className="text-[11px] text-charcoal-muted font-normal">CAD</span></span>
                   </div>
@@ -182,7 +178,7 @@ export function Services() {
                 </div>
               </div>
               <div className="mt-8 text-[11px] text-charcoal-muted/70 italic border-t border-border/40 pt-4">
-                *30-minute sessions are not available for single individual bookings.
+                *30 and 45-minute sessions are not available for single individual bookings.
               </div>
             </div>
 
@@ -206,15 +202,11 @@ export function Services() {
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-base font-semibold text-charcoal-muted">45 Minutes</span>
-                    <span className="font-display font-extrabold text-sage text-xl">$95 <span className="text-[11px] text-charcoal-muted font-normal">/ person</span></span>
+                    <span className="font-display font-extrabold text-sage text-xl">$100 <span className="text-[11px] text-charcoal-muted font-normal">/ person</span></span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-base font-semibold text-charcoal-muted">60 Minutes</span>
                     <span className="font-display font-extrabold text-sage text-xl">$125 <span className="text-[11px] text-charcoal-muted font-normal">/ person</span></span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-base font-semibold text-charcoal-muted">90 Minutes</span>
-                    <span className="font-display font-extrabold text-sage text-xl">$165 <span className="text-[11px] text-charcoal-muted font-normal">/ person</span></span>
                   </div>
                 </div>
               </div>

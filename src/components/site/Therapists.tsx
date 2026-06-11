@@ -37,15 +37,32 @@ export function Therapists() {
               {/* Photo */}
               <div className="w-full md:w-2/5 shrink-0">
                 <div className="aspect-[4/5] rounded-2xl overflow-hidden relative shadow-soft border border-border bg-soft-blue-light/20">
-                  <img
-                    src={t.photo}
-                    alt={t.name}
-                    className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-700"
-                    onError={(e) => {
-                      // fallback to standard user avatar icon/placeholder if photo fails to load
-                      e.currentTarget.src = "https://images.unsplash.com/photo-1594824813573-246434de83fb?auto=format&fit=crop&q=80&w=800";
-                    }}
-                  />
+                  {t.photo ? (
+                    <>
+                      <img
+                        src={t.photo}
+                        alt={t.name}
+                        className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-700"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                          (e.currentTarget.nextElementSibling as HTMLElement)?.classList.remove('hidden');
+                        }}
+                      />
+                      <div className="hidden w-full h-full flex-col items-center justify-center bg-soft-blue-light/40 gap-4">
+                        <div className="w-20 h-20 rounded-full bg-sage/10 border-2 border-sage/20 flex items-center justify-center">
+                          <svg className="w-10 h-10 text-sage/40" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+                        </div>
+                        <p className="text-[11px] text-charcoal-muted font-semibold tracking-wider uppercase">Photo Coming Soon</p>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center bg-soft-blue-light/40 gap-4">
+                      <div className="w-20 h-20 rounded-full bg-sage/10 border-2 border-sage/20 flex items-center justify-center">
+                        <svg className="w-10 h-10 text-sage/40" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+                      </div>
+                      <p className="text-[11px] text-charcoal-muted font-semibold tracking-wider uppercase">Photo Coming Soon</p>
+                    </div>
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-charcoal/20 via-transparent to-transparent opacity-60 mix-blend-multiply" />
                 </div>
               </div>
