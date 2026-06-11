@@ -101,8 +101,10 @@ export function Services() {
                       alt={`${s.name} ${s.accent}`}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
+                    {/* Theme gradient overlay (sage → soft-blue) */}
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-sage/25 via-transparent to-soft-blue/20 mix-blend-multiply" />
                     <div
-                      className="absolute inset-0 mix-blend-multiply opacity-20 transition-opacity duration-500 group-hover:opacity-0"
+                      className="absolute inset-0 mix-blend-multiply opacity-15 transition-opacity duration-500 group-hover:opacity-0"
                       style={{ background: s.tint }}
                     />
                   </div>
