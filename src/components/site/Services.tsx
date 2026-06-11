@@ -175,7 +175,7 @@ export function Services() {
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-base font-semibold text-charcoal-muted">90 Minutes</span>
-                    <span className="font-display font-extrabold text-charcoal text-xl">$175 <span className="text-[11px] text-charcoal-muted font-normal">CAD</span></span>
+                    <span className="font-display font-extrabold text-charcoal text-xl">$180 <span className="text-[11px] text-charcoal-muted font-normal">CAD</span></span>
                   </div>
                 </div>
               </div>
