@@ -68,7 +68,8 @@ export function Hero() {
               alt="Calm Avion Mobile Massage setup — folded linens, warm oil, and eucalyptus in a sunlit Calgary home"
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-tr from-sage/15 via-transparent to-transparent mix-blend-multiply" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-sage/25 via-transparent to-soft-blue/25 mix-blend-multiply" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-charcoal/10" />
           </div>
 
           {/* Floating credential chip */}
